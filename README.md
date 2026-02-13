@@ -9,6 +9,7 @@ AI 에이전트를 위한 도메인 전문 스킬 저장소.
 | Skill | Description | Domain |
 |-------|-------------|--------|
 | [k-sunshine](skills/k-sunshine/) | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
+| [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
 
 ## Structure
 
@@ -18,10 +19,13 @@ Skills-for-RA/
 │   ├── SKILL.md
 │   └── references/
 └── skills/             # 스킬 저장소
-    └── k-sunshine/
-        ├── SKILL.md           # 스킬 정의
-        ├── k-sunshine.skill   # 패키지 바이너리
-        └── references/        # 참조 문서
+    ├── k-sunshine/
+    │   ├── SKILL.md           # 스킬 정의
+    │   ├── k-sunshine.skill   # 패키지 바이너리
+    │   └── references/        # 참조 문서
+    └── human-writing/
+        ├── SKILL.md           # 파이프라인 오케스트레이션
+        └── references/        # 변환/검증 규칙 문서
 ```
 
 ## Usage
