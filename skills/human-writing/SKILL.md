@@ -5,16 +5,6 @@ description: >
   asymmetry injection, connector prune, controlled uncertainty, domain voice)과
   3단계 검증(AI smell lint, fact integrity check, redundancy prune)을 제공한다. Triggers:
   human writing, AI 톤 제거, 인간적 글쓰기, 사고 흔적, AI 냄새, 텍스트 변환, 글쓰기 스타일, 휴먼 라이팅, 인간처럼
-license: Apache-2.0
-compatibility: Designed for Claude Code
-metadata:
-  version: "1.1.0"
-  category: "domain"
-  status: "active"
-  updated: "2026-02-14"
-  tags: "writing, ai-detection, text-transformation, human-writing, korean"
-  author: "HB"
-  user-invocable: "true"
 ---
 
 # Human Writing: AI-to-Human Text Transformation Pipeline
