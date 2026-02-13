@@ -1,15 +1,12 @@
 ---
 name: human-writing
 description: >
-  AI-generated text를 인간 전문가의 사고 흐름처럼 변환하는 파이프라인 스킬.
-  5단계 변환(cognitive trace, asymmetry injection, connector prune,
-  controlled uncertainty, domain voice)과 3단계 검증(AI smell lint,
-  fact integrity check, redundancy prune)을 제공한다.
-  Triggers: human writing, AI 톤 제거, 인간적 글쓰기, 사고 흔적,
-  AI 냄새, 텍스트 변환, 글쓰기 스타일, 휴먼 라이팅, 인간처럼
+  AI-generated text를 인간 전문가의 사고 흐름처럼 변환하는 파이프라인 스킬. 5단계 변환(cognitive trace,
+  asymmetry injection, connector prune, controlled uncertainty, domain voice)과
+  3단계 검증(AI smell lint, fact integrity check, redundancy prune)을 제공한다. Triggers:
+  human writing, AI 톤 제거, 인간적 글쓰기, 사고 흔적, AI 냄새, 텍스트 변환, 글쓰기 스타일, 휴먼 라이팅, 인간처럼
 license: Apache-2.0
 compatibility: Designed for Claude Code
-user-invocable: true
 metadata:
   version: "1.1.0"
   category: "domain"
@@ -17,6 +14,7 @@ metadata:
   updated: "2026-02-14"
   tags: "writing, ai-detection, text-transformation, human-writing, korean"
   author: "HB"
+  user-invocable: "true"
 ---
 
 # Human Writing: AI-to-Human Text Transformation Pipeline
