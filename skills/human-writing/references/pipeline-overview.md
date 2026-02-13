@@ -3,8 +3,15 @@
 ## Pipeline Flow
 
 ```
-원본 텍스트 → [Step 1-5 변환] → [Verify 1-3 검증] → 최종 텍스트
+원본 텍스트
+    ↓
+[프리셋 선택]
+    ├─ express ──→ [Step 1-5 + Verify 1-3 동시 로드] → 단일 패스 ──→ 최종 텍스트
+    ├─ standard ─→ [Step 1-5 통합 변환] → [Verify 1-3 원본 대조] ──→ 최종 텍스트
+    └─ deep ─────→ [Step1]→[Step2]→…→[Step5] → [Verify 1-3 통합] → 최종 텍스트
 ```
+
+프리셋을 지정하지 않으면 **standard** (2패스)가 적용된다.
 
 ## Stage Summary
 
