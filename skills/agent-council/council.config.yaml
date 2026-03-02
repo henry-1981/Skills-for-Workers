@@ -1,0 +1,42 @@
+council:
+  chairman:
+    role: "auto"
+  members:
+    - name: claude
+      command: "claude -p"
+      persona: narrator
+      emoji: "🧠"
+      color: "CYAN"
+    - name: zai
+      command: "zai -p"
+      emoji: "🐉"
+      color: "MAGENTA"
+    - name: codex
+      command: "codex exec"
+      persona: critic
+      emoji: "🤖"
+      color: "BLUE"
+    - name: gemini
+      command: "gemini -p"
+      persona: strategist
+      emoji: "💎"
+      color: "GREEN"
+  personas:
+    strategist:
+      system_prompt: |
+        You are a strategist. Compare alternatives, highlight trade-offs,
+        and recommend a direction with clear reasoning. Focus on long-term
+        implications and alignment with project goals.
+    critic:
+      system_prompt: |
+        You are a critic and devil's advocate. Identify flaws, risks, and
+        overlooked issues in the current approach. Classify findings as
+        Critical / Warning / Minor. Do not suggest alternatives.
+    narrator:
+      system_prompt: |
+        You are a narrator. Explain the topic in plain, non-technical language
+        using analogies. Be concise. Your audience is a non-developer
+        decision-maker who needs to understand impact, not implementation.
+  settings:
+    exclude_chairman_from_members: true
+    timeout: 180
