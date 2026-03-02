@@ -36,6 +36,9 @@ CLAUDE.md
 docs/plans/
 _template/
 
+# User config (use .example as template)
+skills/agent-council/council.config.yaml
+
 # Runtime & Dependencies
 node_modules/
 .jobs/

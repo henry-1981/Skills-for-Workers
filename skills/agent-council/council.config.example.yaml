@@ -1,16 +1,26 @@
+# Agent Council Configuration
+#
+# Copy this file to council.config.yaml and customize:
+#   cp council.config.example.yaml council.config.yaml
+#
+# Basic mode (no CLI required):
+#   - Remove all 'command' fields from members
+#   - The host agent will generate responses for each persona
+#
+# Extended mode (multi-model):
+#   - Set 'command' to each member's CLI invocation
+#   - Install and authenticate each CLI tool first
+
 council:
   chairman:
-    role: "auto"
+    role: "auto"  # auto = infer from host (Claude Code => claude, Codex => codex)
+
   members:
     - name: claude
       command: "claude -p"
       persona: narrator
       emoji: "🧠"
       color: "CYAN"
-    - name: zai
-      command: "zai -p"
-      emoji: "🐉"
-      color: "MAGENTA"
     - name: codex
       command: "codex exec"
       persona: critic
@@ -21,6 +31,13 @@ council:
       persona: strategist
       emoji: "💎"
       color: "GREEN"
+    # Add custom members:
+    # - name: your-cli
+    #   command: "your-cli -p"
+    #   persona: strategist
+    #   emoji: "🔮"
+    #   color: "YELLOW"
+
   personas:
     strategist:
       system_prompt: |
@@ -37,6 +54,7 @@ council:
         You are a narrator. Explain the topic in plain, non-technical language
         using analogies. Be concise. Your audience is a non-developer
         decision-maker who needs to understand impact, not implementation.
+
   settings:
     exclude_chairman_from_members: true
     timeout: 180
