@@ -10,12 +10,16 @@ Collect multiple perspectives and synthesize one answer.
 
 ## Mode Selection
 
-This skill operates in two modes based on configuration:
+| | Basic | Extended (Recommended) |
+|---|---|---|
+| **What happens** | One AI plays multiple roles | Different AI models each give their genuine perspective |
+| **Diversity** | Simulated — same model, different prompts | Real — different training, different reasoning |
+| **Setup** | None | CLI install + auth per model |
+| **Best for** | Quick brainstorming, simple questions | Important decisions, deep technical review, strategy |
 
-- **Basic mode**: No external CLI required. The host agent generates responses for each persona. Works immediately after installation.
-- **Extended mode**: External AI CLIs (claude, codex, gemini, etc.) are called in parallel. Each persona is backed by a different AI model.
+**Why extended mode matters**: A single AI "playing critic" tends to agree with itself. Different models (Claude, GPT, Gemini) have genuinely different training data, reasoning patterns, and blind spots — producing stronger disagreement and richer synthesis.
 
-**How it's determined**: If `council.config.yaml` has members with `command` fields and the CLIs are available, extended mode is used. Otherwise, basic mode.
+**How it's determined**: If `council.config.yaml` has members with `command` fields and the CLIs are available, extended mode is used. Otherwise, basic mode. See `references/setup.md` to set up extended mode.
 
 ## Basic Mode Workflow
 
@@ -59,7 +63,7 @@ No scripts or dependencies required. The host agent handles everything.
 
 ## Extended Mode Workflow
 
-Requires Node.js and at least one external AI CLI. See `references/setup.md` for installation.
+Each member runs a real AI CLI in parallel — you get genuinely independent opinions, not role-played ones. Requires Node.js and at least one external AI CLI. See `references/setup.md` for installation.
 
 ### One-shot
 
