@@ -1,29 +1,62 @@
 # Configure members
 
-Edit `council.config.yaml` to set chairman and members:
+## Quick start
+
+Copy the example config:
+```bash
+cp council.config.example.yaml council.config.yaml
+```
+
+## Config structure
 
 ```yaml
 council:
   chairman:
-    role: "auto"
+    role: "auto"  # auto | claude | codex | gemini | ...
+
   members:
     - name: claude
-      command: "claude -p"
+      command: "claude -p"       # Remove this line for basic mode
+      persona: narrator          # Links to a persona definition
       emoji: "🧠"
       color: "CYAN"
-    - name: codex
-      command: "codex exec"
-      emoji: "🤖"
-      color: "BLUE"
-    - name: gemini
-      command: "gemini"
-      emoji: "💎"
-      color: "GREEN"
+
+  personas:
+    narrator:
+      system_prompt: |
+        You are a narrator. Explain in plain language.
+
+  settings:
+    exclude_chairman_from_members: true
+    timeout: 180
 ```
 
-Add custom members by appending entries to `members`:
+## Basic mode vs Extended mode
 
-- Use a stable `name` (lowercase, short).
-- Set `command` to a runnable CLI invocation.
-- Provide `emoji` and `color` for readability (optional but recommended).
-- Note that the installer filters members to detected CLIs only when it first generates `council.config.yaml`. After that, missing CLIs are not auto-removed and will report `missing_cli` at runtime; remove unavailable members or install the CLI before running.
+- **Basic mode**: Remove `command` fields from members. The host agent generates each persona's response directly.
+- **Extended mode**: Keep `command` fields. Each member's CLI is called in parallel.
+
+## Adding members
+
+Append entries to `members`:
+- `name`: stable identifier (lowercase, short)
+- `command`: CLI invocation (optional — omit for basic mode)
+- `persona`: key referencing a persona definition (optional)
+- `emoji` and `color`: for readability (optional)
+
+## Adding personas
+
+Add entries under `personas`:
+```yaml
+personas:
+  my-role:
+    system_prompt: |
+      You are a [role]. [perspective instructions].
+```
+
+Then assign to a member with `persona: my-role`.
+
+## Notes
+
+- Missing CLIs report `missing_cli` at runtime but don't crash the council
+- The chairman is excluded from members by default (`exclude_chairman_from_members: true`)
