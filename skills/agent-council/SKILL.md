@@ -6,11 +6,72 @@ origin: "Forked from henry-1981/plugins-for-claude-natives (MIT License)"
 
 # Agent Council
 
-Collect multiple AI opinions and synthesize one answer.
+Collect multiple perspectives and synthesize one answer.
 
-## Usage
+## Mode Selection
 
-Run a job and collect results:
+| | Basic | Extended (Recommended) |
+|---|---|---|
+| **What happens** | One AI plays multiple roles | Different AI models each give their genuine perspective |
+| **Diversity** | Simulated — same model, different prompts | Real — different training, different reasoning |
+| **Setup** | None | CLI install + auth per model |
+| **Best for** | Quick brainstorming, simple questions | Important decisions, deep technical review, strategy |
+
+**Why extended mode matters**: A single AI "playing critic" tends to agree with itself. Different models (Claude, GPT, Gemini) have genuinely different training data, reasoning patterns, and blind spots — producing stronger disagreement and richer synthesis.
+
+**How it's determined**: If `council.config.yaml` has members with `command` fields and the CLIs are available, extended mode is used. Otherwise, basic mode. See `references/setup.md` to set up extended mode.
+
+## Basic Mode Workflow
+
+No scripts or dependencies required. The host agent handles everything.
+
+1. Read `council.config.yaml` (or use default personas if no config exists)
+2. For each persona defined in `personas`:
+   - Apply the persona's `system_prompt` as your role
+   - Generate a response to the user's question from that perspective
+   - Label the response with the persona name and emoji
+3. After all persona responses are generated, synthesize:
+   - Identify points of agreement and disagreement
+   - Highlight the strongest arguments from each perspective
+   - Provide a balanced final recommendation
+
+### Default Personas
+
+| Persona | Role | Emoji |
+|---------|------|-------|
+| strategist | Compare alternatives, highlight trade-offs, recommend direction | 💎 |
+| critic | Identify flaws, risks, overlooked issues (Critical/Warning/Minor) | 🤖 |
+| narrator | Explain in plain language with analogies for non-technical audience | 🧠 |
+
+### Basic Mode Response Format
+
+```
+## Council Responses
+
+### 🧠 Narrator
+[response from narrator perspective]
+
+### 🤖 Critic
+[response from critic perspective]
+
+### 💎 Strategist
+[response from strategist perspective]
+
+## Synthesis
+[balanced recommendation combining all perspectives]
+```
+
+## Extended Mode Workflow
+
+Each member runs a real AI CLI in parallel — you get genuinely independent opinions, not role-played ones. Requires Node.js and at least one external AI CLI. See `references/setup.md` for installation.
+
+### One-shot
+
+```bash
+./skills/agent-council/scripts/council.sh "your question here"
+```
+
+### Step-by-step
 
 ```bash
 JOB_DIR=$(./skills/agent-council/scripts/council.sh start "your question here")
@@ -19,17 +80,18 @@ JOB_DIR=$(./skills/agent-council/scripts/council.sh start "your question here")
 ./skills/agent-council/scripts/council.sh clean "$JOB_DIR"
 ```
 
-One-shot:
-
-```bash
-./skills/agent-council/scripts/council.sh "your question here"
-```
+After collecting results, synthesize the responses as chairman:
+- Identify agreement and disagreement across AI models
+- Note where different models bring unique insights
+- Provide final recommendation
 
 ## References
 
-- `references/overview.md` — workflow and background.
-- `references/examples.md` — usage examples.
-- `references/config.md` — member configuration.
-- `references/requirements.md` — dependencies and CLI checks.
-- `references/host-ui.md` — host UI checklist guidance.
-- `references/safety.md` — safety notes.
+- `references/overview.md` — workflow and background
+- `references/examples.md` — usage examples
+- `references/config.md` — member configuration
+- `references/setup.md` — installation and setup guide
+- `references/troubleshooting.md` — common errors and fixes
+- `references/requirements.md` — dependencies and CLI checks
+- `references/host-ui.md` — host UI checklist guidance
+- `references/safety.md` — safety notes

@@ -32,6 +32,13 @@ CLAUDE.md
 # MoAI (local config)
 .moai/
 
+# Development-only (not for distribution)
+docs/plans/
+_template/
+
+# User config (use .example as template)
+skills/agent-council/council.config.yaml
+
 # Runtime & Dependencies
 node_modules/
 .jobs/
