@@ -1,5 +1,6 @@
 ---
 name: k-sunshine
+origin: "Derived from Cowork-RA aria/skills/compliance — KMDIA 공정경쟁규약 Knowledge DB"
 description: >
   Korean medical device marketing compliance advisor based on KMDIA Fair Competition
   Code (의료기기 거래에 관한 공정경쟁규약). Use when reviewing medical device marketing

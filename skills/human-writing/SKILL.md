@@ -1,5 +1,6 @@
 ---
 name: human-writing
+origin: "Original work"
 description: >
   AI-generated text를 인간 전문가의 사고 흐름처럼 변환하는 파이프라인 스킬. 5단계 변환(cognitive trace,
   asymmetry injection, connector prune, controlled uncertainty, domain voice)과

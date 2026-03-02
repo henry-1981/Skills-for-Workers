@@ -1,5 +1,6 @@
 ---
 name: your-skill-name
+origin: "Source of this skill (e.g., Forked from repo-url, Derived from project, Original work)"
 description: >
   Brief description of what this skill does and when to use it.
   Include trigger keywords for automatic activation.

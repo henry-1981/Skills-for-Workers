@@ -1,72 +1,81 @@
-# Skills for RA
+# Skills for Workers
 
-AI 에이전트를 위한 도메인 전문 스킬 저장소.
+조직 내 실무자가 AI 에이전트와 함께 사용할 수 있는 도메인 스킬 모음.
 
-각 스킬은 특정 도메인의 규정, 가이드라인, 의사결정 프레임워크를 포함하며, 여러 AI 플랫폼에서 활용할 수 있습니다.
+각 스킬은 특정 업무 영역의 규정, 가이드라인, 의사결정 프레임워크를 포함하며 Claude Code, Codex, Gemini CLI 등 다양한 AI 플랫폼에서 활용할 수 있습니다.
 
 ## Skill Catalog
 
-| Skill | Description | Domain |
-|-------|-------------|--------|
+| Skill | Description | Category |
+|-------|-------------|----------|
+| [agent-council](skills/agent-council/) | 여러 AI 에이전트의 의견을 수집하고 합성하는 멀티에이전트 오케스트레이터 | Productivity |
 | [k-sunshine](skills/k-sunshine/) | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
 | [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
 
-## Structure
-
-```
-Skills-for-RA/
-├── _template/          # 새 스킬 생성 템플릿
-│   ├── SKILL.md
-│   └── references/
-└── skills/             # 스킬 저장소
-    ├── k-sunshine/
-    │   ├── SKILL.md           # 스킬 정의
-    │   ├── k-sunshine.skill   # 패키지 바이너리
-    │   └── references/        # 참조 문서
-    └── human-writing/
-        ├── SKILL.md           # 파이프라인 오케스트레이션
-        └── references/        # 변환/검증 규칙 문서
-```
-
-## Usage
+## Quick Start
 
 ### Claude Code
 
 ```bash
-# 스킬 디렉토리를 직접 참조
-claude --skill ./skills/k-sunshine/SKILL.md
+# 1. 레포 클론
+git clone https://github.com/henry-1981/Skills-for-Workers.git ~/skills
+
+# 2. 사용할 스킬을 심링크로 등록
+ln -s ~/skills/skills/agent-council ~/.claude/skills/agent-council
+ln -s ~/skills/skills/k-sunshine ~/.claude/skills/k-sunshine
+
+# 3. 의존성 설치 (agent-council)
+cd ~/.claude/skills/agent-council && npm install
 ```
 
 ### Codex
 
 ```bash
-# 스킬을 시스템 프롬프트로 로드
-codex --system-prompt "$(cat skills/k-sunshine/SKILL.md)"
+codex --system-prompt "$(cat ~/skills/skills/k-sunshine/SKILL.md)"
 ```
 
 ### Gemini CLI
 
 ```bash
-# 스킬을 컨텍스트로 제공
-gemini --context skills/k-sunshine/SKILL.md
+gemini --context ~/skills/skills/k-sunshine/SKILL.md
 ```
 
-### Cowork Plugin
+## Structure
 
-Cowork 플러그인의 스킬 매니저에서 `skills/` 경로를 등록하여 사용합니다.
+```
+Skills-for-Workers/
+├── _template/              # 새 스킬 생성 템플릿
+│   ├── SKILL.md
+│   └── references/
+└── skills/
+    ├── agent-council/      # 멀티 AI 의견 합성
+    │   ├── SKILL.md
+    │   ├── council.config.yaml
+    │   ├── scripts/
+    │   └── references/
+    ├── k-sunshine/         # 의료기기 마케팅 컴플라이언스
+    │   ├── SKILL.md
+    │   └── references/
+    └── human-writing/      # AI→인간 텍스트 변환
+        ├── SKILL.md
+        └── references/
+```
 
 ## Adding a New Skill
 
-1. `_template/` 디렉토리를 복사하여 `skills/` 아래에 새 스킬 디렉토리 생성:
-   ```bash
-   cp -r _template skills/my-new-skill
-   ```
+```bash
+cp -r _template skills/my-new-skill
+```
 
-2. `SKILL.md`의 frontmatter와 본문을 작성
+`SKILL.md`의 frontmatter를 작성하고 `references/`에 참조 문서를 추가합니다. `origin` 필드에 출처를 명시해 주세요.
 
-3. `references/` 디렉토리에 참조 문서 추가
+## Attribution
 
-4. 커밋 및 푸시
+| Skill | Origin | License |
+|-------|--------|---------|
+| agent-council | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives#agent-council) | MIT |
+| k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | Internal |
+| human-writing | Original work | — |
 
 ## License
 
