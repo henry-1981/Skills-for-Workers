@@ -17,9 +17,22 @@ function exitWithError(message) {
   process.exit(1);
 }
 
+const SKILL_EXAMPLE_CONFIG_FILE = path.join(SKILL_DIR, 'council.config.example.yaml');
+
 function resolveDefaultConfigFile() {
   if (fs.existsSync(SKILL_CONFIG_FILE)) return SKILL_CONFIG_FILE;
   if (fs.existsSync(REPO_CONFIG_FILE)) return REPO_CONFIG_FILE;
+
+  // Auto-copy from example if available
+  if (fs.existsSync(SKILL_EXAMPLE_CONFIG_FILE)) {
+    fs.copyFileSync(SKILL_EXAMPLE_CONFIG_FILE, SKILL_CONFIG_FILE);
+    process.stderr.write(
+      `council: created ${path.basename(SKILL_CONFIG_FILE)} from example template.\n` +
+      `council: customize it at ${SKILL_CONFIG_FILE}\n`
+    );
+    return SKILL_CONFIG_FILE;
+  }
+
   return SKILL_CONFIG_FILE;
 }
 
