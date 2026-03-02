@@ -203,10 +203,11 @@ function main() {
 
   child.on('error', (error) => {
     const isMissing = error && error.code === 'ENOENT';
+    const missingMsg = `'${program}' CLI not found. Install it or remove this member from council.config.yaml. See references/setup.md`;
     finalize({
       member,
       state: isMissing ? 'missing_cli' : 'error',
-      message: error && error.message ? error.message : 'Process error',
+      message: isMissing ? missingMsg : (error && error.message ? error.message : 'Process error'),
       finishedAt: new Date().toISOString(),
       command,
       exitCode: null,
