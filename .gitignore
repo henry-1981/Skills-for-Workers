@@ -32,6 +32,10 @@ CLAUDE.md
 # MoAI (local config)
 .moai/
 
+# Development-only (not for distribution)
+docs/plans/
+_template/
+
 # Runtime & Dependencies
 node_modules/
 .jobs/
