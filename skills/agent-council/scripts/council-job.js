@@ -413,12 +413,41 @@ function cmdStart(options, prompt) {
   const timeoutSec = Number.isFinite(timeoutOverride) && timeoutOverride > 0 ? timeoutOverride : timeoutSetting > 0 ? timeoutSetting : 0;
 
   const requestedMembers = config.council.members || [];
+  const personasMap = config.council.personas || {};
   const members = requestedMembers.filter((m) => {
     if (!m || !m.name || !m.command) return false;
     const nameLc = String(m.name).toLowerCase();
     if (excludeChairmanFromMembers && !includeChairman && nameLc === chairmanRole) return false;
     return true;
   });
+
+  // Detect excluded members that had personas assigned
+  const excludedMembers = requestedMembers.filter((m) => {
+    if (!m || !m.name || !m.command) return false;
+    return !members.some((fm) => String(fm.name).toLowerCase() === String(m.name).toLowerCase());
+  });
+  const excludedPersonas = excludedMembers
+    .filter((m) => m.persona && personasMap[String(m.persona).trim()])
+    .map((m) => {
+      const key = String(m.persona).trim();
+      return { member: String(m.name), persona: key, system_prompt: String(personasMap[key].system_prompt || '').trim() };
+    });
+
+  if (excludedPersonas.length > 0) {
+    process.stderr.write(
+      `council: WARNING — ${excludedPersonas.length} persona(s) excluded with chairman member: ${excludedPersonas.map((p) => p.persona).join(', ')}. ` +
+        `These will be included in results for chairman synthesis.\n`
+    );
+  }
+
+  // Validate persona count: configured vs active
+  const configuredPersonaCount = requestedMembers.filter((m) => m && m.persona).length;
+  const activePersonaCount = members.filter((m) => m && m.persona).length;
+  if (configuredPersonaCount !== activePersonaCount) {
+    process.stderr.write(
+      `council: persona mismatch — configured: ${configuredPersonaCount}, active: ${activePersonaCount}\n`
+    );
+  }
 
   const jobId = `${new Date().toISOString().replace(/[:.]/g, '').replace('T', '-').slice(0, 15)}-${crypto
     .randomBytes(3)
@@ -445,6 +474,7 @@ function cmdStart(options, prompt) {
       emoji: m.emoji ? String(m.emoji) : null,
       color: m.color ? String(m.color) : null,
     })),
+    excludedPersonas: excludedPersonas.length > 0 ? excludedPersonas : undefined,
   };
   atomicWriteJson(path.join(jobDir, 'job.json'), jobMeta);
 
@@ -456,7 +486,6 @@ function cmdStart(options, prompt) {
 
     // Write persona file if configured
     const personaKey = member.persona ? String(member.persona).trim() : null;
-    const personasMap = config.council.personas || {};
     const personaDef = personaKey ? personasMap[personaKey] : null;
     if (personaDef && personaDef.system_prompt) {
       fs.writeFileSync(
@@ -686,6 +715,7 @@ function cmdResults(options, jobDir) {
   const resolvedJobDir = path.resolve(jobDir);
   const jobMeta = readJsonIfExists(path.join(resolvedJobDir, 'job.json'));
   const membersRoot = path.join(resolvedJobDir, 'members');
+  const excludedPersonas = jobMeta && jobMeta.excludedPersonas ? jobMeta.excludedPersonas : [];
 
   const members = [];
   if (fs.existsSync(membersRoot)) {
@@ -702,29 +732,27 @@ function cmdResults(options, jobDir) {
   }
 
   if (options.json) {
-    process.stdout.write(
-      `${JSON.stringify(
-        {
-          jobDir: resolvedJobDir,
-          id: jobMeta ? jobMeta.id : null,
-          prompt: fs.existsSync(path.join(resolvedJobDir, 'prompt.txt'))
-            ? fs.readFileSync(path.join(resolvedJobDir, 'prompt.txt'), 'utf8')
-            : null,
-          members: members
-            .map((m) => ({
-              member: m.member,
-              state: m.state,
-              exitCode: m.exitCode != null ? m.exitCode : null,
-              message: m.message || null,
-              output: m.output,
-              stderr: m.stderr,
-            }))
-            .sort((a, b) => String(a.member).localeCompare(String(b.member))),
-        },
-        null,
-        2
-      )}\n`
-    );
+    const result = {
+      jobDir: resolvedJobDir,
+      id: jobMeta ? jobMeta.id : null,
+      prompt: fs.existsSync(path.join(resolvedJobDir, 'prompt.txt'))
+        ? fs.readFileSync(path.join(resolvedJobDir, 'prompt.txt'), 'utf8')
+        : null,
+      members: members
+        .map((m) => ({
+          member: m.member,
+          state: m.state,
+          exitCode: m.exitCode != null ? m.exitCode : null,
+          message: m.message || null,
+          output: m.output,
+          stderr: m.stderr,
+        }))
+        .sort((a, b) => String(a.member).localeCompare(String(b.member))),
+    };
+    if (excludedPersonas.length > 0) {
+      result.excludedPersonas = excludedPersonas;
+    }
+    process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
     return;
   }
 
@@ -735,6 +763,14 @@ function cmdResults(options, jobDir) {
     if (!m.output && m.stderr) {
       process.stdout.write('\n');
       process.stdout.write(m.stderr);
+    }
+    process.stdout.write('\n');
+  }
+
+  if (excludedPersonas.length > 0) {
+    process.stdout.write(`\n=== EXCLUDED PERSONAS (chairman synthesis required) ===\n`);
+    for (const ep of excludedPersonas) {
+      process.stdout.write(`- ${ep.persona} (from member: ${ep.member}): ${ep.system_prompt.split('\n')[0]}\n`);
     }
     process.stdout.write('\n');
   }
