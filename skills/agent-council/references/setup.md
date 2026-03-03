@@ -32,7 +32,7 @@
 |-----|---------|-------------|
 | Claude Code | `npm install -g @anthropic-ai/claude-code` | `claude` (first run) |
 | Codex | `npm install -g @openai/codex` | `codex auth` |
-| Gemini CLI | `npm install -g @anthropic-ai/gemini-cli` or see Google docs | `gemini auth` |
+| Gemini CLI | `npm install -g @google/gemini-cli` | `gemini` (first run) |
 
 ## Config Customization
 
