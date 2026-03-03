@@ -1,69 +1,74 @@
 ---
 name: agent-council
-description: Collect and synthesize opinions from multiple AI agents. Use when users say "summon the council", "ask other AIs", or want multiple AI perspectives on a question.
+description: >
+  Collect and synthesize opinions from multiple AI agents. 여러 AI 에이전트의 의견을
+  수집하고 합성하는 멀티 페르소나 스킬. Use when users say "summon the council",
+  "ask other AIs", "council 소환", "다른 AI한테 물어봐", or want multiple AI perspectives
+  on a question. Triggers: agent council, 에이전트 카운슬, 멀티 페르소나, 의견 합성,
+  council 소환
 origin: "Forked from henry-1981/plugins-for-claude-natives (MIT License)"
 ---
 
 # Agent Council
 
-Collect multiple perspectives and synthesize one answer.
+여러 관점을 수집하고 하나의 답변으로 합성한다.
 
-## Mode Selection
+## 모드 선택
 
-| | Basic | Extended (Recommended) |
+| | Basic | Extended (권장) |
 |---|---|---|
-| **What happens** | One AI plays multiple roles | Different AI models each give their genuine perspective |
-| **Diversity** | Simulated — same model, different prompts | Real — different training, different reasoning |
-| **Setup** | None | CLI install + auth per model |
-| **Best for** | Quick brainstorming, simple questions | Important decisions, deep technical review, strategy |
+| **동작 방식** | 하나의 AI가 여러 역할을 수행 | 서로 다른 AI 모델이 각자의 관점을 제시 |
+| **다양성** | 시뮬레이션 — 같은 모델, 다른 프롬프트 | 실제 — 다른 학습 데이터, 다른 추론 방식 |
+| **설정** | 없음 | CLI 설치 + 모델별 인증 |
+| **적합한 용도** | 빠른 브레인스토밍, 단순 질문 | 중요한 의사결정, 심층 기술 리뷰, 전략 |
 
-**Why extended mode matters**: A single AI "playing critic" tends to agree with itself. Different models (Claude, GPT, Gemini) have genuinely different training data, reasoning patterns, and blind spots — producing stronger disagreement and richer synthesis.
+**Extended 모드가 중요한 이유**: 단일 AI가 "비평가 역할"을 하면 자기 자신에게 동의하는 경향이 있다. 서로 다른 모델(Claude, GPT, Gemini)은 학습 데이터, 추론 패턴, 사각지대가 실제로 다르므로 더 강한 이견과 풍부한 합성을 만들어낸다.
 
-**How it's determined**: If `council.config.yaml` has members with `command` fields and the CLIs are available, extended mode is used. Otherwise, basic mode. See `references/setup.md` to set up extended mode.
+**모드 결정 방식**: `council.config.yaml`에 `command` 필드가 있는 멤버가 정의되어 있고 해당 CLI가 사용 가능하면 extended 모드를 사용한다. 그렇지 않으면 basic 모드로 동작한다. Extended 모드 설정은 `references/setup.md`를 참조한다.
 
-## Basic Mode Workflow
+## Basic 모드 워크플로우
 
-No scripts or dependencies required. The host agent handles everything.
+스크립트나 의존성이 필요 없다. 호스트 에이전트가 모든 것을 처리한다.
 
-1. Read `council.config.yaml` (or use default personas if no config exists)
-2. For each persona defined in `personas`:
-   - Apply the persona's `system_prompt` as your role
-   - Generate a response to the user's question from that perspective
-   - Label the response with the persona name and emoji
-3. After all persona responses are generated, synthesize:
-   - Identify points of agreement and disagreement
-   - Highlight the strongest arguments from each perspective
-   - Provide a balanced final recommendation
+1. `council.config.yaml`을 읽는다 (config가 없으면 기본 페르소나 사용)
+2. `personas`에 정의된 각 페르소나에 대해:
+   - 페르소나의 `system_prompt`를 역할로 적용
+   - 해당 관점에서 사용자의 질문에 대한 응답 생성
+   - 페르소나 이름과 이모지로 응답 라벨링
+3. 모든 페르소나 응답이 생성된 후 합성:
+   - 합의점과 이견을 식별
+   - 각 관점에서 가장 강력한 논거를 강조
+   - 균형 잡힌 최종 권고안 제공
 
-### Default Personas
+### 기본 페르소나
 
-| Persona | Role | Emoji |
+| Persona | 역할 | Emoji |
 |---------|------|-------|
-| strategist | Compare alternatives, highlight trade-offs, recommend direction | 💎 |
-| critic | Identify flaws, risks, overlooked issues (Critical/Warning/Minor) | 🤖 |
-| narrator | Explain in plain language with analogies for non-technical audience | 🧠 |
+| strategist | 대안 비교, 트레이드오프 강조, 방향 제시 | 💎 |
+| critic | 결함, 리스크, 간과된 이슈 식별 (Critical/Warning/Minor) | 🤖 |
+| narrator | 비기술 청중을 위해 비유를 활용한 평이한 설명 | 🧠 |
 
-### Basic Mode Response Format
+### Basic 모드 응답 형식
 
 ```
 ## Council Responses
 
 ### 🧠 Narrator
-[response from narrator perspective]
+[narrator 관점의 응답]
 
 ### 🤖 Critic
-[response from critic perspective]
+[critic 관점의 응답]
 
 ### 💎 Strategist
-[response from strategist perspective]
+[strategist 관점의 응답]
 
 ## Synthesis
-[balanced recommendation combining all perspectives]
+[모든 관점을 종합한 균형 잡힌 권고안]
 ```
 
-## Extended Mode Workflow
+## Extended 모드 워크플로우
 
-Each member runs a real AI CLI in parallel — you get genuinely independent opinions, not role-played ones. Requires Node.js and at least one external AI CLI. See `references/setup.md` for installation.
+각 멤버가 실제 AI CLI를 병렬로 실행한다 — 역할극이 아닌 진정으로 독립적인 의견을 얻을 수 있다. Node.js와 최소 하나의 외부 AI CLI가 필요하다. 설치 방법은 `references/setup.md`를 참조한다.
 
 ### One-shot
 
@@ -80,18 +85,18 @@ JOB_DIR=$(./skills/agent-council/scripts/council.sh start "your question here")
 ./skills/agent-council/scripts/council.sh clean "$JOB_DIR"
 ```
 
-After collecting results, synthesize the responses as chairman:
-- Identify agreement and disagreement across AI models
-- Note where different models bring unique insights
-- Provide final recommendation
+결과를 수집한 후 chairman으로서 응답을 합성한다:
+- AI 모델 간 합의와 이견을 식별
+- 각 모델이 제공하는 고유한 인사이트를 기록
+- 최종 권고안 제공
 
 ## References
 
-- `references/overview.md` — workflow and background
-- `references/examples.md` — usage examples
-- `references/config.md` — member configuration
-- `references/setup.md` — installation and setup guide
-- `references/troubleshooting.md` — common errors and fixes
-- `references/requirements.md` — dependencies and CLI checks
-- `references/host-ui.md` — host UI checklist guidance
-- `references/safety.md` — safety notes
+- `references/overview.md` — 워크플로우와 배경
+- `references/examples.md` — 사용 예시
+- `references/config.md` — 멤버 설정
+- `references/setup.md` — 설치 및 셋업 가이드
+- `references/troubleshooting.md` — 자주 발생하는 오류와 해결법
+- `references/requirements.md` — 의존성 및 CLI 확인
+- `references/host-ui.md` — 호스트 UI 체크리스트 가이드
+- `references/safety.md` — 안전 관련 참고사항
