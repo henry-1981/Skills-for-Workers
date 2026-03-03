@@ -34,7 +34,6 @@ CLAUDE.md
 
 # Development-only (not for distribution)
 docs/plans/
-_template/
 
 # User config (use .example as template)
 skills/agent-council/council.config.yaml
