@@ -20,12 +20,16 @@
 # 1. 레포 클론
 git clone https://github.com/henry-1981/Skills-for-Workers.git ~/skills
 
-# 2. 사용할 스킬을 심링크로 등록
+# 2. 스킬 디렉토리 생성 + 심링크 등록
+mkdir -p ~/.claude/skills
 ln -s ~/skills/skills/agent-council ~/.claude/skills/agent-council
 ln -s ~/skills/skills/k-sunshine ~/.claude/skills/k-sunshine
+ln -s ~/skills/skills/human-writing ~/.claude/skills/human-writing
 
-# 3. 의존성 설치 (agent-council)
+# 3. (선택) agent-council extended 모드 사용 시
 cd ~/.claude/skills/agent-council && npm install
+cp council.config.example.yaml council.config.yaml
+# basic 모드는 의존성 불필요 — 상세: references/setup.md
 ```
 
 ### Codex
@@ -40,6 +44,23 @@ codex --system-prompt "$(cat ~/skills/skills/k-sunshine/SKILL.md)"
 gemini --context ~/skills/skills/k-sunshine/SKILL.md
 ```
 
+> **Note**: Codex와 Gemini CLI는 `references/` 디렉토리를 자동으로 로드하지 않습니다. 상세 규정이 필요한 스킬은 references를 함께 전달하세요:
+> ```bash
+> # 예: k-sunshine의 SKILL.md + 모든 참조 문서를 함께 전달
+> codex --system-prompt "$(cat ~/skills/skills/k-sunshine/SKILL.md ~/skills/skills/k-sunshine/references/*.md)"
+> ```
+
+### 설치 확인
+
+```bash
+ls -la ~/.claude/skills/          # 심링크 확인
+# Claude Code에서 "council 소환해줘" 입력 → 스킬 활성화 확인
+```
+
+### claude.ai Web
+
+`.skill`/`.zip` 파일은 claude.ai 웹 플랫폼 업로드용 번들입니다. Claude Code나 CLI 환경에서는 사용하지 않습니다.
+
 ## Structure
 
 ```
@@ -50,14 +71,17 @@ Skills-for-Workers/
 └── skills/
     ├── agent-council/      # 멀티 페르소나 의견 합성 (basic/extended)
     │   ├── SKILL.md
+    │   ├── package.json
     │   ├── council.config.example.yaml
     │   ├── scripts/
     │   └── references/
     ├── k-sunshine/         # 의료기기 마케팅 컴플라이언스
     │   ├── SKILL.md
+    │   ├── k-sunshine.skill        # claude.ai 웹용 번들
     │   └── references/
     └── human-writing/      # AI→인간 텍스트 변환
         ├── SKILL.md
+        ├── human-writing.zip       # claude.ai 웹용 번들
         └── references/
 ```
 
