@@ -98,9 +98,9 @@ cp -r _template skills/my-new-skill
 | Skill | Origin | License |
 |-------|--------|---------|
 | agent-council | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives#agent-council) | MIT |
-| k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | Internal |
-| human-writing | Original work | — |
+| k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
+| human-writing | Original work | MIT |
 
 ## License
 
-Apache-2.0
+MIT
