@@ -8,7 +8,7 @@
 
 | Skill | Description | Category |
 |-------|-------------|----------|
-| [agent-council](skills/agent-council/) | 여러 AI 에이전트의 의견을 수집하고 합성하는 멀티에이전트 오케스트레이터 | Productivity |
+| [agent-council](skills/agent-council/) | 멀티 페르소나 의견 합성 (basic: 호스트 에이전트 단독, extended: 멀티 CLI 오케스트레이션) | Productivity |
 | [k-sunshine](skills/k-sunshine/) | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
 | [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
 
@@ -48,9 +48,9 @@ Skills-for-Workers/
 │   ├── SKILL.md
 │   └── references/
 └── skills/
-    ├── agent-council/      # 멀티 AI 의견 합성
+    ├── agent-council/      # 멀티 페르소나 의견 합성 (basic/extended)
     │   ├── SKILL.md
-    │   ├── council.config.yaml
+    │   ├── council.config.example.yaml
     │   ├── scripts/
     │   └── references/
     ├── k-sunshine/         # 의료기기 마케팅 컴플라이언스
