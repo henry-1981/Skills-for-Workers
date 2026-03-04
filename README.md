@@ -11,6 +11,7 @@
 | [agent-council](skills/agent-council/) | 멀티 페르소나 의견 합성 (basic: 호스트 에이전트 단독, extended: 멀티 CLI 오케스트레이션) | Productivity |
 | [k-sunshine](skills/k-sunshine/) | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
 | [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
+| [nda-triage](skills/nda-triage/) | NDA 스크리닝 및 GREEN/YELLOW/RED 분류 (Anthropic 포크) | Legal Compliance |
 
 ## Quick Start
 
@@ -25,6 +26,7 @@ mkdir -p ~/.claude/skills
 ln -s ~/skills/skills/agent-council ~/.claude/skills/agent-council
 ln -s ~/skills/skills/k-sunshine ~/.claude/skills/k-sunshine
 ln -s ~/skills/skills/human-writing ~/.claude/skills/human-writing
+ln -s ~/skills/skills/nda-triage ~/.claude/skills/nda-triage
 
 # 3. (선택) agent-council extended 모드 사용 시
 cd ~/.claude/skills/agent-council && npm install
@@ -79,9 +81,12 @@ Skills-for-Workers/
     │   ├── SKILL.md
     │   ├── k-sunshine.skill        # claude.ai 웹용 번들
     │   └── references/
-    └── human-writing/      # AI→인간 텍스트 변환
+    ├── human-writing/      # AI→인간 텍스트 변환
+    │   ├── SKILL.md
+    │   ├── human-writing.zip       # claude.ai 웹용 번들
+    │   └── references/
+    └── nda-triage/         # NDA 스크리닝 (Anthropic 포크)
         ├── SKILL.md
-        ├── human-writing.zip       # claude.ai 웹용 번들
         └── references/
 ```
 
@@ -100,6 +105,7 @@ cp -r _template skills/my-new-skill
 | agent-council | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives#agent-council) | MIT |
 | k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
 | human-writing | Original work | MIT |
+| nda-triage | Forked from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) legal/skills/nda-triage | Apache 2.0 |
 
 ## License
 
