@@ -22,13 +22,13 @@ AI 에이전트가 스킬 디렉토리를 읽고, Anthropic Agent Skills Spec + 
 
 ### Mode 1: Single Skill Lint
 
-하나의 스킬 디렉토리를 대상으로 12개 규칙을 검증한다.
+하나의 스킬 디렉토리를 대상으로 13개 규칙을 검증한다.
 
 1. 대상 스킬 경로를 확인한다 (예: `skills/nda-triage/`)
 2. `SKILL.md`를 읽고 YAML frontmatter를 파싱한다
 3. 디렉토리명(basename)을 추출한다
 4. `references/` 디렉토리의 파일 목록을 확인한다
-5. 아래 **Lint Rules**의 12개 규칙을 순서대로 적용한다
+5. 아래 **Lint Rules**의 13개 규칙을 순서대로 적용한다
 6. **Decision Framework**에 따라 최종 판정(PASS/FAIL)을 결정한다
 7. **Response Format**의 Single Skill Report 형식으로 결과를 출력한다
 
@@ -62,6 +62,7 @@ AI 에이전트가 스킬 디렉토리를 읽고, Anthropic Agent Skills Spec + 
 | W3 | SKILL.md ≤ 500줄 | 총 라인 수. Progressive Disclosure 원칙 준수 |
 | W4 | SKILL.md ≥ 50줄 | 총 라인 수. 최소한의 실질 내용 보장 |
 | W5 | References 섹션의 파일이 실제 존재 | `## References` 섹션에서 `references/` 경로를 추출하고 파일 존재 여부 확인. References 섹션이 없으면 SKIP |
+| W6 | `origin` 값이 비어있지 않음 | `origin` 필드가 존재하지만 빈 문자열(`""`, `''`)이거나 공백만 포함한 경우 WARN. F5 통과 후 추가 검증 |
 
 ### INFO Rules (참고용 — 보고만, 판정에 무관)
 
@@ -153,4 +154,4 @@ WARN과 INFO는 판정에 영향을 주지 않는다. 보고서에 표시만 한
 
 ## References
 
-- `references/rules-detail.md` — 12개 규칙별 상세: 판정 예시, 엣지 케이스, 수정 방법
+- `references/rules-detail.md` — 13개 규칙별 상세: 판정 예시, 엣지 케이스, 수정 방법
