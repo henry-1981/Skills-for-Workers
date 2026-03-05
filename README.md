@@ -12,6 +12,7 @@
 | [k-sunshine](skills/k-sunshine/) | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
 | [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
 | [nda-triage](skills/nda-triage/) | NDA 스크리닝 및 GREEN/YELLOW/RED 분류 (Anthropic 포크) | Legal Compliance |
+| [skill-lint](skills/skill-lint/) | 스킬 디렉토리 자동 검증 (frontmatter, 구조, references 무결성) | Quality Assurance |
 
 ## Quick Start
 
@@ -27,6 +28,7 @@ ln -s ~/skills/skills/agent-council ~/.claude/skills/agent-council
 ln -s ~/skills/skills/k-sunshine ~/.claude/skills/k-sunshine
 ln -s ~/skills/skills/human-writing ~/.claude/skills/human-writing
 ln -s ~/skills/skills/nda-triage ~/.claude/skills/nda-triage
+ln -s ~/skills/skills/skill-lint ~/.claude/skills/skill-lint
 
 # 3. (선택) agent-council extended 모드 사용 시
 cd ~/.claude/skills/agent-council && npm install
@@ -85,7 +87,10 @@ Skills-for-Workers/
     │   ├── SKILL.md
     │   ├── human-writing.zip       # claude.ai 웹용 번들
     │   └── references/
-    └── nda-triage/         # NDA 스크리닝 (Anthropic 포크)
+    ├── nda-triage/         # NDA 스크리닝 (Anthropic 포크)
+    │   ├── SKILL.md
+    │   └── references/
+    └── skill-lint/         # 스킬 디렉토리 자동 검증
         ├── SKILL.md
         └── references/
 ```
@@ -106,6 +111,7 @@ cp -r _template skills/my-new-skill
 | k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
 | human-writing | Original work | MIT |
 | nda-triage | Forked from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) legal/skills/nda-triage | Apache 2.0 |
+| skill-lint | Original work | MIT |
 
 ## License
 
