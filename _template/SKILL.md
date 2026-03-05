@@ -1,6 +1,8 @@
 ---
+# name: lowercase + hyphens only, max 64 chars, must match directory name
 name: your-skill-name
 origin: "Source of this skill (e.g., Forked from repo-url, Derived from project, Original work)"
+# description: max 1024 chars. Include trigger keywords (Korean + English) for auto-activation
 description: >
   Brief description of what this skill does and when to use it.
   Include trigger keywords for automatic activation.
