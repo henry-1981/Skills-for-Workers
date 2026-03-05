@@ -33,7 +33,7 @@ CLAUDE.md
 .moai/
 
 # Development-only (not for distribution)
-docs/plans/
+docs/
 
 # User config (use .example as template)
 skills/agent-council/council.config.yaml
