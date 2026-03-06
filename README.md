@@ -18,6 +18,7 @@
 | [clarify-vague](skills/clarify-vague/) | 모호한 요구사항을 가설 기반 질문으로 구체화 | Thinking |
 | [clarify-unknown](skills/clarify-unknown/) | 전략 사각지대를 Known/Unknown 4분면으로 분석 | Thinking |
 | [clarify-metamedium](skills/clarify-metamedium/) | 콘텐츠(what) vs 형식(how) 관점 전환 | Thinking |
+| [tool-setup](skills/tool-setup/) | MCP 서버 설정 가이드 (Google Workspace, Notion 연결) | Setup / Onboarding |
 
 ## Quick Start
 
@@ -59,6 +60,7 @@ ln -s ~/skills/skills/skill-package ~/.claude/skills/skill-package
 ln -s ~/skills/skills/clarify-vague ~/.claude/skills/clarify-vague
 ln -s ~/skills/skills/clarify-unknown ~/.claude/skills/clarify-unknown
 ln -s ~/skills/skills/clarify-metamedium ~/.claude/skills/clarify-metamedium
+ln -s ~/skills/skills/tool-setup ~/.claude/skills/tool-setup
 
 # 3. (선택) agent-council extended 모드 사용 시
 cd ~/.claude/skills/agent-council && npm install
@@ -140,7 +142,10 @@ Skills-for-Workers/
     ├── clarify-unknown/    # 전략 사각지대 분석
     │   ├── SKILL.md
     │   └── references/
-    └── clarify-metamedium/ # 콘텐츠 vs 형식
+    ├── clarify-metamedium/ # 콘텐츠 vs 형식
+    │   ├── SKILL.md
+    │   └── references/
+    └── tool-setup/        # MCP 서버 설정 가이드
         ├── SKILL.md
         └── references/
 ```
@@ -194,6 +199,7 @@ cp -r _template skills/my-new-skill
 | clarify-vague | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/vague | MIT |
 | clarify-unknown | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/unknown | MIT |
 | clarify-metamedium | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/metamedium | MIT |
+| tool-setup | Original work | MIT |
 
 ## License
 

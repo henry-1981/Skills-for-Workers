@@ -10,6 +10,7 @@
     { "name": "skill-package", "description": "기존 스킬 패키징 및 제출", "dept": "all", "required": false },
     { "name": "clarify-vague", "description": "모호한 요구사항 → 구체적 스펙 변환", "dept": "all", "required": true },
     { "name": "clarify-unknown", "description": "전략 사각지대 4분면 분석", "dept": "all", "required": true },
-    { "name": "clarify-metamedium", "description": "콘텐츠 vs 형식 관점 전환", "dept": "all", "required": true }
+    { "name": "clarify-metamedium", "description": "콘텐츠 vs 형식 관점 전환", "dept": "all", "required": true },
+    { "name": "tool-setup", "description": "MCP 서버 설정 가이드 (Google Workspace, Notion)", "dept": "all", "required": false }
   ]
 }
