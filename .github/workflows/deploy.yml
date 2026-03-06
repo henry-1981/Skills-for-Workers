@@ -1,0 +1,123 @@
+name: Deploy Skills to Google Drive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'manifest.json'
+      - 'scripts/skills-install.*'
+
+  # Manual trigger for testing
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build version string
+        id: version
+        run: echo "version=$(date +'%Y.%m.%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare distribution
+        run: |
+          mkdir -p dist/skills
+
+          # Copy skills (excluding non-distributable files)
+          for skill_dir in skills/*/; do
+            skill_name=$(basename "$skill_dir")
+
+            # Create skill directory
+            mkdir -p "dist/skills/${skill_name}"
+
+            # Copy files, excluding unwanted patterns
+            rsync -a \
+              --exclude='node_modules/' \
+              --exclude='.jobs/' \
+              --exclude='council.config.yaml' \
+              --exclude='*.skill' \
+              --exclude='*.zip' \
+              --exclude='.gitkeep' \
+              --exclude='.DS_Store' \
+              "$skill_dir" "dist/skills/${skill_name}/"
+          done
+
+          # Copy manifest.json
+          cp manifest.json dist/
+
+      - name: Build zip
+        run: |
+          cd dist
+          zip -r "../skills-v${{ steps.version.outputs.version }}.zip" .
+          cd ..
+
+      - name: Generate version.json
+        run: |
+          SHA=$(shasum -a 256 "skills-v${{ steps.version.outputs.version }}.zip" | cut -d' ' -f1)
+          cat > version.json <<EOF
+          {
+            "version": "${{ steps.version.outputs.version }}",
+            "sha256": "${SHA}",
+            "commit": "${{ github.sha }}",
+            "built_at": "$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          }
+          EOF
+          # Remove leading whitespace from heredoc
+          sed -i 's/^          //' version.json
+
+      - name: Verify zip contents
+        run: |
+          echo "=== Zip contents ==="
+          unzip -l "skills-v${{ steps.version.outputs.version }}.zip"
+          echo ""
+          echo "=== version.json ==="
+          cat version.json
+          echo ""
+          echo "=== Excluded files check ==="
+          unzip -l "skills-v${{ steps.version.outputs.version }}.zip" | grep -E '\.(skill|DS_Store)$|node_modules|council\.config\.yaml|\.jobs' && echo "WARNING: Found excluded files!" || echo "OK: No excluded files found"
+
+      - name: Upload to Google Drive
+        uses: adityak74/google-drive-upload-git-action@v0.3
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folderId: ${{ vars.GOOGLE_DRIVE_FOLDER_ID }}
+          filename: "skills-v${{ steps.version.outputs.version }}.zip"
+          overwrite: "true"
+
+      - name: Upload version.json to Google Drive
+        uses: adityak74/google-drive-upload-git-action@v0.3
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folderId: ${{ vars.GOOGLE_DRIVE_FOLDER_ID }}
+          filename: "version.json"
+          overwrite: "true"
+
+      - name: Upload install scripts to Google Drive
+        uses: adityak74/google-drive-upload-git-action@v0.3
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folderId: ${{ vars.GOOGLE_DRIVE_FOLDER_ID }}
+          filename: "scripts/skills-install.sh"
+          overwrite: "true"
+
+      - name: Upload Windows install script to Google Drive
+        uses: adityak74/google-drive-upload-git-action@v0.3
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folderId: ${{ vars.GOOGLE_DRIVE_FOLDER_ID }}
+          filename: "scripts/skills-install.bat"
+          overwrite: "true"
+
+      - name: Summary
+        run: |
+          echo "## Deploy Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Version**: ${{ steps.version.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Commit**: ${{ github.sha }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Files uploaded**: zip, version.json, install scripts" >> "$GITHUB_STEP_SUMMARY"
