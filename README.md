@@ -13,10 +13,33 @@
 | [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
 | [nda-triage](skills/nda-triage/) | NDA 스크리닝 및 GREEN/YELLOW/RED 분류 (Anthropic 포크) | Legal Compliance |
 | [skill-lint](skills/skill-lint/) | 스킬 디렉토리 자동 검증 (frontmatter, 구조, references 무결성) | Quality Assurance |
+| [skill-submit](skills/skill-submit/) | 스킬 생성·제출 라우터 (skill-creator → lint → package 안내) | Contribution |
+| [skill-package](skills/skill-package/) | 기존 스킬 검증 및 제출용 zip 패키징 | Contribution |
 
 ## Quick Start
 
-### Claude Code
+### 설치 스크립트 (권장)
+
+Google Drive "Skills for Workers" 폴더에서 아래 파일을 다운로드합니다:
+- `skills-v*.zip` (스킬 패키지)
+- `version.json` (무결성 검증용)
+- `skills-install.sh` (Mac) 또는 `skills-install.bat` (Windows)
+
+```bash
+# Mac/Linux
+chmod +x skills-install.sh
+./skills-install.sh skills-v2026.03.06.zip
+
+# Windows — CMD에서 실행 또는 더블클릭
+skills-install.bat skills-v2026.03.06.zip
+```
+
+설치 스크립트가 자동으로:
+1. SHA256 무결성 검증
+2. 필수 스킬 설치 (skill-lint, agent-council, human-writing)
+3. 선택 스킬 설치 여부 확인 (k-sunshine, nda-triage 등)
+
+### 개발자용 (심링크 방식)
 
 ```bash
 # 1. 레포 클론
@@ -29,6 +52,7 @@ ln -s ~/skills/skills/k-sunshine ~/.claude/skills/k-sunshine
 ln -s ~/skills/skills/human-writing ~/.claude/skills/human-writing
 ln -s ~/skills/skills/nda-triage ~/.claude/skills/nda-triage
 ln -s ~/skills/skills/skill-lint ~/.claude/skills/skill-lint
+ln -s ~/skills/skills/skill-package ~/.claude/skills/skill-package
 
 # 3. (선택) agent-council extended 모드 사용 시
 cd ~/.claude/skills/agent-council && npm install
@@ -72,6 +96,14 @@ Skills-for-Workers/
 ├── _template/              # 새 스킬 생성 템플릿
 │   ├── SKILL.md
 │   └── references/
+├── manifest.json           # 스킬 레지스트리 (required/optional, 부서)
+├── scripts/
+│   ├── skills-install.sh   # Mac/Linux 설치 스크립트
+│   ├── skills-install.bat  # Windows 설치 스크립트
+│   ├── skill-submit.sh     # Mac/Linux 제출 스크립트
+│   └── skill-submit.bat    # Windows 제출 스크립트
+├── .github/workflows/
+│   └── deploy.yml          # CI: main push → zip → Google Drive
 └── skills/
     ├── agent-council/      # 멀티 페르소나 의견 합성 (basic/extended)
     │   ├── SKILL.md
@@ -90,12 +122,22 @@ Skills-for-Workers/
     ├── nda-triage/         # NDA 스크리닝 (Anthropic 포크)
     │   ├── SKILL.md
     │   └── references/
-    └── skill-lint/         # 스킬 디렉토리 자동 검증
-        ├── SKILL.md
-        └── references/
+    ├── skill-lint/         # 스킬 디렉토리 자동 검증
+    │   ├── SKILL.md
+    │   └── references/
+    ├── skill-submit/       # 스킬 제출 가이드
+    │   └── SKILL.md
+    └── skill-package/      # 기존 스킬 패키징
+        └── SKILL.md
 ```
 
 ## Adding a New Skill
+
+### 방법 1: skill-submit 스킬 (비개발자 권장)
+
+Claude Code에서 `/skill-submit` 실행 → 의도 파악 → `/skill-creator`(생성) 또는 `/skill-package`(패키징) 안내
+
+### 방법 2: 템플릿 수동 복사 (개발자)
 
 ```bash
 cp -r _template skills/my-new-skill
@@ -112,6 +154,8 @@ cp -r _template skills/my-new-skill
 | human-writing | Original work | MIT |
 | nda-triage | Forked from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) legal/skills/nda-triage | Apache 2.0 |
 | skill-lint | Original work | MIT |
+| skill-submit | Original work | MIT |
+| skill-package | Original work | MIT |
 
 ## License
 
