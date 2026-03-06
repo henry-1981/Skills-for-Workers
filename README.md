@@ -15,6 +15,9 @@
 | [skill-lint](skills/skill-lint/) | 스킬 디렉토리 자동 검증 (frontmatter, 구조, references 무결성) | Quality Assurance |
 | [skill-submit](skills/skill-submit/) | 스킬 생성·제출 라우터 (skill-creator → lint → package 안내) | Contribution |
 | [skill-package](skills/skill-package/) | 기존 스킬 검증 및 제출용 zip 패키징 | Contribution |
+| [clarify-vague](skills/clarify-vague/) | 모호한 요구사항을 가설 기반 질문으로 구체화 | Thinking |
+| [clarify-unknown](skills/clarify-unknown/) | 전략 사각지대를 Known/Unknown 4분면으로 분석 | Thinking |
+| [clarify-metamedium](skills/clarify-metamedium/) | 콘텐츠(what) vs 형식(how) 관점 전환 | Thinking |
 
 ## Quick Start
 
@@ -36,7 +39,7 @@ skills-install.bat skills-v2026.03.06.zip
 
 설치 스크립트가 자동으로:
 1. SHA256 무결성 검증
-2. 필수 스킬 설치 (skill-lint, agent-council, human-writing)
+2. 필수 스킬 설치 (skill-lint, agent-council, human-writing, clarify 3종)
 3. 선택 스킬 설치 여부 확인 (k-sunshine, nda-triage 등)
 
 ### 개발자용 (심링크 방식)
@@ -53,6 +56,9 @@ ln -s ~/skills/skills/human-writing ~/.claude/skills/human-writing
 ln -s ~/skills/skills/nda-triage ~/.claude/skills/nda-triage
 ln -s ~/skills/skills/skill-lint ~/.claude/skills/skill-lint
 ln -s ~/skills/skills/skill-package ~/.claude/skills/skill-package
+ln -s ~/skills/skills/clarify-vague ~/.claude/skills/clarify-vague
+ln -s ~/skills/skills/clarify-unknown ~/.claude/skills/clarify-unknown
+ln -s ~/skills/skills/clarify-metamedium ~/.claude/skills/clarify-metamedium
 
 # 3. (선택) agent-council extended 모드 사용 시
 cd ~/.claude/skills/agent-council && npm install
@@ -127,8 +133,16 @@ Skills-for-Workers/
     │   └── references/
     ├── skill-submit/       # 스킬 제출 가이드
     │   └── SKILL.md
-    └── skill-package/      # 기존 스킬 패키징
-        └── SKILL.md
+    ├── skill-package/      # 기존 스킬 패키징
+    │   └── SKILL.md
+    ├── clarify-vague/      # 요구사항 명확화
+    │   └── SKILL.md
+    ├── clarify-unknown/    # 전략 사각지대 분석
+    │   ├── SKILL.md
+    │   └── references/
+    └── clarify-metamedium/ # 콘텐츠 vs 형식
+        ├── SKILL.md
+        └── references/
 ```
 
 ## Adding a New Skill
@@ -145,6 +159,27 @@ cp -r _template skills/my-new-skill
 
 `SKILL.md`의 frontmatter를 작성하고 `references/`에 참조 문서를 추가합니다. `origin` 필드에 출처를 명시해 주세요.
 
+## Recommended External Skills
+
+이 레포에 포함되지 않지만, Claude Code/Cowork 사용 시 유용한 외부 스킬입니다.
+
+### Anthropic 공식
+
+| 스킬 | 설명 | 설치 |
+|------|------|------|
+| skill-creator | 인터뷰 기반 스킬 자동 생성 | `npx skills add anthropic/skill-creator` |
+| docx / xlsx / pptx / pdf | Office 문서 생성·편집 | Claude Code 내장 또는 [anthropics/skills](https://github.com/anthropics/skills) |
+| code-review | 코드 리뷰 체크리스트 | `npx skills add anthropic/code-review` |
+
+### 커뮤니티
+
+| 리소스 | 설명 |
+|--------|------|
+| [skills.sh](https://skills.sh/) | 에이전트 스킬 디렉토리 + CLI 설치 |
+| [SkillsMP](https://skillsmp.com/) | 350K+ 스킬 마켓플레이스 |
+| [awesome-agent-skills](https://github.com/skillmatic-ai/awesome-agent-skills) | 큐레이션된 스킬 목록 |
+| [knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | Legal, Sales, Finance 등 11개 도메인 플러그인 |
+
 ## Attribution
 
 | Skill | Origin | License |
@@ -156,6 +191,9 @@ cp -r _template skills/my-new-skill
 | skill-lint | Original work | MIT |
 | skill-submit | Original work | MIT |
 | skill-package | Original work | MIT |
+| clarify-vague | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/vague | MIT |
+| clarify-unknown | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/unknown | MIT |
+| clarify-metamedium | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/metamedium | MIT |
 
 ## License
 

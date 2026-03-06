@@ -7,6 +7,9 @@
     { "name": "k-sunshine", "description": "의료기기 마케팅 컴플라이언스", "dept": "regulatory", "required": false },
     { "name": "nda-triage", "description": "NDA 스크리닝 GREEN/YELLOW/RED 분류", "dept": "legal", "required": false },
     { "name": "skill-submit", "description": "스킬 생성·제출 라우터", "dept": "all", "required": false },
-    { "name": "skill-package", "description": "기존 스킬 패키징 및 제출", "dept": "all", "required": false }
+    { "name": "skill-package", "description": "기존 스킬 패키징 및 제출", "dept": "all", "required": false },
+    { "name": "clarify-vague", "description": "모호한 요구사항 → 구체적 스펙 변환", "dept": "all", "required": true },
+    { "name": "clarify-unknown", "description": "전략 사각지대 4분면 분석", "dept": "all", "required": true },
+    { "name": "clarify-metamedium", "description": "콘텐츠 vs 형식 관점 전환", "dept": "all", "required": true }
   ]
 }
