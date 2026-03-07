@@ -150,6 +150,18 @@ Skills-for-Workers/
         └── references/
 ```
 
+## Advanced Patterns
+
+Skills 외에 Claude Code 품질을 높이는 고급 패턴 가이드 — [ADVANCED-PATTERNS.md](ADVANCED-PATTERNS.md)
+
+| 패턴 | 역할 | 파일 위치 |
+|------|------|----------|
+| **Agents** | 서브에이전트 역할 분담 + 품질 계약 | `.claude/agents/*.md` |
+| **Commands** | `/슬래시 커맨드`로 다단계 워크플로우 실행 | `.claude/commands/*.md` |
+| **A/B 실험** | 스킬 적용 전후 품질 차이를 정량 측정 | 실험 설계 가이드 포함 |
+
+> Harness 연구에 따르면 구조화된 사전 구성으로 LLM 산출물 품질이 평균 60% 향상된다. — [Hwang, 2026](https://github.com/revfactory/claude-code-harness)
+
 ## Adding a New Skill
 
 ### 방법 1: skill-submit 스킬 (비개발자 권장)
