@@ -1,5 +1,5 @@
 ---
-name: clarify-unknown
+name: unknown
 origin: "Forked from plugins-for-claude-natives/clarify/unknown"
 description: >
   Surface hidden assumptions and blind spots using Known/Unknown 4-quadrant framework.

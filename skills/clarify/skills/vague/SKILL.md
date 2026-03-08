@@ -1,5 +1,5 @@
 ---
-name: clarify-vague
+name: vague
 origin: "Forked from plugins-for-claude-natives/clarify/vague"
 description: >
   Transform vague requirements into precise specs through hypothesis-driven questioning.

@@ -1,5 +1,5 @@
 ---
-name: clarify-metamedium
+name: metamedium
 origin: "Forked from plugins-for-claude-natives/clarify/metamedium"
 description: >
   Distinguish content (what) from form (how/medium) to find where real leverage lies.
