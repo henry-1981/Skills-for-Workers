@@ -1,153 +1,124 @@
 # Skills for Workers
 
-조직 내 실무자가 AI 에이전트와 함께 사용할 수 있는 도메인 스킬 모음.
+조직 내 실무자가 AI 에이전트와 함께 사용할 수 있는 도메인 Plugin marketplace.
 
-각 스킬은 특정 업무 영역의 규정, 가이드라인, 의사결정 프레임워크를 포함하며 Claude Code, Codex, Gemini CLI 등 다양한 AI 플랫폼에서 활용할 수 있습니다.
+각 Plugin은 특정 업무 영역의 규정, 가이드라인, 의사결정 프레임워크를 포함하며 Claude Code Plugin marketplace를 통해 배포됩니다.
 
-## Skill Catalog
+## Plugin Catalog
 
-| Skill | Description | Category |
-|-------|-------------|----------|
-| [agent-council](skills/agent-council/) | 멀티 페르소나 의견 합성 (basic: 호스트 에이전트 단독, extended: 멀티 CLI 오케스트레이션) | Productivity |
-| [k-sunshine](skills/k-sunshine/) | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
-| [human-writing](skills/human-writing/) | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
-| [nda-triage](skills/nda-triage/) | NDA 스크리닝 및 GREEN/YELLOW/RED 분류 (Anthropic 포크) | Legal Compliance |
-| [skill-lint](skills/skill-lint/) | 스킬 디렉토리 자동 검증 (frontmatter, 구조, references 무결성) | Quality Assurance |
-| [skill-submit](skills/skill-submit/) | 스킬 생성·제출 라우터 (skill-creator → lint → package 안내) | Contribution |
-| [skill-package](skills/skill-package/) | 기존 스킬 검증 및 제출용 zip 패키징 | Contribution |
-| [clarify-vague](skills/clarify-vague/) | 모호한 요구사항을 가설 기반 질문으로 구체화 | Thinking |
-| [clarify-unknown](skills/clarify-unknown/) | 전략 사각지대를 Known/Unknown 4분면으로 분석 | Thinking |
-| [clarify-metamedium](skills/clarify-metamedium/) | 콘텐츠(what) vs 형식(how) 관점 전환 | Thinking |
-| [tool-setup](skills/tool-setup/) | MCP 서버 설정 가이드 (Google Workspace, Notion 연결) | Setup / Onboarding |
+| Plugin | Skills | Description | Category |
+|--------|--------|-------------|----------|
+| [agent-council](skills/agent-council/) | council | 멀티 페르소나 의견 합성 (basic/extended 모드) | Productivity |
+| [clarify](skills/clarify/) | vague, unknown, metamedium | 요구사항 구체화, 전략 사각지대 분석, 콘텐츠 vs 형식 관점 전환 | Thinking |
+| [human-writing](skills/human-writing/) | human-writing | AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인 | Writing Style |
+| [k-sunshine](skills/k-sunshine/) | k-sunshine | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
+| [skill-tools](skills/skill-tools/) | skill-lint, skill-submit, skill-package | 스킬 검증, 제출 라우팅, 패키징 도구 묶음 | Meta |
+| [tool-setup](skills/tool-setup/) | tool-setup | MCP 서버 설정 가이드 (Google Workspace, Notion 연결) | Setup / Onboarding |
+| [presentation](skills/presentation/) | presentation | 마크다운 → Figma Slides / PPTX 발표자료 생성 (TODO) | Productivity |
+
+> **NDA Triage**: Cowork 공식 legal plugin으로 이전되었습니다. Claude Code에서 직접 사용 가능합니다.
 
 ## Quick Start
 
-### 설치 스크립트 (권장)
+### Plugin Marketplace (권장)
 
-Google Drive "Skills for Workers" 폴더에서 아래 파일을 다운로드합니다:
-- `skills-v*.zip` (스킬 패키지)
-- `version.json` (무결성 검증용)
-- `skills-install.sh` (Mac) 또는 `skills-install.bat` (Windows)
+Server-managed settings (Team/Enterprise Admin 콘솔)를 통해 자동으로 전달됩니다. 사용자 설정 불필요.
 
 ```bash
-# Mac/Linux
-chmod +x skills-install.sh
-./skills-install.sh skills-v2026.03.06.zip
-
-# Windows — CMD에서 실행 또는 더블클릭
-skills-install.bat skills-v2026.03.06.zip
+# 또는 로컬에서 직접 등록
+claude plugin marketplace add ./
 ```
 
-설치 스크립트가 자동으로:
-1. SHA256 무결성 검증
-2. 필수 스킬 설치 (skill-lint, agent-council, human-writing, clarify 3종)
-3. 선택 스킬 설치 여부 확인 (k-sunshine, nda-triage 등)
+### 단일 Plugin 테스트
 
-### 개발자용 (심링크 방식)
+```bash
+claude --plugin-dir ./skills/human-writing
+```
+
+### 개발자용 (소스에서 직접)
 
 ```bash
 # 1. 레포 클론
 git clone https://github.com/henry-1981/Skills-for-Workers.git ~/skills
 
-# 2. 스킬 디렉토리 생성 + 심링크 등록
-mkdir -p ~/.claude/skills
-ln -s ~/skills/skills/agent-council ~/.claude/skills/agent-council
-ln -s ~/skills/skills/k-sunshine ~/.claude/skills/k-sunshine
-ln -s ~/skills/skills/human-writing ~/.claude/skills/human-writing
-ln -s ~/skills/skills/nda-triage ~/.claude/skills/nda-triage
-ln -s ~/skills/skills/skill-lint ~/.claude/skills/skill-lint
-ln -s ~/skills/skills/skill-package ~/.claude/skills/skill-package
-ln -s ~/skills/skills/clarify-vague ~/.claude/skills/clarify-vague
-ln -s ~/skills/skills/clarify-unknown ~/.claude/skills/clarify-unknown
-ln -s ~/skills/skills/clarify-metamedium ~/.claude/skills/clarify-metamedium
-ln -s ~/skills/skills/tool-setup ~/.claude/skills/tool-setup
+# 2. marketplace 등록
+cd ~/skills
+claude plugin marketplace add ./
 
 # 3. (선택) agent-council extended 모드 사용 시
-cd ~/.claude/skills/agent-council && npm install
+cd skills/agent-council && npm install
 cp council.config.example.yaml council.config.yaml
-# basic 모드는 의존성 불필요 — 상세: references/setup.md
 ```
 
 ### Codex
 
 ```bash
-codex --system-prompt "$(cat ~/skills/skills/k-sunshine/SKILL.md)"
+codex --system-prompt "$(cat ~/skills/skills/k-sunshine/skills/k-sunshine/SKILL.md)"
 ```
 
 ### Gemini CLI
 
 ```bash
-gemini --context ~/skills/skills/k-sunshine/SKILL.md
+gemini --context ~/skills/skills/k-sunshine/skills/k-sunshine/SKILL.md
 ```
 
-> **Note**: Codex와 Gemini CLI는 `references/` 디렉토리를 자동으로 로드하지 않습니다. 상세 규정이 필요한 스킬은 references를 함께 전달하세요:
-> ```bash
-> # 예: k-sunshine의 SKILL.md + 모든 참조 문서를 함께 전달
-> codex --system-prompt "$(cat ~/skills/skills/k-sunshine/SKILL.md ~/skills/skills/k-sunshine/references/*.md)"
-> ```
-
-### 설치 확인
-
-```bash
-ls -la ~/.claude/skills/          # 심링크 확인
-# Claude Code에서 "council 소환해줘" 입력 → 스킬 활성화 확인
-```
-
-### claude.ai Web
-
-`.skill`/`.zip` 파일은 claude.ai 웹 플랫폼 업로드용 번들입니다. Claude Code나 CLI 환경에서는 사용하지 않습니다.
+> **Note**: Codex와 Gemini CLI는 `references/` 디렉토리를 자동으로 로드하지 않습니다. 상세 규정이 필요한 스킬은 references를 함께 전달하세요.
 
 ## Structure
 
 ```
 Skills-for-Workers/
-├── _template/              # 새 스킬 생성 템플릿
-│   ├── SKILL.md
-│   └── references/
-├── manifest.json           # 스킬 레지스트리 (required/optional, 부서)
+├── .claude-plugin/
+│   └── marketplace.json       # 전체 Plugin 카탈로그
+├── _template/                 # 새 Plugin 생성 템플릿
+│   ├── .claude-plugin/plugin.json
+│   └── skills/your-skill-name/
+│       ├── SKILL.md
+│       └── references/
 ├── scripts/
-│   ├── skills-install.sh   # Mac/Linux 설치 스크립트
-│   ├── skills-install.bat  # Windows 설치 스크립트
-│   ├── skill-submit.sh     # Mac/Linux 제출 스크립트
-│   └── skill-submit.bat    # Windows 제출 스크립트
-├── .github/workflows/
-│   └── deploy.yml          # CI: main push → zip → Google Drive
+│   └── lint-skills.sh         # 스킬 검증 스크립트
 └── skills/
-    ├── agent-council/      # 멀티 페르소나 의견 합성 (basic/extended)
-    │   ├── SKILL.md
-    │   ├── package.json
-    │   ├── council.config.example.yaml
+    ├── agent-council/         # 멀티 페르소나 의견 합성
+    │   ├── .claude-plugin/plugin.json
+    │   ├── skills/council/
+    │   │   ├── SKILL.md
+    │   │   └── references/
     │   ├── scripts/
-    │   └── references/
-    ├── k-sunshine/         # 의료기기 마케팅 컴플라이언스
-    │   ├── SKILL.md
-    │   ├── k-sunshine.skill        # claude.ai 웹용 번들
-    │   └── references/
-    ├── human-writing/      # AI→인간 텍스트 변환
-    │   ├── SKILL.md
-    │   ├── human-writing.zip       # claude.ai 웹용 번들
-    │   └── references/
-    ├── nda-triage/         # NDA 스크리닝 (Anthropic 포크)
-    │   ├── SKILL.md
-    │   └── references/
-    ├── skill-lint/         # 스킬 디렉토리 자동 검증
-    │   ├── SKILL.md
-    │   └── references/
-    ├── skill-submit/       # 스킬 제출 가이드
-    │   └── SKILL.md
-    ├── skill-package/      # 기존 스킬 패키징
-    │   └── SKILL.md
-    ├── clarify-vague/      # 요구사항 명확화
-    │   └── SKILL.md
-    ├── clarify-unknown/    # 전략 사각지대 분석
-    │   ├── SKILL.md
-    │   └── references/
-    ├── clarify-metamedium/ # 콘텐츠 vs 형식
-    │   ├── SKILL.md
-    │   └── references/
-    └── tool-setup/        # MCP 서버 설정 가이드
-        ├── SKILL.md
-        └── references/
+    │   ├── package.json
+    │   └── council.config.example.yaml
+    ├── clarify/               # 요구사항·전략·관점 명확화
+    │   ├── .claude-plugin/plugin.json
+    │   ├── commands/clarify.md
+    │   └── skills/
+    │       ├── vague/SKILL.md
+    │       ├── unknown/SKILL.md + references/
+    │       └── metamedium/SKILL.md + references/
+    ├── human-writing/         # AI→인간 텍스트 변환
+    │   ├── .claude-plugin/plugin.json
+    │   └── skills/human-writing/
+    │       ├── SKILL.md
+    │       └── references/
+    ├── k-sunshine/            # 의료기기 마케팅 컴플라이언스
+    │   ├── .claude-plugin/plugin.json
+    │   └── skills/k-sunshine/
+    │       ├── SKILL.md
+    │       ├── k-sunshine.skill
+    │       └── references/
+    ├── skill-tools/           # 스킬 검증·제출·패키징
+    │   ├── .claude-plugin/plugin.json
+    │   └── skills/
+    │       ├── skill-lint/SKILL.md + references/
+    │       ├── skill-submit/SKILL.md
+    │       └── skill-package/SKILL.md
+    ├── tool-setup/            # MCP 서버 설정 가이드
+    │   ├── .claude-plugin/plugin.json
+    │   └── skills/tool-setup/
+    │       ├── SKILL.md
+    │       └── references/
+    └── presentation/          # 발표자료 생성 (TODO)
+        ├── .claude-plugin/plugin.json
+        ├── .mcp.json
+        └── skills/presentation/SKILL.md
 ```
 
 ## Advanced Patterns
@@ -162,7 +133,7 @@ Skills 외에 Claude Code 품질을 높이는 고급 패턴 가이드 — [ADVAN
 
 > Harness 연구에 따르면 구조화된 사전 구성으로 LLM 산출물 품질이 평균 60% 향상된다. — [Hwang, 2026](https://github.com/revfactory/claude-code-harness)
 
-## Adding a New Skill
+## Adding a New Plugin
 
 ### 방법 1: skill-submit 스킬 (비개발자 권장)
 
@@ -171,10 +142,10 @@ Claude Code에서 `/skill-submit` 실행 → 의도 파악 → `/skill-creator`(
 ### 방법 2: 템플릿 수동 복사 (개발자)
 
 ```bash
-cp -r _template skills/my-new-skill
+cp -r _template skills/my-new-plugin
 ```
 
-`SKILL.md`의 frontmatter를 작성하고 `references/`에 참조 문서를 추가합니다. `origin` 필드에 출처를 명시해 주세요.
+`plugin.json`과 `SKILL.md`의 frontmatter를 작성하고 `references/`에 참조 문서를 추가합니다. `origin` 필드에 출처를 명시해 주세요.
 
 ## Recommended External Skills
 
@@ -199,19 +170,15 @@ cp -r _template skills/my-new-skill
 
 ## Attribution
 
-| Skill | Origin | License |
-|-------|--------|---------|
+| Plugin | Origin | License |
+|--------|--------|---------|
 | agent-council | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives#agent-council) | MIT |
-| k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
+| clarify | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/* | MIT |
 | human-writing | Original work | MIT |
-| nda-triage | Forked from [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) legal/skills/nda-triage | Apache 2.0 |
-| skill-lint | Original work | MIT |
-| skill-submit | Original work | MIT |
-| skill-package | Original work | MIT |
-| clarify-vague | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/vague | MIT |
-| clarify-unknown | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/unknown | MIT |
-| clarify-metamedium | Forked from [plugins-for-claude-natives](https://github.com/henry-1981/plugins-for-claude-natives) clarify/metamedium | MIT |
+| k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
+| skill-tools | Original work | MIT |
 | tool-setup | Original work | MIT |
+| presentation | Original work | MIT |
 
 ## License
 

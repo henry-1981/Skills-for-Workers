@@ -201,8 +201,10 @@ lint_skill() {
   skill_name=$(basename "$skill_dir")
   local skill_md="${skill_dir}/SKILL.md"
 
+  # Derive relative path from repo root for display
+  local display_path="${skill_dir#${REPO_ROOT}/}"
   echo ""
-  echo "Lint: skills/${skill_name}"
+  echo "Lint: ${display_path}"
 
   # Check SKILL.md exists
   if [ ! -f "$skill_md" ]; then
@@ -270,11 +272,11 @@ main() {
 
     lint_skill "$skill_dir" || exit_code=1
   else
-    # Batch lint: all skills
-    for skill_dir in "${REPO_ROOT}"/skills/*/; do
-      [ ! -d "$skill_dir" ] && continue
-      [ ! -f "${skill_dir}SKILL.md" ] && continue
-      lint_skill "${skill_dir%/}" || exit_code=1
+    # Batch lint: discover SKILL.md in plugin structure
+    for skill_md in "${REPO_ROOT}"/skills/*/skills/*/SKILL.md; do
+      [ ! -f "$skill_md" ] && continue
+      skill_dir=$(dirname "$skill_md")
+      lint_skill "$skill_dir" || exit_code=1
     done
   fi
 

@@ -1,0 +1,62 @@
+{
+  "name": "skills-for-workers",
+  "owner": {
+    "name": "HB"
+  },
+  "metadata": {
+    "description": "조직 내 실무자를 위한 도메인 스킬/플러그인 모음",
+    "pluginRoot": "./skills"
+  },
+  "plugins": [
+    {
+      "name": "clarify",
+      "source": "clarify",
+      "description": "모호한 요구사항 구체화, 전략 사각지대 분석, 콘텐츠 vs 형식 관점 전환",
+      "version": "1.0.0",
+      "category": "thinking",
+      "tags": ["clarify", "requirements", "strategy", "metamedium"]
+    },
+    {
+      "name": "skill-tools",
+      "source": "skill-tools",
+      "description": "스킬 검증(lint), 제출 라우팅, 패키징 도구 묶음",
+      "version": "1.0.0",
+      "category": "meta"
+    },
+    {
+      "name": "agent-council",
+      "source": "agent-council",
+      "description": "멀티 페르소나 의견 합성 (basic/extended 모드)",
+      "version": "1.0.0",
+      "category": "productivity"
+    },
+    {
+      "name": "human-writing",
+      "source": "human-writing",
+      "description": "AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인",
+      "version": "1.0.0",
+      "category": "writing"
+    },
+    {
+      "name": "k-sunshine",
+      "source": "k-sunshine",
+      "description": "의료기기 마케팅 컴플라이언스 어드바이저",
+      "version": "1.0.0",
+      "category": "compliance"
+    },
+    {
+      "name": "tool-setup",
+      "source": "tool-setup",
+      "description": "MCP 서버 설정 가이드 (Google Workspace, Notion)",
+      "version": "1.0.0",
+      "category": "onboarding"
+    },
+    {
+      "name": "presentation",
+      "source": "presentation",
+      "description": "마크다운 → Figma Slides / PPTX 발표자료 생성 파이프라인",
+      "version": "0.1.0",
+      "category": "productivity"
+    }
+  ]
+}

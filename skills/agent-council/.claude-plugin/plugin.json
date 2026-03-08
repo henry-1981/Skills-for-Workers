@@ -1,0 +1,5 @@
+{
+  "name": "agent-council",
+  "description": "멀티 페르소나 의견 합성 (basic/extended 모드). Triggers: council, agent council, 에이전트 카운슬, 멀티 페르소나, 의견 합성",
+  "version": "1.0.0"
+}

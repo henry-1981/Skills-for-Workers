@@ -1,0 +1,5 @@
+{
+  "name": "skill-tools",
+  "description": "스킬 검증(lint), 제출 라우팅(submit), 패키징(package) 도구 묶음",
+  "version": "1.0.0"
+}
