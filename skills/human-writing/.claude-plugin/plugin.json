@@ -1,0 +1,5 @@
+{
+  "name": "human-writing",
+  "description": "AI 텍스트를 인간 전문가 필체로 변환하는 파이프라인",
+  "version": "1.0.0"
+}
