@@ -28,6 +28,7 @@ Thumbs.db
 .claude/
 CLAUDE.md
 .mcp.json
+!skills/*/.mcp.json
 
 # MoAI (local config)
 .moai/
