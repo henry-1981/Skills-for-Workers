@@ -1,5 +1,5 @@
 ---
-name: agent-council
+name: council
 description: >
   Collect and synthesize opinions from multiple AI agents. 여러 AI 에이전트의 의견을
   수집하고 합성하는 멀티 페르소나 스킬. Use when users say "summon the council",

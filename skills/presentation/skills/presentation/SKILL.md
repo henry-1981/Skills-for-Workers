@@ -1,5 +1,6 @@
 ---
 name: presentation
+origin: "Skills-for-Workers scaffold"
 classification: hybrid
 description: >
   마크다운 → Figma Slides / PPTX 발표자료 생성.
