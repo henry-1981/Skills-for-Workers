@@ -54,7 +54,7 @@
     {
       "name": "presentation",
       "source": "presentation",
-      "description": "마크다운 → Figma Slides / PPTX 발표자료 생성 파이프라인",
+      "description": "마크다운 → PPTX 발표자료 생성 파이프라인",
       "version": "0.1.0",
       "category": "productivity"
     }
