@@ -14,7 +14,7 @@
 | [k-sunshine](skills/k-sunshine/) | k-sunshine | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
 | [skill-tools](skills/skill-tools/) | skill-lint, skill-submit, skill-package | 스킬 검증, 제출 라우팅, 패키징 도구 묶음 | Meta |
 | [tool-setup](skills/tool-setup/) | tool-setup | MCP 서버 설정 가이드 (Google Workspace, Notion 연결) | Setup / Onboarding |
-| [presentation](skills/presentation/) | presentation | 마크다운 → Figma Slides / PPTX 발표자료 생성 (TODO) | Productivity |
+| [presentation](skills/presentation/) | presentation | 마크다운 → PPTX 발표자료 생성 파이프라인 | Productivity |
 
 > **NDA Triage**: Cowork 공식 legal plugin으로 이전되었습니다. Claude Code에서 직접 사용 가능합니다.
 
@@ -48,6 +48,9 @@ claude plugin marketplace add ./
 # 3. (선택) agent-council extended 모드 사용 시
 cd skills/agent-council && npm install
 cp council.config.example.yaml council.config.yaml
+
+# 4. (선택) presentation 스킬 사용 시
+cd skills/presentation && npm install
 ```
 
 ### Codex
@@ -115,10 +118,13 @@ Skills-for-Workers/
     │   └── skills/tool-setup/
     │       ├── SKILL.md
     │       └── references/
-    └── presentation/          # 발표자료 생성 (TODO)
+    └── presentation/          # 마크다운 → PPTX 발표자료 생성
         ├── .claude-plugin/plugin.json
-        ├── .mcp.json
-        └── skills/presentation/SKILL.md
+        ├── package.json
+        ├── src/                  # TypeScript 파이프라인 (parser, codegen, themes)
+        └── skills/presentation/
+            ├── SKILL.md
+            └── references/       # slides-md-format, outline-format, style-presets
 ```
 
 ## Advanced Patterns
@@ -178,7 +184,7 @@ cp -r _template skills/my-new-plugin
 | k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
 | skill-tools | Original work | MIT |
 | tool-setup | Original work | MIT |
-| presentation | Original work | MIT |
+| presentation | Forked from [figma](https://github.com/henry-1981/figma) (PPTX pipeline only, Figma 의존성 제거) | MIT |
 
 ## License
 

@@ -43,3 +43,7 @@ skills/agent-council/council.config.yaml
 # Runtime & Dependencies
 node_modules/
 .jobs/
+
+# Build output
+dist/
+*.tsbuildinfo

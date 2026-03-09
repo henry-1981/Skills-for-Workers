@@ -94,7 +94,7 @@ SKILL.md는 반드시 `skills/` 서브디렉토리 안에 위치해야 한다 (p
 | `k-sunshine` | k-sunshine | Pure markdown + binary `.skill` archive | None |
 | `skill-tools` | skill-lint, skill-submit, skill-package | Pure markdown | None |
 | `tool-setup` | tool-setup | Pure markdown guide + references | None |
-| `presentation` | presentation | Scaffold (TODO) + MCP | figma-slides MCP server |
+| `presentation` | presentation | TypeScript pipeline (parser, codegen, themes) | `pptxgenjs` npm package, Node.js runtime |
 
 ### agent-council Specifics
 

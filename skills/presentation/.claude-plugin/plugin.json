@@ -1,5 +1,5 @@
 {
   "name": "presentation",
-  "description": "마크다운 → Figma Slides / PPTX 발표자료 생성 파이프라인. Triggers: presentation, 발표자료, 슬라이드, pptx, figma slides",
+  "description": "마크다운 → PPTX 발표자료 생성 파이프라인. Triggers: presentation, 발표자료, 슬라이드, pptx",
   "version": "0.1.0"
 }

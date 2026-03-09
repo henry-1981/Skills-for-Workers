@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "figma-slides": {
-      "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/figma-slides/build/index.js"],
-      "env": {}
-    }
-  }
-}
