@@ -56,14 +56,14 @@ describe('rgbToHex', () => {
     expect(rgbToHex({ r: 0.5, g: 0.5, b: 0.5 })).toBe('808080');
   });
 
-  it('handles typical Figma RGB values', () => {
+  it('handles typical normalized RGB values', () => {
     // e.g. {r: 0.2, g: 0.4, b: 0.8} → 33/102/204 → '2166CC'
     expect(rgbToHex({ r: 0.2, g: 0.4, b: 0.8 })).toBe('3366CC');
   });
 });
 
 describe('fontPxToPt', () => {
-  it('converts standard Figma font sizes (proportional 0.5)', () => {
+  it('converts standard font sizes (proportional 0.5)', () => {
     // Proportional: 1920px canvas → 13.333" → factor = 13.333/1920*72 ≈ 0.5
     expect(fontPxToPt(60)).toBe(30);
     expect(fontPxToPt(48)).toBe(24);

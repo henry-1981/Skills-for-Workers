@@ -53,9 +53,9 @@ export function resolveTokens(preset: StylePreset) {
       darkRed: preset.cardFills[4],
     },
     font: {
-      title: { size: 60, style: preset.fonts.display.figmaStyle },
-      cardHeader: { size: 48, style: preset.fonts.display.figmaStyle },
-      body: { size: 36, style: preset.fonts.body.figmaStyle },
+      title: { size: 60, style: preset.fonts.display.style },
+      cardHeader: { size: 48, style: preset.fonts.display.style },
+      body: { size: 36, style: preset.fonts.body.style },
       caption: { size: 24, style: 'Medium' },
       detail: { size: 28, style: 'Medium' },
     },

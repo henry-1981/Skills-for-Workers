@@ -4,7 +4,7 @@
  * Extracts spatial computation from BentoGenerator into a standalone,
  * renderer-agnostic module. Produces ResolvedSlideGeometry with absolute
  * pixel coordinates (1920×1080 canvas). Each Renderer converts to its
- * own unit system (e.g., Figma px, PPTX inches).
+ * own unit system (e.g., canvas px, PPTX inches).
  *
  * Decorative elements (quotation marks, accent bars, number circles)
  * are NOT included — each Renderer implements those independently.

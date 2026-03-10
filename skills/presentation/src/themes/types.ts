@@ -68,8 +68,8 @@ export interface StylePreset {
   cardFills: RGB[];
   cardAccents: RGB[];
   fonts: {
-    display: { family: string; weight: string; figmaStyle: string };
-    body: { family: string; weight: string; figmaStyle: string };
+    display: { family: string; weight: string; style: string };
+    body: { family: string; weight: string; style: string };
   };
   signature: string[];
 }
