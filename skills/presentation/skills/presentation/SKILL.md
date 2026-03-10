@@ -37,9 +37,38 @@ Load these before starting:
 - `references/style-presets.md` — Style presets
 - `references/html-generation.md` — HTML slide generation rules
 
+Profile files (auto-generated, gitignored — loaded when available):
+- `references/my-defaults.md` — 기본 프리셋, purpose 매핑, 사용 횟수
+- `references/my-visual.md` — 프리셋 오버라이드, 커스텀 프리셋
+- `references/my-structure.md` — 선호 레이아웃 (YAML frontmatter) + 배치 메모 (본문)
+- `references/my-voice.md` — 톤 규칙, 제목 스타일, 금지/선호 표현
+
 ---
 
 ## Phase 1: 정보 수집
+
+### 프로필 확인 (Phase 1 시작 시 가장 먼저)
+
+1. `references/my-defaults.md` 존재 확인:
+   - **있으면**: 기본 프리셋/purpose 매핑 로드 → 아래 프리셋 추천에 반영
+   - **없으면**: 아래 부트스트랩 실행 후 계속
+
+2. **부트스트랩** (프로필 최초 생성 — my-defaults.md 없을 때만):
+   ```
+   "참고할 PPTX가 있으면 넣어주세요. 없으면 몇 가지 질문으로 시작합니다."
+
+   PPTX 있음 → extractFromPptx() → matchPreset() 실행 → 프로필 초기화
+     이후: "이 PPTX가 평소 스타일인가요?" 확인 후 반영
+   PPTX 없음 → 온보딩 3문답:
+     1. "주로 어떤 발표를 하시나요?" → purpose 매칭
+     2. "선호하는 톤은?" (격식/캐주얼/간결) → my-voice.md 초기화
+     3. "밝은/어두운 테마 중?" → mode 결정 → 프리셋 추천
+   ```
+
+3. 프로필 있으면 추가 로드:
+   - `references/my-visual.md` — 선택된 프리셋의 오버라이드 적용
+   - `references/my-voice.md` — 톤/문구 가이드로 활용 (슬라이드 문구 작성 시)
+   - `references/my-structure.md` — 레이아웃 선호 반영
 
 ### 소스 자동 감지
 
@@ -71,17 +100,17 @@ Load these before starting:
 
 After analyzing the source, detect presentation purpose and recommend matching preset.
 
-1. **Detect purpose** from topic, audience, and user keywords.
-   Reference: `src/themes/purpose-profiles.ts` — 20 purpose profiles with keyword matching.
-   Each profile has `presets[]` (preset candidates in priority order) and `layouts[]` (preferred layouts).
+1. **프로필 매핑 확인**: my-defaults.md에서 해당 purpose의 기존 preset 매핑 확인
+   - 매핑 있으면 → 가장 많이 사용한 프리셋을 1순위로 추천
+   - 매핑 없으면 → purpose-profiles.ts 기반 기본 추천 사용
 
-2. **Present top 3 presets** from the matched purpose profile's `presets[]` array:
+2. **Present top 3 presets** from matched purpose profile's `presets[]` array (프로필 반영):
 
 ```
 추천 프리셋:
-  A) kr-impact-dark — 임팩트 있는 한국형 다크 (추천)
-  B) bold-signal — 강렬한 시그널, 어두운 배경
-  C) electric-studio — 전기적 에너지, 네온 톤
+  A) [프로필 기반 프리셋] — [vibe] (평소 N회 사용) ← 프로필 기반 (있을 때)
+  B) [purpose 기반 2순위] — [vibe]
+  C) [purpose 기반 3순위] — [vibe]
   또는 프리셋 이름을 직접 입력하세요.
 ```
 
@@ -92,6 +121,11 @@ Experienced users can skip by saying the preset name directly (e.g., "bold-signa
    - Direct: "notebook-tabs로 해줘"
    - Purpose-based: "투자자 피칭용으로" -> Sequoia/YC pattern
    - Accept default: proceed with recommendation
+
+4. **Temporary Override 확인** (평소와 다른 프리셋 선택 시):
+   "이번만 예외인가요, 앞으로 기본으로 할까요?"
+   - "이번만" → 프로필 업데이트 스킵 (Phase 5에서 확인하지 않음)
+   - "앞으로" → Phase 5에서 프로필 업데이트
 
 ### PPTX 스타일 선택
 
