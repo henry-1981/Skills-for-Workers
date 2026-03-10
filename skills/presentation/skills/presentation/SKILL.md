@@ -57,17 +57,16 @@ Profile files (auto-generated, gitignored — loaded when available):
    ```
    "참고할 PPTX가 있으면 넣어주세요. 없으면 몇 가지 질문으로 시작합니다."
 
-   PPTX 있음 → extractFromPptx() → matchPreset() 실행 → 프로필 초기화
+   PPTX 있음 → `node dist/profile/cli.js bootstrap-pptx <path>` 실행 → 프로필 초기화
      이후: "이 PPTX가 평소 스타일인가요?" 확인 후 반영
-   PPTX 없음 → 온보딩 3문답:
+   PPTX 없음 → 온보딩 2문답:
      1. "주로 어떤 발표를 하시나요?" → purpose 매칭
-     2. "선호하는 톤은?" (격식/캐주얼/간결) → my-voice.md 초기화
-     3. "밝은/어두운 테마 중?" → mode 결정 → 프리셋 추천
+     2. "밝은/어두운 테마 중?" → mode 결정 → 프리셋 추천
    ```
 
 3. 프로필 있으면 추가 로드:
    - `references/my-visual.md` — 선택된 프리셋의 오버라이드 적용
-   - `references/my-voice.md` — 톤/문구 가이드로 활용 (슬라이드 문구 작성 시)
+   - `references/my-voice.md` — 톤/문구 가이드로 활용 (파일 없으면 스킵, 사용하며 자연 적층)
    - `references/my-structure.md` — 레이아웃 선호 반영
 
 ### 소스 자동 감지
@@ -272,21 +271,23 @@ PPTX 내보내기 완료 후 자동 실행. **Temporary Override("이번만")로
 
 ### 5a. 코드 자동 기록 (정형 데이터)
 
-Phase 5 시작 전, `src/profile/` 모듈로 변경 대상 파일의 스냅샷 생성:
-```
-createSnapshot(ALL_PROFILE_PATHS)
+Phase 5 시작 전 스냅샷 생성 (임시 파일로 저장):
+```bash
+SNAP=$(mktemp /tmp/profile-snap-XXXX.json)
+node dist/profile/cli.js snapshot "$SNAP"
 ```
 
-다음 함수를 순서대로 호출:
-1. `updatePurposeMapping(purpose, preset)` — purpose→preset 매핑 횟수 +1
-2. `saveVisualOverride(presetId, overrides)` — 프리셋 오버라이드 변경사항 (있으면)
-3. `updateLayoutPrefs(purpose, layouts)` — 이번 발표에서 사용한 레이아웃 기록
+다음 커맨드를 순서대로 실행 (skills/presentation/ 에서):
+1. `node dist/profile/cli.js update-purpose "<purpose>" "<preset>"` — purpose→preset 매핑 횟수 +1
+2. `node dist/profile/cli.js save-visual "<presetId>" '<json>'` — 오버라이드 변경사항 (있으면)
+3. `node dist/profile/cli.js update-layout "<purpose>" "<layout1,layout2>"` — 레이아웃 기록
 
 ### 5b. Claude 기록 (비정형 데이터)
 
-- 새로운 톤 규칙 발견 시 → `references/my-voice.md` 본문에 추가
+- 새로운 톤 규칙 발견 시 → `references/my-voice.md` 본문에 추가 (파일 없으면 새로 생성)
   - 예: "시너지란 표현 쓰지 마" → 금지 표현 섹션에 추가
   - 예: 제목 질문형 패턴 감지 → 제목 스타일 섹션에 기록
+  - 빈 상태에서 시작해 발표마다 자연스럽게 적층되는 것이 정상
 - 특이 배치 결정 시 → `references/my-structure.md` 본문에 메모
 
 **⚠️ 소유권 규칙:** Claude는 YAML frontmatter를 절대 직접 수정하지 않는다. 코드(src/profile/)는 마크다운 본문을 절대 수정하지 않는다.
@@ -296,12 +297,12 @@ createSnapshot(ALL_PROFILE_PATHS)
 ```
 "이 스타일을 프로필에 저장할까요?"
   Yes → 유지
-  No  → restoreSnapshot(snapshot)으로 5a/5b 변경사항 전체 롤백
+  No  → `node dist/profile/cli.js restore "$SNAP"` 으로 5a/5b 변경사항 전체 롤백
 ```
 
 ### Profile Audit (10회 주기)
 
-`my-defaults.md`의 purposeMappings count 합이 10의 배수를 넘을 때:
+Phase 5 완료 직후 `node dist/profile/cli.js audit-check` 실행. `due: true`이면:
 1. 프로필 전체 검토 제안
 2. "최근에는 A보다 B를 더 선호하시는 것 같은데, 가이드를 정리할까요?"
 3. 오래되고 사용 빈도 낮은 매핑 정리 제안

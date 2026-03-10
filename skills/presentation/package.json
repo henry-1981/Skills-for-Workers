@@ -8,6 +8,7 @@
     "start": "tsx src/index.ts",
     "test": "vitest --passWithNoTests --exclude 'dist/**'",
     "html2pptx": "tsc && node dist/html-pipeline/cli.js",
+    "profile": "tsc && node dist/profile/cli.js",
     "editor": "node tools/slides-grab/scripts/editor-server.js"
   },
   "devDependencies": {
