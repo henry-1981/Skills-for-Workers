@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { writeFile, readFile, mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { randomUUID } from 'node:crypto';
 import {
   initDefaults,
   updatePurposeMapping,
@@ -15,7 +16,7 @@ import type { ProfileDefaults, ProfileVisual, ProfileStructure } from '../types.
 let testDir: string;
 
 beforeEach(async () => {
-  testDir = join(tmpdir(), `profile-writer-test-${Date.now()}`);
+  testDir = join(tmpdir(), `profile-writer-test-${randomUUID()}`);
   await mkdir(testDir, { recursive: true });
 });
 

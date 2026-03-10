@@ -3,12 +3,13 @@ import { writeFile, readFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { randomUUID } from 'node:crypto';
 import { createSnapshot, restoreSnapshot } from '../snapshot.js';
 
 let testDir: string;
 
 beforeEach(async () => {
-  testDir = join(tmpdir(), `snapshot-test-${Date.now()}`);
+  testDir = join(tmpdir(), `snapshot-test-${randomUUID()}`);
   await mkdir(testDir, { recursive: true });
 });
 
