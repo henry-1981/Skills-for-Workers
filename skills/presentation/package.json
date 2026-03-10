@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "tsx src/index.ts",
-    "test": "vitest --passWithNoTests --exclude 'dist/**'"
+    "test": "vitest --passWithNoTests --exclude 'dist/**'",
+    "html2pptx": "tsc && node dist/html-pipeline/cli.js",
+    "editor": "node tools/slides-grab/scripts/editor-server.js"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -15,6 +17,8 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "pptxgenjs": "^4.0.1"
+    "playwright": "^1.58.2",
+    "pptxgenjs": "^4.0.1",
+    "sharp": "^0.34.5"
   }
 }

@@ -1,5 +1,5 @@
 {
   "name": "presentation",
-  "description": "마크다운 → PPTX 발표자료 생성 파이프라인. Triggers: presentation, 발표자료, 슬라이드, pptx",
-  "version": "0.1.0"
+  "description": "마크다운/HTML → PPTX 발표자료 생성 파이프라인. 듀얼 모드 (디자인 우선/편집 우선) + 시각 에디터. Triggers: presentation, 발표자료, 슬라이드, pptx",
+  "version": "0.2.0"
 }

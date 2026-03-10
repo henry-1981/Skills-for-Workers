@@ -1,0 +1,23 @@
+import { HtmlPipeline, type RenderMode } from './orchestrator.js';
+
+const args = process.argv.slice(2);
+const slidesDir = args.find(a => !a.startsWith('--')) ?? 'slides';
+const outputPath = args.find(a => a.startsWith('--output='))?.split('=')[1] ?? 'output.pptx';
+const modeArg = args.find(a => a.startsWith('--mode='))?.split('=')[1];
+const mode: RenderMode = (modeArg === 'dom' || modeArg === 'screenshot' || modeArg === 'hybrid') ? modeArg : 'hybrid';
+const verbose = args.includes('--verbose');
+
+const pipeline = new HtmlPipeline();
+
+pipeline.process({ slidesDir, outputPath, mode, verbose })
+  .then(result => {
+    console.log(`\n✓ ${result.totalSlides} slides → ${result.outputFile} (mode: ${mode})`);
+    if (result.errors.length > 0) {
+      console.log(`\n⚠ ${result.errors.length} warnings:`);
+      result.errors.forEach(e => console.log(`  - ${e}`));
+    }
+  })
+  .catch(err => {
+    console.error('Fatal error:', err.message);
+    process.exit(1);
+  });

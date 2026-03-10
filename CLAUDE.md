@@ -94,7 +94,7 @@ SKILL.md는 반드시 `skills/` 서브디렉토리 안에 위치해야 한다 (p
 | `k-sunshine` | k-sunshine | Pure markdown + binary `.skill` archive | None |
 | `skill-tools` | skill-lint, skill-submit, skill-package | Pure markdown | None |
 | `tool-setup` | tool-setup | Pure markdown guide + references | None |
-| `presentation` | presentation | TypeScript pipeline (parser, codegen, themes) | `pptxgenjs` npm package, Node.js runtime |
+| `presentation` | presentation | TypeScript pipeline + HTML dual-mode (hybrid/dom) + slides-grab editor | `pptxgenjs`, `playwright`, `sharp`, Node.js runtime |
 
 ### agent-council Specifics
 
@@ -117,6 +117,19 @@ Skills 외 고급 패턴(Agents, Commands, A/B 실험 방법론)은 `ADVANCED-PA
 ### human-writing Specifics
 
 5단계 변환(cognitive_trace → asymmetry_injection → connector_prune → controlled_uncertainty → domain_voice) + 3단계 검증(AI smell lint, fact integrity, redundancy prune) 파이프라인. 깊이 프리셋(express/standard/deep)으로 패스 수를 조절한다. 각 단계는 `references/` 내 개별 문서로 분리되어 다른 스킬에서 선택적 참조 가능.
+
+### Presentation Plugin Specifics
+
+듀얼 모드 PPTX 생성 파이프라인:
+
+- **마크다운 파이프라인** (기존): slides.md → parser → narrative → layout(9종 Bento) → geometry(1920×1080) → pptx-renderer
+- **HTML 파이프라인** (신규): HTML slides → orchestrator → hybrid-renderer 또는 html2pptx → PPTX
+  - **디자인 우선 (hybrid)**: 스크린샷 배경 + 편집 가능 텍스트 오버레이
+  - **편집 우선 (dom)**: 순수 DOM→PPTX 변환, 모든 요소 편집 가능
+- **slides-grab 에디터**: 브라우저 기반 시각 편집기 (`npm run editor`)
+  - AI Edit 큐: 수정 의도 축적 → 마크다운으로 변환 → Claude Code에 전달
+  - 직접 편집: 텍스트/색상/크기/위치 실시간 변경
+- **Playwright MCP**: `.mcp.json`으로 브라우저 자동화 MCP 서버 설정
 
 ## Commands
 
