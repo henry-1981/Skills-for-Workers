@@ -14,7 +14,7 @@
 | [k-sunshine](skills/k-sunshine/) | k-sunshine | 의료기기 마케팅 컴플라이언스 어드바이저 (KMDIA 공정경쟁규약) | Healthcare Compliance |
 | [skill-tools](skills/skill-tools/) | skill-lint, skill-submit, skill-package | 스킬 검증, 제출 라우팅, 패키징 도구 묶음 | Meta |
 | [tool-setup](skills/tool-setup/) | tool-setup | MCP 서버 설정 가이드 (Google Workspace, Notion 연결) | Setup / Onboarding |
-| [presentation](skills/presentation/) | presentation | 마크다운 → PPTX 발표자료 생성 파이프라인 | Productivity |
+| [presentation](skills/presentation/) | presentation | 마크다운/HTML → PPTX 발표자료 생성 (듀얼 모드: 디자인 우선/편집 우선) + 시각 에디터 | Productivity |
 
 > **NDA Triage**: Cowork 공식 legal plugin으로 이전되었습니다. Claude Code에서 직접 사용 가능합니다.
 
@@ -118,13 +118,17 @@ Skills-for-Workers/
     │   └── skills/tool-setup/
     │       ├── SKILL.md
     │       └── references/
-    └── presentation/          # 마크다운 → PPTX 발표자료 생성
+    └── presentation/          # 마크다운/HTML → PPTX 듀얼 모드 + 시각 에디터
         ├── .claude-plugin/plugin.json
-        ├── package.json
-        ├── src/                  # TypeScript 파이프라인 (parser, codegen, themes)
+        ├── .mcp.json             # Playwright MCP 서버
+        ├── package.json          # pptxgenjs, playwright, sharp
+        ├── src/                  # TypeScript 파이프라인
+        │   ├── parser/, narrative/, codegen/, themes/  # 마크다운→PPTX
+        │   └── html-pipeline/    # HTML→PPTX (hybrid/dom 모드)
+        ├── tools/slides-grab/    # 브라우저 기반 시각 편집기
         └── skills/presentation/
             ├── SKILL.md
-            └── references/       # slides-md-format, outline-format, style-presets
+            └── references/       # slides-md-format, outline-format, style-presets, html-generation, editor-guide
 ```
 
 ## Advanced Patterns
@@ -184,7 +188,7 @@ cp -r _template skills/my-new-plugin
 | k-sunshine | Derived from [Cowork-RA](https://github.com/henry-1981/Cowork-RA) aria/skills/compliance | MIT |
 | skill-tools | Original work | MIT |
 | tool-setup | Original work | MIT |
-| presentation | Forked from [figma](https://github.com/henry-1981/figma) (PPTX pipeline only, Figma 의존성 제거) | MIT |
+| presentation | Forked from [figma](https://github.com/henry-1981/figma) (PPTX 듀얼 모드 + slides-grab 에디터, Figma 의존성 제거) | MIT |
 
 ## License
 
