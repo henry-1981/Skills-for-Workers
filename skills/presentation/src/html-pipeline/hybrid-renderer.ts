@@ -67,7 +67,8 @@ async function extractTextOverlays(page: Page): Promise<TextOverlay[]> {
     const INLINE_TAGS = new Set(['SPAN', 'STRONG', 'EM', 'B', 'I', 'U', 'A', 'MARK', 'SUB', 'SUP', 'SMALL', 'CODE', 'BR']);
 
     // Element is a "text block" if it has text and all its text-bearing children are inline
-    function isTextBlock(el: Element): boolean {
+    // NOTE: Use arrow functions to avoid tsx/esbuild __name wrapper in page.evaluate
+    const isTextBlock = (el: Element): boolean => {
       if (SKIP_TAGS.has(el.tagName)) return false;
 
       const text = el.textContent?.trim();
@@ -81,9 +82,9 @@ async function extractTextOverlays(page: Page): Promise<TextOverlay[]> {
       }
 
       return true;
-    }
+    };
 
-    function walk(el: Element) {
+    const walk = (el: Element): void => {
       if (SKIP_TAGS.has(el.tagName)) return;
       if (processed.has(el)) return;
 
@@ -199,7 +200,8 @@ export async function hybridRender(
         const SKIP = new Set(['HTML', 'HEAD', 'BODY', 'SCRIPT', 'STYLE', 'META', 'LINK', 'HR', 'IMG', 'SVG', 'CANVAS', 'VIDEO', 'AUDIO', 'IFRAME']);
         const INLINE = new Set(['SPAN', 'STRONG', 'EM', 'B', 'I', 'U', 'A', 'MARK', 'SUB', 'SUP', 'SMALL', 'CODE', 'BR']);
 
-        function isTextBlock(el: Element): boolean {
+        // NOTE: Use arrow functions to avoid tsx/esbuild __name wrapper in page.evaluate
+        const isTextBlock = (el: Element): boolean => {
           if (SKIP.has(el.tagName)) return false;
           const text = el.textContent?.trim();
           if (!text) return false;
@@ -208,10 +210,10 @@ export async function hybridRender(
             if (child.textContent?.trim()) return false;
           }
           return true;
-        }
+        };
 
         // Check if element uses gradient text (background-clip: text)
-        function hasGradientText(el: Element): boolean {
+        const hasGradientText = (el: Element): boolean => {
           const cs = window.getComputedStyle(el);
           if (cs.webkitBackgroundClip === 'text' || (cs as any).backgroundClip === 'text') return true;
           for (const child of el.querySelectorAll('*')) {
@@ -219,9 +221,9 @@ export async function hybridRender(
             if (childCs.webkitBackgroundClip === 'text' || (childCs as any).backgroundClip === 'text') return true;
           }
           return false;
-        }
+        };
 
-        function hideText(el: Element) {
+        const hideText = (el: Element): void => {
           if (SKIP.has(el.tagName)) return;
           if (isTextBlock(el)) {
             // Keep gradient text visible in screenshot (can't be replicated in PPTX)
