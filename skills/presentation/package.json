@@ -17,9 +17,12 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
+    "@types/jszip": "^3.4.0",
     "express": "^5.2.1",
+    "jszip": "^3.10.1",
     "playwright": "^1.58.2",
     "pptxgenjs": "^4.0.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "yaml": "^2.8.2"
   }
 }
