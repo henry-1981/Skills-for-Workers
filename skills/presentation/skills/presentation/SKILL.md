@@ -266,6 +266,48 @@ Show outline to user for approval before proceeding to Phase 3.
 
 ---
 
+## Phase 5: 프로필 축적 (발표 완료 후)
+
+PPTX 내보내기 완료 후 자동 실행. **Temporary Override("이번만")로 표시된 경우에는 실행하지 않는다.**
+
+### 5a. 코드 자동 기록 (정형 데이터)
+
+Phase 5 시작 전, `src/profile/` 모듈로 변경 대상 파일의 스냅샷 생성:
+```
+createSnapshot(ALL_PROFILE_PATHS)
+```
+
+다음 함수를 순서대로 호출:
+1. `updatePurposeMapping(purpose, preset)` — purpose→preset 매핑 횟수 +1
+2. `saveVisualOverride(presetId, overrides)` — 프리셋 오버라이드 변경사항 (있으면)
+3. `updateLayoutPrefs(purpose, layouts)` — 이번 발표에서 사용한 레이아웃 기록
+
+### 5b. Claude 기록 (비정형 데이터)
+
+- 새로운 톤 규칙 발견 시 → `references/my-voice.md` 본문에 추가
+  - 예: "시너지란 표현 쓰지 마" → 금지 표현 섹션에 추가
+  - 예: 제목 질문형 패턴 감지 → 제목 스타일 섹션에 기록
+- 특이 배치 결정 시 → `references/my-structure.md` 본문에 메모
+
+**⚠️ 소유권 규칙:** Claude는 YAML frontmatter를 절대 직접 수정하지 않는다. 코드(src/profile/)는 마크다운 본문을 절대 수정하지 않는다.
+
+### 5c. 확인
+
+```
+"이 스타일을 프로필에 저장할까요?"
+  Yes → 유지
+  No  → restoreSnapshot(snapshot)으로 5a/5b 변경사항 전체 롤백
+```
+
+### Profile Audit (10회 주기)
+
+`my-defaults.md`의 purposeMappings count 합이 10의 배수를 넘을 때:
+1. 프로필 전체 검토 제안
+2. "최근에는 A보다 B를 더 선호하시는 것 같은데, 가이드를 정리할까요?"
+3. 오래되고 사용 빈도 낮은 매핑 정리 제안
+
+---
+
 ## Error Handling
 
 | Error | Recovery |
