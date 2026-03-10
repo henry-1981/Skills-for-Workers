@@ -26,7 +26,7 @@ const PptxGen: any = (typeof PptxGenJSDefault === 'function'
 
 // ── Constants ──
 
-const LAYOUT_NAME = 'FIGMA_1920x1080';
+const LAYOUT_NAME = 'SLIDE_1920x1080';
 
 /** Default rectRadius for rounded cards (0.0–1.0 ratio) */
 const CARD_RECT_RADIUS = 0.05;

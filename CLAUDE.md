@@ -152,9 +152,16 @@ JOB_DIR=$(./skills/agent-council/scripts/council.sh start "question")
 ./skills/agent-council/scripts/council.sh wait "$JOB_DIR"
 ./skills/agent-council/scripts/council.sh results "$JOB_DIR"
 ./skills/agent-council/scripts/council.sh clean "$JOB_DIR"
+
+# presentation: HTML→PPTX 변환 (tsc 필수, tsx 불가)
+cd skills/presentation && npm install
+npm run html2pptx -- --slidesDir=./slides --output=output.pptx --mode=hybrid
+
+# presentation: slides-grab 에디터 (express 미설치 — 추후 추가 필요)
+cd skills/presentation && npm run editor
 ```
 
-빌드, 테스트 시스템은 없다. 대부분의 스킬은 순수 마크다운이며 별도의 빌드 과정이 필요 없다.
+빌드, 테스트 시스템은 없다. 대부분의 스킬은 순수 마크다운이며 별도의 빌드 과정이 필요 없다. presentation 플러그인의 HTML 파이프라인은 `tsc && node dist/`로 실행해야 한다 (tsx의 esbuild __name 래핑이 page.evaluate 브라우저 컨텍스트와 충돌).
 
 ## Creating a New Plugin
 
