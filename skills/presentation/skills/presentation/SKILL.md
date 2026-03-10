@@ -1,3 +1,11 @@
+---
+name: presentation
+description: >
+  마크다운/HTML → PPTX 발표자료 생성 파이프라인. 듀얼 모드 (디자인 우선/편집 우선) + 시각 에디터.
+  Triggers: presentation, 발표자료, 슬라이드, pptx
+origin: internal — figma PPTX pipeline fork + html-pipeline integration
+---
+
 # /presentation Skill
 
 Generate professional PPTX presentations from topics, documents, or URLs.
