@@ -50,3 +50,6 @@ dist/
 
 # Git worktrees
 .worktrees/
+
+# Personal profile (presentation plugin)
+skills/presentation/skills/presentation/references/my-*.md
