@@ -1,6 +1,6 @@
-# Free Mode: Source → Conference-Quality HTML Slides
+# Free Mode: Source → HTML Slides
 
-Generate presentation slides as standalone HTML files optimized for maximum visual impact.
+Generate presentation slides as standalone HTML files.
 The HTML will be screenshot-captured for PPTX — you have full CSS freedom.
 
 ## Process
@@ -10,9 +10,9 @@ Given source material, generate a series of presentation slide HTML files.
 ### Internal planning (do not output)
 1. Analyze source: key points, data, narrative flow
 2. Decide slide count (8-15 for 10-minute presentation)
-3. Plan visual variety: title, content, KPI, quote, comparison, timeline
-4. Design narrative arc: opener → build-up → evidence → climax → closer
-5. **Choose a cohesive visual identity**: color palette, mood, typography weight — whatever best serves the content
+3. Design narrative arc: opener → build-up → evidence → climax → closer
+4. Select visual archetype: match to content character + user mood keyword (if provided). Load `references/visual-archetypes.md` for archetype definitions.
+5. Plan each slide: message first (what to say), then layout (how to arrange) — the message determines the composition, not a template.
 
 ## HTML Specification
 
@@ -53,41 +53,21 @@ LLM은 슬라이드를 쓸 때 무의식적으로 설득력을 버린다. 아래
 
 ---
 
-## Design Philosophy — Use Full CSS Power
+## Visual Archetype Interpretation
 
-You are designing conference keynote slides. Use every CSS capability available:
+선택한 아키타입의 무드, 색상 철학, 레이아웃 경향, 타이포를 참고하되 콘텐츠에 맞게 자유롭게 해석하라. 아키타입은 출발점이지 규격이 아니다.
 
-- **Gradients**: `linear-gradient`, `radial-gradient`, `conic-gradient` for backgrounds and text
-- **Glow effects**: `box-shadow` with spread, `filter: blur()` for ambient glow
-- **Transparency**: `rgba()`, `backdrop-filter: blur()` for frosted glass
-- **Rounded corners**: generous `border-radius` on cards
-- **Subtle animations**: CSS transitions for hover states (optional)
-- **Typography**: `-webkit-background-clip: text` for gradient text, `letter-spacing`, `line-height`
-- **Layout**: Flexbox, Grid — use whatever produces the best visual result
+사용자 프로필에 아키타입별 오버라이드가 있으면 우선 반영한다.
 
-### Visual Design — Your Call
+## CSS — Full Freedom
 
-You decide the visual direction. Consider:
-- What mood best serves this content? (authoritative, playful, elegant, bold, minimal...)
-- What color palette creates the right emotional response?
-- Dark or light? Warm or cool? High contrast or subtle?
-- Should typography be the hero, or should layout/color lead?
-
-The only constraint: make it **stunning**. Conference keynote quality.
-
-### Quality Targets
-- Strong visual identity — every slide should feel part of a cohesive deck
-- Large, bold typography with clear hierarchy (80-100px titles)
-- Generous whitespace — less content, more impact
-- Decorative elements where appropriate: accent lines, subtle grids, ambient glow orbs
+모든 CSS 기법을 사용할 수 있다: gradients, glow, backdrop-filter, transparency, rounded corners, grid, flexbox. 아키타입의 방향 안에서 최대한 표현하라.
 
 ### What NOT to do
 - No cramped layouts — each slide should breathe
 - No small text (minimum 16px for any visible text)
-- No plain white backgrounds — always styled
 - No walls of text — if content is dense, split across slides
 - No clip-art or placeholder images
-- No generic "corporate blue" — be intentional about your palette
 
 ## Output
 Write each slide as a separate HTML file to the specified directory.
