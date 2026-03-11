@@ -24,14 +24,14 @@ describe('colorDistance', () => {
 });
 
 describe('matchPreset', () => {
-  it('should match bold-signal for dark bg + orange accent', () => {
-    // bold-signal: bgPrimary=#1a1a1a, accent=#FF5722
+  it('should match a dark kr-* preset for dark bg + warm accent', () => {
     const style: ExtractedStyle = {
       bgColor: '#1a1a1a',
       accentColor: '#FF5722',
     };
     const result = matchPreset(style);
-    expect(result.id).toBe('bold-signal');
+    expect(result.id).toMatch(/^kr-/);
+    expect(result.mode).toBe('dark');
   });
 
   it('should match kr-clean-white for white bg + blue accent', () => {

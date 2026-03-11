@@ -4,7 +4,7 @@ const args = process.argv.slice(2);
 const slidesDir = args.find(a => !a.startsWith('--')) ?? 'slides';
 const outputPath = args.find(a => a.startsWith('--output='))?.split('=')[1] ?? 'output.pptx';
 const modeArg = args.find(a => a.startsWith('--mode='))?.split('=')[1];
-const mode: RenderMode = (modeArg === 'dom' || modeArg === 'screenshot' || modeArg === 'hybrid') ? modeArg : 'hybrid';
+const mode: RenderMode = (modeArg === 'screenshot' || modeArg === 'hybrid') ? modeArg : 'hybrid';
 const verbose = args.includes('--verbose');
 
 const pipeline = new HtmlPipeline();
