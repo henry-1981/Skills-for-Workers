@@ -108,6 +108,25 @@ Profile files (auto-generated, gitignored — loaded when available):
 | 자유 모드 | `prompts/hybrid-free.md` | Message Design + 자유 CSS |
 | 프리셋 모드 | `prompts/hybrid.md` | Message Design + 프리셋 CSS 변수 |
 
+### 무드 키워드 수집 (자유 모드일 때)
+
+디자인 모드에서 A(자유)를 선택한 경우:
+
+1. **프로필 확인**: my-defaults.md에 해당 purpose의 아키타입 사용 이력이 있으면:
+   ```
+   "지난번 [purpose]에 [archetype]을 쓰셨는데, 이번에도 사용할까요?
+    또는 원하는 분위기를 말씀해주세요. 맡겨주셔도 됩니다."
+   ```
+
+2. **프로필 없거나 신규 purpose**:
+   ```
+   "어떤 분위기를 원하세요? (예: 밝고 깔끔하게, 어둡고 임팩트있게, 따뜻하게)
+    맡겨주셔도 됩니다."
+   ```
+
+3. **매핑**: 사용자 키워드 → `references/visual-archetypes.md`에서 가장 적합한 아키타입 선택 (LLM 판단)
+4. **키워드 없음**: LLM이 콘텐츠 분석 후 자동 선택, 선택한 아키타입을 사용자에게 알림
+
 ### Preset Selection (프리셋 모드일 때만)
 
 1. **프로필 매핑 확인**: my-defaults.md에서 해당 purpose의 기존 preset 매핑 확인
@@ -252,6 +271,7 @@ node dist/profile/cli.js snapshot "$SNAP"
 1. `node dist/profile/cli.js update-purpose "<purpose>" "<preset>"` — purpose→preset 매핑 횟수 +1
 2. `node dist/profile/cli.js save-visual "<presetId>" '<json>'` — 오버라이드 변경사항 (있으면)
 3. `node dist/profile/cli.js update-layout "<purpose>" "<layout1,layout2>"` — 레이아웃 기록
+4. `node dist/profile/cli.js update-archetype "<purpose>" "<archetype>"` — 자유 모드일 때만, purpose→archetype 매핑 횟수 +1
 
 ### 5b. Claude 기록 (비정형 데이터)
 
@@ -259,6 +279,9 @@ node dist/profile/cli.js snapshot "$SNAP"
   - 예: "시너지란 표현 쓰지 마" → 금지 표현 섹션에 추가
   - 예: 제목 질문형 패턴 감지 → 제목 스타일 섹션에 기록
   - 빈 상태에서 시작해 발표마다 자연스럽게 적층되는 것이 정상
+- 아키타입 오버라이드 발견 시 → `references/my-visual.md`의 `## Archetype Overrides` 섹션에 추가
+  - 예: "warm-organic인데 그림자는 빼줘" → `### warm-organic` 아래에 기록
+  - 프리셋 오버라이드와 같은 파일, 같은 축적 패턴
 - 특이 배치 결정 시 → `references/my-structure.md` 본문에 메모
 
 **⚠️ 소유권 규칙:** Claude는 YAML frontmatter를 절대 직접 수정하지 않는다. 코드(src/profile/)는 마크다운 본문을 절대 수정하지 않는다.
