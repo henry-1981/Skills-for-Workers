@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #0a0a0a;
+    color: #f5f5f0;
+    position: relative;
+  }
+
+  .content {
+    display: flex;
+    height: 100%;
+  }
+
+  .narrow {
+    width: 35%;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 100px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .narrow h2 {
+    font-size: 52px; font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin-bottom: 40px;
+  }
+
+  .narrow h2 span {
+    color: #e53e3e;
+  }
+
+  .narrow p {
+    font-size: 18px; font-weight: 300;
+    color: rgba(245,245,240,0.4);
+    line-height: 1.8;
+  }
+
+  .wide {
+    width: 65%;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 80px 100px 80px 80px;
+    gap: 0;
+  }
+
+  .row {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .row:last-child { border-bottom: none; }
+
+  .row-label {
+    width: 180px; flex-shrink: 0;
+    padding: 28px 0;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    color: #555;
+  }
+
+  .row-them, .row-us {
+    flex: 1;
+    padding: 28px 24px;
+  }
+
+  .row-them {
+    color: rgba(245,245,240,0.25);
+    font-size: 18px; font-weight: 300;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .row-us {
+    color: #f5f5f0;
+    font-size: 18px; font-weight: 600;
+  }
+
+  .row-us .accent {
+    color: #e53e3e;
+  }
+
+  .col-header {
+    display: flex;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+    padding-bottom: 16px;
+    margin-bottom: 0;
+  }
+
+  .col-header .row-label { color: transparent; }
+  .col-header .row-them,
+  .col-header .row-us {
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 4px; text-transform: uppercase;
+    padding: 0 24px 16px;
+  }
+  .col-header .row-them { color: #444; }
+  .col-header .row-us { color: #e53e3e; }
+
+  .page {
+    position: absolute;
+    bottom: 28px; left: 100px;
+    font-size: 13px; color: #333;
+    letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="narrow">
+      <h2>같은 걸 <span>다르게</span> 하는 게 아니다</h2>
+      <p>다른 것을 한다.<br>비교 자체가 성립하지 않는<br>포지션을 만든다.</p>
+    </div>
+
+    <div class="wide">
+      <div class="col-header">
+        <div class="row-label"></div>
+        <div class="row-them">기존 브랜드</div>
+        <div class="row-us">VOKE</div>
+      </div>
+      <div class="row">
+        <div class="row-label">약속</div>
+        <div class="row-them">"최고의 품질"</div>
+        <div class="row-us">"<span class="accent">당신의 태도</span>를 입혀라"</div>
+      </div>
+      <div class="row">
+        <div class="row-label">관계</div>
+        <div class="row-them">구매 → 끝</div>
+        <div class="row-us">구매 → <span class="accent">커뮤니티 진입</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">콘텐츠</div>
+        <div class="row-them">제품 사진</div>
+        <div class="row-us">사용자가 만든 <span class="accent">태도 선언</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">KPI</div>
+        <div class="row-them">매출, 점유율</div>
+        <div class="row-us"><span class="accent">재방문율</span>, 커뮤니티 활성도</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">04 / 05</div>
+</body>
+</html>
