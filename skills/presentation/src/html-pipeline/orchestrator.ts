@@ -2,7 +2,6 @@ import { readdirSync, existsSync } from 'fs';
 import { resolve, join } from 'path';
 import PptxGenJSDefault from 'pptxgenjs';
 import { chromium } from 'playwright';
-import { html2pptx } from './html2pptx.js';
 import { hybridRender } from './hybrid-renderer.js';
 
 // Handle pptxgenjs dual export
@@ -10,7 +9,7 @@ const PptxGen: any = (typeof PptxGenJSDefault === 'function'
   ? PptxGenJSDefault
   : (PptxGenJSDefault as any).default) ?? PptxGenJSDefault;
 
-export type RenderMode = 'hybrid' | 'dom' | 'screenshot';
+export type RenderMode = 'hybrid' | 'screenshot';
 
 export interface HtmlPipelineOptions {
   slidesDir: string;
@@ -56,20 +55,12 @@ export class HtmlPipeline {
       for (const file of htmlFiles) {
         if (verbose) console.log(`  Processing: ${file}`);
 
-        if (mode === 'dom') {
-          const result = await html2pptx(file, pres, { browser });
-          if (result.errors.length > 0) {
-            allErrors.push(...result.errors.map((e: string) => `${file}: ${e}`));
-          }
-        } else {
-          // hybrid or screenshot
-          const result = await hybridRender(file, pres, {
-            browser,
-            screenshotOnly: mode === 'screenshot',
-          });
-          if (result.errors.length > 0) {
-            allErrors.push(...result.errors.map((e: string) => `${file}: ${e}`));
-          }
+        const result = await hybridRender(file, pres, {
+          browser,
+          screenshotOnly: mode === 'screenshot',
+        });
+        if (result.errors.length > 0) {
+          allErrors.push(...result.errors.map((e: string) => `${file}: ${e}`));
         }
       }
     } finally {
