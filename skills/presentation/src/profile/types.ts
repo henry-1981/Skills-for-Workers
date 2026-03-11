@@ -1,5 +1,13 @@
 // src/profile/types.ts
 
+/** Purpose → Archetype mapping entry (free mode) */
+export interface ArchetypeMapping {
+  purpose: string;
+  archetype: string;
+  count: number;
+  lastUsed: string; // YYYY-MM-DD
+}
+
 /** Purpose → Preset mapping entry */
 export interface PurposeMapping {
   purpose: string;
@@ -11,10 +19,11 @@ export interface PurposeMapping {
 /** my-defaults.md frontmatter */
 export interface ProfileDefaults {
   defaultPreset: string;
-  pptxMode: 'hybrid' | 'dom';
+  pptxMode: 'hybrid';
   outputDir: string;
   updatedAt: string; // YYYY-MM-DD
   purposeMappings: PurposeMapping[];
+  archetypeUsage: ArchetypeMapping[];
 }
 
 /** Preset color/font override */

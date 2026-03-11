@@ -4,6 +4,7 @@ import { dirname } from 'node:path';
 import { parseFrontmatter, stringifyFrontmatter } from './frontmatter.js';
 import { PROFILE_PATHS } from './paths.js';
 import type {
+  ArchetypeMapping,
   ProfileDefaults,
   ProfileVisual,
   ProfileStructure,
@@ -34,7 +35,7 @@ async function readOrInit<T>(filePath: string, defaultData: T): Promise<{ data: 
  */
 export async function initDefaults(
   preset: string,
-  pptxMode: 'hybrid' | 'dom',
+  pptxMode: 'hybrid',
   outputDir: string,
   path?: string,
 ): Promise<void> {
@@ -46,6 +47,7 @@ export async function initDefaults(
     outputDir,
     updatedAt: today(),
     purposeMappings: [],
+    archetypeUsage: [],
   };
   await writeFile(filePath, stringifyFrontmatter(data));
 }
@@ -67,6 +69,7 @@ export async function updatePurposeMapping(
     outputDir: '~/Desktop',
     updatedAt: '',
     purposeMappings: [],
+    archetypeUsage: [],
   });
 
   const existing = data.purposeMappings.find(
@@ -80,6 +83,47 @@ export async function updatePurposeMapping(
     data.purposeMappings.push({
       purpose,
       preset,
+      count: 1,
+      lastUsed: today(),
+    });
+  }
+
+  data.updatedAt = today();
+  await ensureDir(filePath);
+  await writeFile(filePath, stringifyFrontmatter(data, body));
+}
+
+/**
+ * Add or increment a purpose→archetype mapping (free mode).
+ * Same purpose + same archetype → increment count.
+ * Same purpose + different archetype → add new entry.
+ */
+export async function updateArchetypeMapping(
+  purpose: string,
+  archetype: string,
+  path?: string,
+): Promise<void> {
+  const filePath = path ?? PROFILE_PATHS.defaults;
+  const { data, body } = await readOrInit<ProfileDefaults>(filePath, {
+    defaultPreset: '',
+    pptxMode: 'hybrid',
+    outputDir: '~/Desktop',
+    updatedAt: '',
+    purposeMappings: [],
+    archetypeUsage: [],
+  });
+
+  const existing = data.archetypeUsage.find(
+    m => m.purpose === purpose && m.archetype === archetype,
+  );
+
+  if (existing) {
+    existing.count += 1;
+    existing.lastUsed = today();
+  } else {
+    data.archetypeUsage.push({
+      purpose,
+      archetype,
       count: 1,
       lastUsed: today(),
     });

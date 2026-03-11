@@ -6,6 +6,7 @@ import { writeFile, readFile, mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import {
   updatePurposeMapping,
+  updateArchetypeMapping,
   saveVisualOverride,
   updateLayoutPrefs,
   initDefaults,
@@ -22,6 +23,7 @@ function usage(): never {
 
 Subcommands:
   update-purpose <purpose> <preset>       Add/increment purpose→preset mapping
+  update-archetype <purpose> <archetype>  Add/increment purpose→archetype mapping (free mode)
   save-visual <presetId> <jsonString>     Save visual override for a preset
   update-layout <purpose> <layout,...>    Record layouts used for a purpose
   snapshot <outputFile>                   Snapshot all profile files to JSON
@@ -138,6 +140,17 @@ try {
       // Audit is due when total crosses a 10-multiple boundary
       const due = totalCount > 0 && totalCount % 10 === 0;
       console.log(JSON.stringify({ due, totalCount, defaultPreset: defaults.defaultPreset }));
+      break;
+    }
+
+    case 'update-archetype': {
+      const [purpose, archetype] = args;
+      if (!purpose || !archetype) {
+        console.error('Error: update-archetype requires <purpose> <archetype>');
+        process.exit(1);
+      }
+      await updateArchetypeMapping(purpose, archetype);
+      console.log(`✓ archetype mapping updated: ${purpose} → ${archetype}`);
       break;
     }
 

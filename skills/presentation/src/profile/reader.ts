@@ -26,6 +26,7 @@ export async function readDefaults(path?: string): Promise<ProfileDefaults | nul
     outputDir: data.outputDir ?? '~/Desktop',
     updatedAt: data.updatedAt ?? '',
     purposeMappings: data.purposeMappings ?? [],
+    archetypeUsage: data.archetypeUsage ?? [],
   };
 }
 
