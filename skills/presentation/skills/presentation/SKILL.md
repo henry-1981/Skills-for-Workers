@@ -1,7 +1,7 @@
 ---
 name: presentation
 description: >
-  마크다운/HTML → PPTX 발표자료 생성 파이프라인. 듀얼 모드 (디자인 우선/편집 우선) + 시각 에디터.
+  HTML → hybrid PPTX 발표자료 생성 파이프라인. 자유모드 기본 + 프리셋 opt-in + Message Design 레이어.
   Triggers: presentation, 발표자료, 슬라이드, pptx
 origin: internal — figma PPTX pipeline fork + html-pipeline integration
 ---
@@ -18,10 +18,9 @@ Generate professional PPTX presentations from topics, documents, or URLs.
 
 Examples:
 - `/presentation "AI 트렌드 2026" 8장`
-- `/presentation ./report.md 10장 --style=notebook-tabs`
+- `/presentation ./report.md 10장 --preset=kr-corporate-navy`
 - `/presentation https://notion.so/page-id 5장 우아한 느낌으로`
 - `/presentation "분기 실적 보고" 6장`
-- `/presentation ./deck.md --style=swiss-modern`
 
 대화 인식:
 - "프레젠테이션 만들어줘"
@@ -32,10 +31,8 @@ Examples:
 ## References
 
 Load these before starting:
-- `references/slides-md-format.md` — Parser format specification
-- `references/outline-format.md` — Intermediate outline format
-- `references/style-presets.md` — Style presets
 - `references/html-generation.md` — HTML slide generation rules
+- `references/style-presets.md` — Style presets (kr-* 9종)
 
 Profile files (auto-generated, gitignored — loaded when available):
 - `references/my-defaults.md` — 기본 프리셋, purpose 매핑, 사용 횟수
@@ -91,19 +88,33 @@ Profile files (auto-generated, gitignored — loaded when available):
 1. **소스 자료** — 이미 있으면 스킵
 2. **목적** — purpose-profile 자동 매칭
 3. **분량** — "몇 분 발표인가요?" or "몇 장?"
-4. **프리셋** — 목적 기반 상위 3개 자동 추천 (아래 Purpose Detection 참조)
-5. **PPTX 스타일** — 디자인 우선 / 편집 우선 (아래 PPTX 스타일 선택 참조)
-6. **저장 경로** — 첫 사용 시 질문, CLAUDE.md에 `outputDir: <path>` 저장
+4. **디자인 모드** — 아래 디자인 모드 선택 참조
+5. **저장 경로** — 첫 사용 시 질문, CLAUDE.md에 `outputDir: <path>` 저장
 
-### Purpose Detection + Preset Auto-Selection
+### 디자인 모드 선택
 
-After analyzing the source, detect presentation purpose and recommend matching preset.
+```
+디자인 모드:
+  A) 자유 모드 (기본) — AI가 자유롭게 디자인합니다. 제약 없음.
+  B) 프리셋 모드 — 브랜드/규정에 맞는 가드레일을 적용합니다.
+```
+
+- **기본값: A (자유 모드)** — 1920×1080 규격만 지키고 LLM이 자유롭게 디자인
+- B 선택 시 → 프리셋 선택 단계로 진입 (아래 참조)
+- 사용자가 프리셋 이름을 직접 언급하면 자동으로 B 모드
+
+| 선택 | HTML 프롬프트 | 설명 |
+|------|--------------|------|
+| 자유 모드 | `prompts/hybrid-free.md` | Message Design + 자유 CSS |
+| 프리셋 모드 | `prompts/hybrid.md` | Message Design + 프리셋 CSS 변수 |
+
+### Preset Selection (프리셋 모드일 때만)
 
 1. **프로필 매핑 확인**: my-defaults.md에서 해당 purpose의 기존 preset 매핑 확인
    - 매핑 있으면 → 가장 많이 사용한 프리셋을 1순위로 추천
    - 매핑 없으면 → purpose-profiles.ts 기반 기본 추천 사용
 
-2. **Present top 3 presets** from matched purpose profile's `presets[]` array (프로필 반영):
+2. **Present top 3 presets** from matched purpose profile's `presets[]` array:
 
 ```
 추천 프리셋:
@@ -113,36 +124,10 @@ After analyzing the source, detect presentation purpose and recommend matching p
   또는 프리셋 이름을 직접 입력하세요.
 ```
 
-Each preset description uses its `vibe` field from `src/themes/presets.ts`.
-Experienced users can skip by saying the preset name directly (e.g., "bold-signal로").
-
-3. User can override:
-   - Direct: "notebook-tabs로 해줘"
-   - Purpose-based: "투자자 피칭용으로" -> Sequoia/YC pattern
-   - Accept default: proceed with recommendation
-
-4. **Temporary Override 확인** (평소와 다른 프리셋 선택 시):
+3. **Temporary Override 확인** (평소와 다른 프리셋 선택 시):
    "이번만 예외인가요, 앞으로 기본으로 할까요?"
    - "이번만" → 프로필 업데이트 스킵 (Phase 5에서 확인하지 않음)
    - "앞으로" → Phase 5에서 프로필 업데이트
-
-### PPTX 스타일 선택
-
-프리셋 확정 직후, PPTX 스타일을 묻는다:
-
-```
-PPTX 스타일:
-  A) 디자인 우선 — 화려한 비주얼, 받는 사람은 텍스트만 수정 가능
-  B) 편집 우선 — 깔끔한 디자인, 받는 사람도 모든 요소 자유롭게 수정 가능
-```
-
-- 기본값: A (디자인 우선)
-- 선택에 따라 Phase 3 HTML 생성 프롬프트와 Phase 4 내보내기 모드가 분기됨:
-
-| 선택 | HTML 프롬프트 | 내보내기 모드 |
-|------|--------------|--------------|
-| 디자인 우선 | `prompts/hybrid.md` | `--mode=hybrid` |
-| 편집 우선 | `prompts/editable.md` | `--mode=dom` |
 
 ---
 
@@ -161,19 +146,18 @@ C) 슬라이드별 — 한 장씩 만들면서 피드백을 받습니다
 
 ### Mode B: 아웃라인 생성 (단계별 모드)
 
-Create an outline following `references/outline-format.md`:
-
 ```
 OUTLINE: [Title]
-STYLE: [preset-name]
+MODE: free | preset:[preset-name]
 SLIDES: [count]
 
 ---
 
 SECTION A: [Name] (slide range, duration)
 
-  #1. [Title] -> [ContentType]
-      -> [content summary]
+  #1. [Title — 주장형, 목차형 금지]
+      -> [핵심 메시지 1문장]
+      -> [레이아웃 의도]
 ```
 
 #### Content Analysis
@@ -183,20 +167,11 @@ SECTION A: [Name] (slide range, duration)
 - Determine narrative arc: Problem -> Analysis -> Solution -> Action
 - Match content volume to requested slide count
 
-#### ContentType Assignment
-
-Assign ContentType to each slide based on content:
-- Key message with supporting points -> `content-bullets`
-- Comparison or data -> `content-table`
-- Impactful quote -> `quote`
-- Process or flow -> `diagram-flow`
-- Opening -> `title`, Closing -> `closing`
-
 #### Content Guidelines
 
-- Each slide should have ONE clear message
-- Bullet text: concise, 10-15 words per bullet
-- Table cells: short phrases, not paragraphs
+- Each slide should have ONE clear takeaway (Message Design Rule 1)
+- Before information, establish tension — why this matters (Rule 2)
+- Connect to audience's reality, not abstract tech (Rule 4)
 - Balance content types: don't use 5 bullet slides in a row
 - Total text per slide: aim for 50-100 words
 
@@ -207,8 +182,8 @@ Show outline to user for approval before proceeding to Phase 3.
 ## Phase 3: HTML 생성 + 프리뷰/수정
 
 1. **HTML 슬라이드 생성**
-   - **디자인 우선**: `references/html-generation.md` + `prompts/hybrid.md` 규칙 적용
-   - **편집 우선**: `prompts/editable.md` 규칙 적용 (CSS 제약, 시맨틱 HTML 강제)
+   - 선택된 모드에 따라 `references/html-generation.md` + 해당 프롬프트 규칙 적용
+   - **양쪽 프롬프트 모두 Message Design 레이어 포함** (4규칙 + 5안티패턴)
    - 저장 위치: `slides/generated/`
    - Mode A: 전체 한 번에 생성
    - Mode B: 아웃라인 승인 후 생성
@@ -235,11 +210,7 @@ Show outline to user for approval before proceeding to Phase 3.
 
 2. **PPTX 생성**
    ```bash
-   # 디자인 우선 (기본)
    npm run export-pptx -- slides/generated --output=<outputDir>/[topic-slug].pptx --mode=hybrid --verbose
-
-   # 편집 우선
-   npm run export-pptx -- slides/generated --output=<outputDir>/[topic-slug].pptx --mode=dom --verbose
    ```
 
 3. **결과 보고**
@@ -323,10 +294,9 @@ Phase 5 완료 직후 `node dist/profile/cli.js audit-check` 실행. `due: true`
 ```
 User: /presentation "AI 트렌드 2026" 8장
 
-[Phase 1] 소스 분석 + 프리셋 추천
-  "발표 목적: 트렌드 리포트 (Editorial 패턴)
-   추천 스타일: Vintage Editorial
-   대안: Electric Studio, Dark Botanical"
+[Phase 1] 소스 분석 + 디자인 모드
+  "디자인 모드: A) 자유 모드 (기본)  B) 프리셋 모드"
+  → A 선택 (기본)
 
 [Phase 2] "생성 방식을 선택해주세요: A/B/C" -> B 선택
   아웃라인 제시 -> 승인

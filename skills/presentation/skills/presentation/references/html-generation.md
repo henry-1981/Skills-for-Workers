@@ -14,17 +14,19 @@ PPTX 경로에서 Claude Code가 HTML 슬라이드를 생성할 때의 규칙.
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 ```
 
-## 디자인 자유도 — 모드별 분기
+## 디자인 모드
 
-### 디자인 우선 모드 (기본)
+### 자유 모드 (기본)
 CSS 제약 없음. gradient, glow, backdrop-filter, 반투명 모두 사용 가능.
 컨퍼런스 키노트 수준의 비주얼 품질을 목표로 한다.
+상세 규칙: `src/html-pipeline/prompts/hybrid-free.md`
+
+### 프리셋 모드
+자유 모드 + 프리셋 CSS 변수 가드레일 적용.
+브랜드/규정 준수가 필요할 때 사용.
 상세 규칙: `src/html-pipeline/prompts/hybrid.md`
 
-### 편집 우선 모드
-CSS 제약 있음. 단색 배경, 시맨틱 태그, 그라디언트/필터 금지.
-받는 사람이 PowerPoint에서 모든 요소를 자유롭게 수정할 수 있도록 한다.
-상세 규칙: `src/html-pipeline/prompts/editable.md`
+양쪽 모두 Message Design 레이어 (4규칙 + 5안티패턴)가 CSS보다 먼저 적용된다.
 
 ## 프리셋 CSS 변수
 `preset-to-css.ts`로 생성된 CSS variables를 `:root`에 주입.
