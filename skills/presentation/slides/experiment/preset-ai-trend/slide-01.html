@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  /* Preset CSS: kr-corporate-navy */
+  :root {
+    --bg-primary: #1B2838;
+    --bg-gradient-end: #0D1B2A;
+    --card-bg: #243447;
+    --accent: #4A9BD9;
+    --text-primary: #F0F4F8;
+    --text-secondary: #8899AA;
+    --text-on-card: #F0F4F8;
+    --card-fill-0: #243447;
+    --card-fill-1: #1E3A5F;
+    --card-fill-2: #2C4A6E;
+    --card-fill-3: #1B3352;
+    --card-fill-4: #345882;
+    --card-fill-5: #1B2838;
+    --card-accent-0: #4A9BD9;
+    --card-accent-1: #5AABEA;
+    --card-accent-2: #3A8BC9;
+    --card-accent-3: #4A9BD9;
+    --card-accent-4: #6BBBFA;
+    --card-accent-5: #4A9BD9;
+    --font-display: 'Pretendard';
+    --font-display-weight: 700;
+    --font-body: 'Pretendard';
+    --font-body-weight: 400;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: var(--font-body), 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-gradient-end));
+    position: relative;
+  }
+
+  /* Subtle grid */
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,155,217,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,155,217,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Accent bar top */
+  .accent-bar { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    height: 100%; padding: 120px;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 24px; border-radius: 100px;
+    background: rgba(74, 155, 217, 0.1);
+    border: 1px solid rgba(74, 155, 217, 0.25);
+    color: var(--accent); font-size: 18px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  .badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+  h1 {
+    font-size: 96px; font-weight: var(--font-display-weight); line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    letter-spacing: -2px;
+  }
+
+  .subtitle {
+    font-size: 28px; font-weight: 300; color: var(--text-secondary);
+    letter-spacing: 1px;
+    max-width: 700px;
+  }
+
+  /* Bottom accent line */
+  .bottom-line {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: var(--accent); opacity: 0.4;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: var(--text-secondary);
+    font-weight: 400; letter-spacing: 4px; opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="accent-bar"></div>
+
+  <div class="content">
+    <div class="badge">Trend Report 2026</div>
+    <h1>AI 트렌드 전망</h1>
+    <p class="subtitle">에이전트 시대의 개막 — 생성에서 실행으로</p>
+  </div>
+
+  <div class="bottom-line"></div>
+  <div class="counter">01 / 05</div>
+</body>
+</html>

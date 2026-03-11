@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(140px);
+  }
+  .orb-1 { width: 900px; height: 900px; background: #7c3aed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.15; }
+  .orb-2 { width: 400px; height: 400px; background: #f59e0b; bottom: -100px; right: 200px; opacity: 0.1; }
+  .orb-3 { width: 300px; height: 300px; background: #ec4899; top: 100px; left: 100px; opacity: 0.08; }
+
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .progress { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #7c3aed, #f59e0b, #ec4899); }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    height: 100%; padding: 120px;
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 14px; font-weight: 500; color: #a78bfa;
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 64px; font-weight: 800; color: #faf5ff;
+    letter-spacing: -1.5px; margin-bottom: 20px; line-height: 1.2;
+  }
+
+  .highlight {
+    font-size: 64px; font-weight: 800; line-height: 1.2;
+    background: linear-gradient(135deg, #a78bfa 0%, #f59e0b 50%, #ec4899 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 48px;
+  }
+
+  .takeaways {
+    display: flex; gap: 48px;
+    margin-bottom: 64px;
+  }
+
+  .takeaway {
+    display: flex; align-items: flex-start; gap: 16px;
+    max-width: 380px; text-align: left;
+  }
+
+  .takeaway-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+  }
+  .takeaway:nth-child(1) .takeaway-icon { background: rgba(124, 58, 237, 0.15); color: #a78bfa; }
+  .takeaway:nth-child(2) .takeaway-icon { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+  .takeaway:nth-child(3) .takeaway-icon { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+
+  .takeaway-text {
+    font-size: 18px; font-weight: 400; color: rgba(250, 245, 255, 0.55);
+    line-height: 1.6;
+  }
+  .takeaway-text strong { color: #faf5ff; font-weight: 600; }
+
+  /* CTA */
+  .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 40px; border-radius: 100px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2));
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #e9d5ff; font-size: 18px; font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .cta-arrow { font-size: 20px; }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    letter-spacing: 4px;
+  }
+
+  /* Accent line at bottom */
+  .accent-line {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 3px;
+    background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="grid-overlay"></div>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="section-label">Key Takeaway</div>
+    <h2>경쟁사는 이미 시작했다.</h2>
+    <div class="highlight">당신의 다음 분기는?</div>
+
+    <div class="takeaways">
+      <div class="takeaway">
+        <div class="takeaway-icon">1</div>
+        <div class="takeaway-text"><strong>월요일에 하나 위임하라.</strong> 반복 업무 하나를 에이전트에게 맡기고, 금요일에 결과를 보라.</div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">2</div>
+        <div class="takeaway-text"><strong>규칙부터 만들어라.</strong> AI 도입 후 거버넌스를 세우는 회사는 사고 후 보험을 드는 것과 같다.</div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">3</div>
+        <div class="takeaway-text"><strong>당신만의 데이터를 쌓아라.</strong> 범용 AI는 누구나 쓴다. 차이를 만드는 건 당신 도메인의 깊이다.</div>
+      </div>
+    </div>
+
+    <div class="cta">
+      우리 조직의 첫 에이전트를 설계합시다 <span class="cta-arrow">→</span>
+    </div>
+  </div>
+
+  <div class="accent-line"></div>
+  <div class="counter">05 / 05</div>
+</body>
+</html>

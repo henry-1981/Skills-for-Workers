@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #0a0a0f;
+    position: relative;
+  }
+
+  .accent-bar {
+    position: absolute; top: 0; left: 0;
+    width: 8px; height: 100%;
+    background: linear-gradient(180deg, #dc2626 0%, #dc2626 40%, transparent 100%);
+  }
+
+  .content {
+    position: relative; z-index: 10;
+    display: grid; grid-template-columns: 480px 1fr; gap: 80px;
+    height: 100%; padding: 80px 100px 80px 140px;
+    align-items: center;
+  }
+
+  /* Left: The argument */
+  .left {
+    display: flex; flex-direction: column;
+  }
+
+  .section-label {
+    font-size: 13px; font-weight: 600; color: #dc2626;
+    letter-spacing: 5px; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-size: 44px; font-weight: 800; color: #f5f5f5;
+    letter-spacing: -1.5px; line-height: 1.25;
+    margin-bottom: 32px;
+  }
+
+  .lead {
+    font-size: 18px; font-weight: 400; color: rgba(245, 245, 245, 0.45);
+    line-height: 1.8;
+  }
+
+  /* Right: The waterfall chart */
+  .chart {
+    display: flex; flex-direction: column; gap: 0;
+    padding: 48px 56px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+  }
+
+  .chart-title {
+    font-size: 14px; font-weight: 500; color: rgba(245, 245, 245, 0.3);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .bar-row {
+    display: grid; grid-template-columns: 200px 1fr 80px; align-items: center;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  }
+  .bar-row:last-child { border-bottom: none; }
+
+  .bar-label {
+    font-size: 16px; font-weight: 500; color: rgba(245, 245, 245, 0.6);
+  }
+  .bar-label.highlight { color: #f5f5f5; font-weight: 700; }
+
+  .bar-track {
+    height: 32px; background: rgba(255, 255, 255, 0.03); border-radius: 6px;
+    position: relative; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 6px;
+    position: absolute; left: 0; top: 0;
+  }
+
+  /* Color semantics: red = being automated, blue = still human */
+  .bar-fill.automated { background: linear-gradient(90deg, #dc2626, #ef4444); opacity: 0.8; }
+  .bar-fill.partial { background: linear-gradient(90deg, #f59e0b, #fbbf24); opacity: 0.7; }
+  .bar-fill.human { background: linear-gradient(90deg, #3b82f6, #60a5fa); opacity: 0.6; }
+
+  .bar-pct {
+    font-size: 18px; font-weight: 700; text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .bar-pct.automated { color: #ef4444; }
+  .bar-pct.partial { color: #fbbf24; }
+  .bar-pct.human { color: #60a5fa; }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 32px; margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: rgba(245, 245, 245, 0.35);
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 3px;
+  }
+  .legend-dot.red { background: #dc2626; }
+  .legend-dot.yellow { background: #f59e0b; }
+  .legend-dot.blue { background: #3b82f6; }
+
+  .bottom-bar {
+    position: absolute; bottom: 48px; left: 140px; right: 100px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .source { font-size: 13px; color: rgba(245, 245, 245, 0.2); }
+  .counter { font-size: 14px; color: rgba(245, 245, 245, 0.2); letter-spacing: 4px; }
+</style>
+</head>
+<body>
+  <div class="accent-bar"></div>
+
+  <div class="content">
+    <div class="left">
+      <div class="section-label">Automation Exposure</div>
+      <h2>같은 직무,<br>다른 운명</h2>
+      <p class="lead">
+        "AI 도입률 72%"라는 평균은 무의미합니다.
+        문제는 당신의 업무 중 어느 부분이
+        $0.02 API 호출로 대체 가능한가입니다.
+        직무별 자동화 노출도를 정면으로 봐야 합니다.
+      </p>
+    </div>
+
+    <div class="chart">
+      <div class="chart-title">직무별 AI 자동화 노출도 (2026)</div>
+
+      <div class="bar-row">
+        <div class="bar-label">데이터 입력·정리</div>
+        <div class="bar-track"><div class="bar-fill automated" style="width: 92%;"></div></div>
+        <div class="bar-pct automated">92%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">번역·현지화</div>
+        <div class="bar-track"><div class="bar-fill automated" style="width: 87%;"></div></div>
+        <div class="bar-pct automated">87%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">고객 응대 (1차)</div>
+        <div class="bar-track"><div class="bar-fill automated" style="width: 81%;"></div></div>
+        <div class="bar-pct automated">81%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">보고서 초안 작성</div>
+        <div class="bar-track"><div class="bar-fill automated" style="width: 76%;"></div></div>
+        <div class="bar-pct automated">76%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">코드 리뷰·테스트</div>
+        <div class="bar-track"><div class="bar-fill partial" style="width: 58%;"></div></div>
+        <div class="bar-pct partial">58%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">제품 전략 수립</div>
+        <div class="bar-track"><div class="bar-fill partial" style="width: 34%;"></div></div>
+        <div class="bar-pct partial">34%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label highlight">이해관계자 설득</div>
+        <div class="bar-track"><div class="bar-fill human" style="width: 12%;"></div></div>
+        <div class="bar-pct human">12%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label highlight">조직 문화 설계</div>
+        <div class="bar-track"><div class="bar-fill human" style="width: 8%;"></div></div>
+        <div class="bar-pct human">8%</div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot red"></div> 거의 완전 자동화</div>
+        <div class="legend-item"><div class="legend-dot yellow"></div> 부분 자동화</div>
+        <div class="legend-item"><div class="legend-dot blue"></div> 인간 영역 유지</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <span class="source">McKinsey GI "Jobs Lost, Jobs Gained" 2025 Update 재구성</span>
+    <span class="counter">02 / 05</span>
+  </div>
+</body>
+</html>

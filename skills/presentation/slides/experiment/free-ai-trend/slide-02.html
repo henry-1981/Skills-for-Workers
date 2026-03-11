@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.2;
+  }
+  .orb-1 { width: 600px; height: 600px; background: #7c3aed; top: -100px; left: -100px; }
+  .orb-2 { width: 500px; height: 500px; background: #f59e0b; bottom: -150px; right: -50px; opacity: 0.15; }
+
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Progress bar */
+  .progress { position: absolute; top: 0; left: 0; width: 40%; height: 3px; background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    height: 100%; padding: 100px 120px 80px;
+  }
+
+  .section-label {
+    font-size: 14px; font-weight: 500; color: #a78bfa;
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 56px; font-weight: 800; color: #faf5ff;
+    letter-spacing: -1px; margin-bottom: 64px;
+  }
+  h2 span {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .trends {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px;
+  }
+
+  .trend-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px; padding: 36px 28px;
+    display: flex; flex-direction: column;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .trend-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    border-radius: 20px 20px 0 0;
+  }
+  .trend-card:nth-child(1)::before { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+  .trend-card:nth-child(2)::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .trend-card:nth-child(3)::before { background: linear-gradient(90deg, #ec4899, #f472b6); }
+  .trend-card:nth-child(4)::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+  .trend-card:nth-child(5)::before { background: linear-gradient(90deg, #10b981, #34d399); }
+
+  .trend-num {
+    font-size: 48px; font-weight: 800; line-height: 1;
+    margin-bottom: 20px;
+  }
+  .trend-card:nth-child(1) .trend-num { color: #a78bfa; }
+  .trend-card:nth-child(2) .trend-num { color: #fbbf24; }
+  .trend-card:nth-child(3) .trend-num { color: #f472b6; }
+  .trend-card:nth-child(4) .trend-num { color: #22d3ee; }
+  .trend-card:nth-child(5) .trend-num { color: #34d399; }
+
+  .trend-title {
+    font-size: 22px; font-weight: 700; color: #faf5ff;
+    margin-bottom: 12px; line-height: 1.3;
+  }
+
+  .trend-desc {
+    font-size: 16px; font-weight: 400; color: rgba(250, 245, 255, 0.45);
+    line-height: 1.6; flex: 1;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-overlay"></div>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="section-label">Overview</div>
+    <h2>2026년을 정의할 <span>5가지 흐름</span></h2>
+
+    <div class="trends">
+      <div class="trend-card">
+        <div class="trend-num">01</div>
+        <div class="trend-title">에이전트 AI</div>
+        <div class="trend-desc">자율 실행하는 AI — 생성을 넘어 행동하는 시스템으로 전환</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-num">02</div>
+        <div class="trend-title">멀티모달 네이티브</div>
+        <div class="trend-desc">텍스트·이미지·음성·코드를 하나의 컨텍스트에서 처리</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-num">03</div>
+        <div class="trend-title">온디바이스 AI</div>
+        <div class="trend-desc">클라우드 없이 동작하는 경량 모델, 프라이버시와 속도의 균형</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-num">04</div>
+        <div class="trend-title">AI 거버넌스</div>
+        <div class="trend-desc">EU AI Act 시행, 기업별 내부 정책 수립이 필수 과제로</div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-num">05</div>
+        <div class="trend-title">도메인 특화</div>
+        <div class="trend-desc">범용에서 전문으로 — 의료·법률·금융 영역의 수직 AI</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="counter">02 / 05</div>
+</body>
+</html>

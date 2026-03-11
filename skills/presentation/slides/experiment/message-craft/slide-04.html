@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  .progress { position: absolute; top: 0; left: 0; width: 80%; height: 3px; background: linear-gradient(90deg, #7c3aed, #ec4899); }
+
+  .content {
+    position: relative; z-index: 10;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    height: 100%; padding: 80px 120px;
+    align-items: center;
+  }
+
+  .left { display: flex; flex-direction: column; }
+
+  h2 {
+    font-size: 50px; font-weight: 800; color: #faf5ff;
+    line-height: 1.2; letter-spacing: -1px;
+    margin-bottom: 36px;
+  }
+  h2 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #a78bfa, #ec4899);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* Tension → Resolution blocks */
+  .tension-block {
+    padding: 24px 28px; border-radius: 12px;
+    margin-bottom: 16px;
+    background: rgba(239, 68, 68, 0.08);
+    border-left: 4px solid #ef4444;
+  }
+  .tension-block p {
+    font-size: 20px; font-weight: 500; color: #fca5a5; line-height: 1.6;
+  }
+
+  .resolution-block {
+    padding: 24px 28px; border-radius: 12px;
+    background: rgba(124, 58, 237, 0.08);
+    border-left: 4px solid #a78bfa;
+  }
+  .resolution-block p {
+    font-size: 20px; font-weight: 500; color: #c4b5fd; line-height: 1.6;
+  }
+
+  /* Right: timeline */
+  .right { display: flex; flex-direction: column; gap: 8px; }
+
+  .era-divider {
+    display: flex; align-items: center; gap: 16px;
+    padding: 8px 0; margin: 8px 0;
+  }
+  .era-divider::before, .era-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(250,245,255,0.1), transparent);
+  }
+  .era-divider::after {
+    background: linear-gradient(90deg, transparent, rgba(250,245,255,0.1));
+  }
+  .era-label {
+    font-size: 13px; font-weight: 600; color: rgba(250,245,255,0.3);
+    letter-spacing: 3px; text-transform: uppercase; white-space: nowrap;
+  }
+
+  .phase {
+    display: flex; align-items: center; gap: 20px;
+    padding: 22px 24px; border-radius: 14px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .phase.now {
+    background: rgba(124, 58, 237, 0.1);
+    border-color: rgba(124, 58, 237, 0.3);
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.08);
+  }
+
+  .phase-year {
+    font-size: 14px; font-weight: 700; color: rgba(250,245,255,0.3);
+    width: 48px; text-align: center; flex-shrink: 0;
+  }
+  .phase.now .phase-year { color: #a78bfa; }
+
+  .phase-title {
+    font-size: 18px; font-weight: 600; color: rgba(250,245,255,0.7);
+  }
+  .phase.now .phase-title { color: #faf5ff; }
+
+  .phase-voice {
+    font-size: 15px; font-weight: 400; color: rgba(250,245,255,0.35);
+    margin-left: auto; font-style: italic;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    letter-spacing: 4px; z-index: 10;
+  }
+</style>
+</head>
+<body>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="left">
+      <h2>당신의 팀에<br><em>새 팀원</em>이<br>합류한다</h2>
+
+      <div class="tension-block">
+        <p>"AI가 내 일을 대체하나요?"</p>
+      </div>
+      <div class="resolution-block">
+        <p>대체가 아닙니다. 역할이 <strong style="color:#e9d5ff;">실행자에서 감독자</strong>로 바뀝니다. 판단은 여전히 사람의 몫입니다.</p>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="era-divider"><span class="era-label">답하던 시대</span></div>
+
+      <div class="phase">
+        <div class="phase-year">2023</div>
+        <div class="phase-title">질문하면 답한다. 끝.</div>
+        <div class="phase-voice">"이것 좀 알려줘"</div>
+      </div>
+      <div class="phase">
+        <div class="phase-year">2024</div>
+        <div class="phase-title">추론 과정을 보여준다</div>
+        <div class="phase-voice">"왜 그런지 설명해줘"</div>
+      </div>
+
+      <div class="era-divider"><span class="era-label">실행하는 시대</span></div>
+
+      <div class="phase now">
+        <div class="phase-year">2025</div>
+        <div class="phase-title">도구를 쓰고 계획을 세운다</div>
+        <div class="phase-voice">"이 일 처리해둬"</div>
+      </div>
+      <div class="phase">
+        <div class="phase-year">2026</div>
+        <div class="phase-title">알아서 끝까지 완수한다</div>
+        <div class="phase-voice">"알아서 해"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="counter">04 / 05</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Hybrid Mode: Source → Conference-Quality HTML Slides
+# Free Mode: Source → Conference-Quality HTML Slides
 
 Generate presentation slides as standalone HTML files optimized for maximum visual impact.
 The HTML will be screenshot-captured for PPTX — you have full CSS freedom.
@@ -12,6 +12,7 @@ Given source material, generate a series of presentation slide HTML files.
 2. Decide slide count (8-15 for 10-minute presentation)
 3. Plan visual variety: title, content, KPI, quote, comparison, timeline
 4. Design narrative arc: opener → build-up → evidence → climax → closer
+5. **Choose a cohesive visual identity**: color palette, mood, typography weight — whatever best serves the content
 
 ## HTML Specification
 
@@ -64,13 +65,21 @@ You are designing conference keynote slides. Use every CSS capability available:
 - **Typography**: `-webkit-background-clip: text` for gradient text, `letter-spacing`, `line-height`
 - **Layout**: Flexbox, Grid — use whatever produces the best visual result
 
-### Visual Quality Targets
-- Dark backgrounds with vibrant accent colors
-- Large, bold typography with strong hierarchy (80-100px titles)
-- Card-based layouts with subtle borders and inner glow
+### Visual Design — Your Call
+
+You decide the visual direction. Consider:
+- What mood best serves this content? (authoritative, playful, elegant, bold, minimal...)
+- What color palette creates the right emotional response?
+- Dark or light? Warm or cool? High contrast or subtle?
+- Should typography be the hero, or should layout/color lead?
+
+The only constraint: make it **stunning**. Conference keynote quality.
+
+### Quality Targets
+- Strong visual identity — every slide should feel part of a cohesive deck
+- Large, bold typography with clear hierarchy (80-100px titles)
 - Generous whitespace — less content, more impact
-- Progress indicators (top bar showing slide position)
-- Decorative elements: accent lines, subtle grids, ambient glow orbs
+- Decorative elements where appropriate: accent lines, subtle grids, ambient glow orbs
 
 ### What NOT to do
 - No cramped layouts — each slide should breathe
@@ -78,14 +87,7 @@ You are designing conference keynote slides. Use every CSS capability available:
 - No plain white backgrounds — always styled
 - No walls of text — if content is dense, split across slides
 - No clip-art or placeholder images
-
-## Preset CSS Variables (injected by orchestrator)
-```css
-{{PRESET_CSS}}
-```
-
-Use these as your color foundation: `var(--bg-primary)`, `var(--text-primary)`, `var(--accent)`, etc.
-Feel free to derive additional colors from the preset palette.
+- No generic "corporate blue" — be intentional about your palette
 
 ## Output
 Write each slide as a separate HTML file to the specified directory.

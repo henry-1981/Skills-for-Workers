@@ -120,15 +120,15 @@ Skills 외 고급 패턴(Agents, Commands, A/B 실험 방법론)은 `ADVANCED-PA
 
 ### Presentation Plugin Specifics
 
-듀얼 모드 PPTX 생성 파이프라인:
+HTML 생성 + hybrid-renderer PPTX 배포 파이프라인:
 
-- **마크다운 파이프라인** (기존): slides.md → parser → narrative → layout(9종 Bento) → geometry(1920×1080) → pptx-renderer
-- **HTML 파이프라인** (신규): HTML slides → orchestrator → hybrid-renderer 또는 html2pptx → PPTX
-  - **디자인 우선 (hybrid)**: 스크린샷 배경 + 편집 가능 텍스트 오버레이
-  - **편집 우선 (dom)**: 순수 DOM→PPTX 변환, 모든 요소 편집 가능
+- **HTML 파이프라인**: HTML slides → orchestrator → hybrid-renderer → PPTX
+  - hybrid 모드: 스크린샷 배경 + 편집 가능 텍스트 오버레이
+  - 자유모드 기본 (1920×1080, LLM 자유 디자인) + 프리셋 opt-in 가드레일
+- **프롬프트 구조**: Message Design 레이어 (4규칙 + 5안티패턴) → CSS Design Philosophy 순서
+  - hybrid.md (프리셋 모드), hybrid-free.md (자유 모드)
 - **slides-grab 에디터**: 브라우저 기반 시각 편집기 (`npm run editor`)
-  - AI Edit 큐: 수정 의도 축적 → 마크다운으로 변환 → Claude Code에 전달
-  - 직접 편집: 텍스트/색상/크기/위치 실시간 변경
+- **themes/presets.ts**: kr-* 9개 프리셋만 유지
 - **Playwright MCP**: `.mcp.json`으로 브라우저 자동화 MCP 서버 설정
 
 ## Commands

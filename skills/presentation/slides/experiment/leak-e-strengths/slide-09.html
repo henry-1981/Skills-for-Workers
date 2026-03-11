@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(120px);
+  }
+  .orb-1 { width: 500px; height: 500px; background: #7c3aed; top: -100px; left: 100px; opacity: 0.15; }
+  .orb-2 { width: 400px; height: 400px; background: #f59e0b; bottom: -100px; right: 200px; opacity: 0.1; }
+
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .progress { position: absolute; top: 0; left: 0; width: 85%; height: 3px; background: linear-gradient(90deg, #7c3aed, #f59e0b); }
+
+  /* Three actionable items - vertical stack, not cramped grid */
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    height: 100%; padding: 80px 200px;
+  }
+
+  .section-label {
+    font-size: 14px; font-weight: 500; color: #a78bfa;
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 44px; font-weight: 800; color: #faf5ff;
+    letter-spacing: -1px; margin-bottom: 56px;
+  }
+
+  .actions { display: flex; flex-direction: column; gap: 24px; }
+
+  .action-item {
+    display: flex; align-items: center; gap: 32px;
+    padding: 32px 40px; border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .action-number {
+    font-size: 48px; font-weight: 900; line-height: 1; flex-shrink: 0;
+    width: 64px; text-align: center;
+  }
+  .action-item:nth-child(1) .action-number { color: rgba(167, 139, 250, 0.6); }
+  .action-item:nth-child(2) .action-number { color: rgba(251, 191, 36, 0.6); }
+  .action-item:nth-child(3) .action-number { color: rgba(244, 114, 182, 0.6); }
+
+  .action-divider {
+    width: 2px; height: 48px; border-radius: 1px; flex-shrink: 0;
+  }
+  .action-item:nth-child(1) .action-divider { background: rgba(167, 139, 250, 0.2); }
+  .action-item:nth-child(2) .action-divider { background: rgba(251, 191, 36, 0.2); }
+  .action-item:nth-child(3) .action-divider { background: rgba(244, 114, 182, 0.2); }
+
+  .action-content { flex: 1; }
+
+  .action-title {
+    font-size: 24px; font-weight: 700; color: #faf5ff; margin-bottom: 8px;
+  }
+
+  .action-desc {
+    font-size: 18px; font-weight: 400; color: rgba(250, 245, 255, 0.45);
+    line-height: 1.6;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-overlay"></div>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="section-label">Action Items</div>
+    <div class="section-title">지금 시작할 세 가지</div>
+
+    <div class="actions">
+      <div class="action-item">
+        <div class="action-number">1</div>
+        <div class="action-divider"></div>
+        <div class="action-content">
+          <div class="action-title">에이전트 파일럿 시작</div>
+          <div class="action-desc">반복 업무 하나를 AI에게 위임하는 것부터. 작게, 빠르게.</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-number">2</div>
+        <div class="action-divider"></div>
+        <div class="action-content">
+          <div class="action-title">거버넌스 프레임 수립</div>
+          <div class="action-desc">도입 후가 아니라 도입 전에. AI 정책은 선제적으로.</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-number">3</div>
+        <div class="action-divider"></div>
+        <div class="action-content">
+          <div class="action-title">도메인 지식 자산화</div>
+          <div class="action-desc">범용 AI 위에 쌓는 전문성이 유일한 경쟁력입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="counter">09 / 10</div>
+</body>
+</html>

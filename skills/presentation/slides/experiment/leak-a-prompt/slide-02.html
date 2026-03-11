@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(120px);
+  }
+  .orb-1 { width: 600px; height: 600px; background: #7c3aed; top: -100px; left: -100px; opacity: 0.2; }
+  .orb-2 { width: 500px; height: 500px; background: #f59e0b; bottom: -150px; right: -50px; opacity: 0.15; }
+
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .progress { position: absolute; top: 0; left: 0; width: 40%; height: 3px; background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+
+  .content {
+    position: relative; z-index: 10;
+    display: grid; grid-template-columns: 520px 1fr; gap: 80px;
+    height: 100%; padding: 100px 120px 80px;
+    align-items: center;
+  }
+
+  /* LEFT: Single takeaway message */
+  .message-column {
+    display: flex; flex-direction: column;
+  }
+
+  .section-label {
+    font-size: 14px; font-weight: 500; color: #a78bfa;
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 52px; font-weight: 800; color: #faf5ff;
+    letter-spacing: -1px; margin-bottom: 24px; line-height: 1.2;
+  }
+
+  .key-message {
+    font-size: 24px; font-weight: 600; line-height: 1.5;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 32px;
+  }
+
+  .tension {
+    font-size: 18px; font-weight: 400; color: rgba(250, 245, 255, 0.5);
+    line-height: 1.8;
+    border-left: 3px solid rgba(167, 139, 250, 0.3);
+    padding-left: 20px;
+  }
+
+  /* RIGHT: Evidence hierarchy — hero trend + supporting */
+  .evidence-column {
+    display: flex; flex-direction: column; gap: 20px;
+  }
+
+  .hero-card {
+    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    border-radius: 20px; padding: 40px 36px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 0 60px rgba(124, 58, 237, 0.08);
+  }
+  .hero-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .hero-num {
+    font-size: 56px; font-weight: 800; color: #a78bfa; line-height: 1;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-size: 28px; font-weight: 700; color: #faf5ff; margin-bottom: 10px;
+  }
+  .hero-desc {
+    font-size: 18px; font-weight: 400; color: rgba(250, 245, 255, 0.6);
+    line-height: 1.7;
+  }
+  .hero-stat {
+    display: inline-block; margin-top: 16px;
+    font-size: 14px; font-weight: 600; color: #a78bfa;
+    background: rgba(124, 58, 237, 0.15);
+    padding: 6px 16px; border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .supporting-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  }
+
+  .support-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px; padding: 24px 22px;
+    position: relative; overflow: hidden;
+  }
+  .support-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    border-radius: 16px 16px 0 0;
+  }
+  .support-card:nth-child(1)::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .support-card:nth-child(2)::before { background: linear-gradient(90deg, #ec4899, #f472b6); }
+  .support-card:nth-child(3)::before { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+  .support-card:nth-child(4)::before { background: linear-gradient(90deg, #10b981, #34d399); }
+
+  .support-num {
+    font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 10px;
+    opacity: 0.6;
+  }
+  .support-card:nth-child(1) .support-num { color: #fbbf24; }
+  .support-card:nth-child(2) .support-num { color: #f472b6; }
+  .support-card:nth-child(3) .support-num { color: #22d3ee; }
+  .support-card:nth-child(4) .support-num { color: #34d399; }
+
+  .support-title {
+    font-size: 18px; font-weight: 700; color: #faf5ff; margin-bottom: 6px;
+  }
+  .support-desc {
+    font-size: 14px; font-weight: 400; color: rgba(250, 245, 255, 0.35);
+    line-height: 1.5;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    letter-spacing: 4px; z-index: 10;
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-overlay"></div>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="message-column">
+      <div class="section-label">Overview</div>
+      <h2>5가지가 아니라,<br>1가지 판이 바뀐다</h2>
+      <div class="key-message">
+        에이전트 AI가 나머지 4개 트렌드의<br>공통 인프라가 됩니다.
+      </div>
+      <div class="tension">
+        멀티모달, 온디바이스, 거버넌스, 도메인 특화 &mdash;<br>
+        모두 "AI가 스스로 실행한다"는 전제 위에 서 있습니다.<br>
+        에이전트 없이는 나머지도 없습니다.
+      </div>
+    </div>
+
+    <div class="evidence-column">
+      <div class="hero-card">
+        <div class="hero-num">01</div>
+        <div class="hero-title">에이전트 AI</div>
+        <div class="hero-desc">자율 실행하는 AI &mdash; 생성을 넘어 행동하는 시스템으로 전환.<br>나머지 4개 트렌드의 실행 레이어.</div>
+        <span class="hero-stat">Gartner 2026 #1 Strategic Trend</span>
+      </div>
+
+      <div class="supporting-grid">
+        <div class="support-card">
+          <div class="support-num">02</div>
+          <div class="support-title">멀티모달 네이티브</div>
+          <div class="support-desc">에이전트가 다루는 입출력 채널</div>
+        </div>
+        <div class="support-card">
+          <div class="support-num">03</div>
+          <div class="support-title">온디바이스 AI</div>
+          <div class="support-desc">에이전트의 엣지 실행 환경</div>
+        </div>
+        <div class="support-card">
+          <div class="support-num">04</div>
+          <div class="support-title">AI 거버넌스</div>
+          <div class="support-desc">에이전트에 대한 통제 프레임워크</div>
+        </div>
+        <div class="support-card">
+          <div class="support-num">05</div>
+          <div class="support-title">도메인 특화</div>
+          <div class="support-desc">에이전트의 전문 영역 확장</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="counter">02 / 05</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg-primary: #1B2838;
+    --bg-gradient-end: #0D1B2A;
+    --card-bg: #243447;
+    --accent: #4A9BD9;
+    --text-primary: #F0F4F8;
+    --text-secondary: #8899AA;
+    --text-on-card: #F0F4F8;
+    --font-display: 'Pretendard';
+    --font-display-weight: 700;
+    --font-body: 'Pretendard';
+    --font-body-weight: 400;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: var(--font-body), 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-gradient-end));
+    position: relative;
+  }
+
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,155,217,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,155,217,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .progress { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent); }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    height: 100%; padding: 120px;
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 14px; font-weight: 500; color: var(--accent);
+    letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 64px; font-weight: var(--font-display-weight); color: var(--text-primary);
+    letter-spacing: -1.5px; margin-bottom: 20px; line-height: 1.2;
+  }
+
+  .highlight {
+    font-size: 64px; font-weight: 800; line-height: 1.2;
+    color: var(--accent);
+    margin-bottom: 48px;
+  }
+
+  .takeaways {
+    display: flex; gap: 48px;
+    margin-bottom: 64px;
+  }
+
+  .takeaway {
+    display: flex; align-items: flex-start; gap: 16px;
+    max-width: 380px; text-align: left;
+  }
+
+  .takeaway-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+    background: rgba(74, 155, 217, 0.1);
+    color: var(--accent);
+  }
+
+  .takeaway-text {
+    font-size: 18px; font-weight: 400; color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .takeaway-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 40px; border-radius: 100px;
+    background: rgba(74, 155, 217, 0.15);
+    border: 1px solid rgba(74, 155, 217, 0.3);
+    color: var(--accent); font-size: 18px; font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .cta-arrow { font-size: 20px; }
+
+  .bottom-line {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 2px;
+    background: var(--accent); opacity: 0.4;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: var(--text-secondary);
+    letter-spacing: 4px; opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="section-label">Key Takeaway</div>
+    <h2>AI를 도입하느냐가 아니라</h2>
+    <div class="highlight">어떻게 함께 일하느냐의 문제</div>
+
+    <div class="takeaways">
+      <div class="takeaway">
+        <div class="takeaway-icon">→</div>
+        <div class="takeaway-text"><strong>에이전트 파일럿</strong> 시작하세요. 반복 업무 하나를 AI에게 위임하는 것부터.</div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">→</div>
+        <div class="takeaway-text"><strong>거버넌스 프레임</strong>을 세우세요. 도입 후가 아니라 도입 전에.</div>
+      </div>
+      <div class="takeaway">
+        <div class="takeaway-icon">→</div>
+        <div class="takeaway-text"><strong>도메인 지식</strong>을 자산화하세요. 범용 AI 위에 쌓는 전문성이 경쟁력.</div>
+      </div>
+    </div>
+
+    <div class="cta">
+      다음 단계를 논의합시다 <span class="cta-arrow">→</span>
+    </div>
+  </div>
+
+  <div class="bottom-line"></div>
+  <div class="counter">05 / 05</div>
+</body>
+</html>

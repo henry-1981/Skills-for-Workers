@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(140px);
+  }
+  .orb-1 { width: 700px; height: 700px; background: #ec4899; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; }
+
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .progress { position: absolute; top: 0; left: 0; width: 60%; height: 3px; background: linear-gradient(90deg, #7c3aed, #ec4899); }
+
+  /* Data spotlight: jobs number */
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    height: 100%; padding: 120px;
+    text-align: center;
+  }
+
+  .context-label {
+    font-size: 16px; font-weight: 500; color: rgba(250, 245, 255, 0.3);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .giant-number {
+    font-size: 200px; font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #f472b6, #ec4899, #be185d);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -6px;
+    margin-bottom: 24px;
+  }
+
+  .number-label {
+    font-size: 36px; font-weight: 600; color: #faf5ff;
+    margin-bottom: 16px;
+  }
+
+  .number-context {
+    font-size: 22px; font-weight: 400; color: rgba(250, 245, 255, 0.4);
+    max-width: 500px; line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .multiplier {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 24px; border-radius: 100px;
+    background: rgba(236, 72, 153, 0.12);
+    border: 1px solid rgba(236, 72, 153, 0.25);
+    font-size: 20px; font-weight: 700; color: #f472b6;
+  }
+
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="grid-overlay"></div>
+  <div class="progress"></div>
+
+  <div class="content">
+    <div class="context-label">AI Job Demand · Annual New Postings</div>
+    <div class="giant-number">4.2M</div>
+    <div class="number-label">AI 관련 신규 채용 공고</div>
+    <div class="number-context">전 세계 연간 기준</div>
+    <div class="multiplier">2024년 대비 2.1배</div>
+  </div>
+
+  <div class="counter">07 / 10</div>
+</body>
+</html>

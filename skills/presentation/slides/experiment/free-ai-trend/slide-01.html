@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #07060b;
+    position: relative;
+  }
+
+  /* Ambient glow orbs */
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35;
+  }
+  .orb-1 { width: 800px; height: 800px; background: #7c3aed; top: -200px; right: -100px; }
+  .orb-2 { width: 600px; height: 600px; background: #f59e0b; bottom: -200px; left: -100px; opacity: 0.2; }
+  .orb-3 { width: 400px; height: 400px; background: #ec4899; bottom: 100px; right: 300px; opacity: 0.15; }
+
+  /* Grid pattern overlay */
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    height: 100%; padding: 120px;
+    text-align: center;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 24px; border-radius: 100px;
+    background: rgba(124, 58, 237, 0.15);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #c4b5fd; font-size: 18px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  .badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #a78bfa; }
+
+  h1 {
+    font-size: 96px; font-weight: 800; line-height: 1.1;
+    background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 40%, #f59e0b 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 32px;
+    letter-spacing: -2px;
+  }
+
+  .subtitle {
+    font-size: 28px; font-weight: 300; color: rgba(250, 245, 255, 0.5);
+    letter-spacing: 1px;
+    max-width: 700px;
+  }
+
+  /* Bottom accent line */
+  .accent-line {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 3px;
+    background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+  }
+
+  /* Slide counter */
+  .counter {
+    position: absolute; bottom: 40px; right: 80px;
+    font-size: 14px; color: rgba(250, 245, 255, 0.2);
+    font-weight: 400; letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="content">
+    <div class="badge">Trend Report 2026</div>
+    <h1>AI 트렌드 전망</h1>
+    <p class="subtitle">에이전트 시대의 개막 — 생성에서 실행으로</p>
+  </div>
+
+  <div class="accent-line"></div>
+  <div class="counter">01 / 05</div>
+</body>
+</html>
