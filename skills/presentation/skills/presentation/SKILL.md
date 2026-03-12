@@ -34,6 +34,12 @@ Load these before starting:
 - `references/html-generation.md` — HTML slide generation rules
 - `references/style-presets.md` — Style presets (kr-* 9종)
 
+Agent pipeline prompts (Phase 2에서 서브에이전트에게 전달):
+- `src/html-pipeline/prompts/research.md` — Research Agent prompt
+- `src/html-pipeline/prompts/verify.md` — Verification Agent prompt
+- `src/html-pipeline/prompts/message-architect.md` — Message Architect prompt
+- `src/html-pipeline/prompts/html-designer.md` — Design Agent prompt
+
 Profile files (auto-generated, gitignored — loaded when available):
 - `references/my-defaults.md` — 기본 프리셋, purpose 매핑, 사용 횟수
 - `references/my-visual.md` — 프리셋 오버라이드, 커스텀 프리셋
@@ -103,10 +109,10 @@ Profile files (auto-generated, gitignored — loaded when available):
 - B 선택 시 → 프리셋 선택 단계로 진입 (아래 참조)
 - 사용자가 프리셋 이름을 직접 언급하면 자동으로 B 모드
 
-| 선택 | HTML 프롬프트 | 설명 |
-|------|--------------|------|
-| 자유 모드 | `prompts/hybrid-free.md` | Message Design + 자유 CSS |
-| 프리셋 모드 | `prompts/hybrid.md` | Message Design + 프리셋 CSS 변수 |
+| 선택 | 생성 방식 | 설명 |
+|------|----------|------|
+| 자유 모드 | Agent Pipeline (Phase 2) | Research → Verify → Message → Verify → Design |
+| 프리셋 모드 | `prompts/hybrid.md` | Message Design + 프리셋 CSS 변수 (단일 프롬프트) |
 
 ### 무드 키워드 수집 (자유 모드일 때)
 
@@ -150,65 +156,89 @@ Profile files (auto-generated, gitignored — loaded when available):
 
 ---
 
-## Phase 2: 생성 모드 선택
+## Phase 2: Agent Pipeline
 
 정보 수집 완료 후 사용자에게 생성 방식 선택지 제시:
 
 ```
 생성 방식을 선택해주세요:
 A) 원샷 — 전체 슬라이드를 한 번에 생성합니다
-B) 단계별 — 아웃라인을 먼저 보여드린 후 승인하시면 생성합니다
+B) 단계별 — 아웃라인을 먼저 보여드린 후 승인하시면 생성합니다 (기본)
 C) 슬라이드별 — 한 장씩 만들면서 피드백을 받습니다
 ```
 
 기본값: 사용자가 선택하지 않으면 **B(단계별)**로 진행.
 
-### Mode B: 아웃라인 생성 (단계별 모드)
+### Pipeline Dispatch
 
-```
-OUTLINE: [Title]
-MODE: free | preset:[preset-name]
-SLIDES: [count]
+아래 단계를 순서대로 실행한다. 각 단계는 Agent tool로 서브에이전트를 dispatch하여 컨텍스트를 격리한다.
+임시 데이터는 `/tmp/presentation-pipeline/` 에 저장한다.
+
+#### Step 1: Research Agent
+
+`src/html-pipeline/prompts/research.md`를 읽고 서브에이전트에게 전달한다.
+
+- **입력**: source + purpose + audience (Phase 1에서 수집)
+- **출력**: research.json → `/tmp/presentation-pipeline/research.json`에 저장
+- **상태 표시**: "📊 소스 분석 중..."
+
+#### Step 2: Verification (Research)
+
+`src/html-pipeline/prompts/verify.md`를 읽고 서브에이전트에게 전달한다.
+
+- **입력**: artifact=research.json, baseline=원본 소스, criteria="소스 커버리지"
+- **출력**: 검증 결과 JSON
+- **pass=true** → Step 3으로
+- **pass=false** → fix_instruction을 포함하여 Step 1 재실행 (최대 2회)
+- **2회 실패** → 사용자에게 issues 목록 제시, 수동 판단 요청
+- **상태 표시**: "🔍 리서치 검증 중..."
+
+#### Step 3: Message Architect
+
+`src/html-pipeline/prompts/message-architect.md`를 읽고 서브에이전트에게 전달한다.
+
+- **입력**: verified research.json + slide count + archetype (Phase 1에서 선택)
+- **출력**: outline.md → `/tmp/presentation-pipeline/outline.md`에 저장
+- **상태 표시**: "✍️ 메시지 설계 중..."
+
+#### Step 4: Verification (Message)
+
+`src/html-pipeline/prompts/verify.md`를 읽고 서브에이전트에게 전달한다.
+
+- **입력**: artifact=outline.md, baseline=research.json, criteria="메시지 충실도"
+- **출력**: 검증 결과 JSON
+- **pass=true** → Step 5으로
+- **pass=false** → fix_instruction을 포함하여 Step 3 재실행 (최대 2회)
+- **2회 실패** → 사용자에게 issues 목록 제시, 수동 판단 요청
+- **상태 표시**: "🔍 메시지 검증 중..."
+
+#### Step 5: 아웃라인 승인 (Mode B/C만)
+
+- **Mode A**: 스킵하고 Step 6으로
+- **Mode B**: outline.md 내용을 사용자에게 보여주고 승인 대기
+- **Mode C**: 슬라이드별로 보여주고 각각 피드백 → 수정 후 전체 승인
+- 사용자가 수정 요청 시 → Step 3 재실행 (수정 사항을 fix_instruction으로 전달)
+
+#### Step 6: Design Agent
+
+`src/html-pipeline/prompts/html-designer.md`를 읽고 서브에이전트에게 전달한다.
+
+- **입력**: verified outline.md + archetype 정의 (`references/visual-archetypes.md`) + profile overrides (my-visual.md, my-structure.md)
+- **출력**: HTML files → `slides/generated/` 디렉토리
+- **Mode C**: 한 장씩 생성하고 피드백 반영
+- **상태 표시**: "🎨 슬라이드 디자인 중..."
+
+#### 임시 파일 정리
+
+Phase 2 완료 후 `/tmp/presentation-pipeline/` 디렉토리 삭제.
 
 ---
 
-SECTION A: [Name] (slide range, duration)
+## Phase 3: 프리뷰/수정
 
-  #1. [Title — 주장형, 목차형 금지]
-      -> [핵심 메시지 1문장]
-      -> [레이아웃 의도]
-```
+HTML 슬라이드는 Phase 2의 Design Agent가 이미 생성 완료. 이 단계는 편집만 담당.
 
-#### Content Analysis
-
-- Identify 3-5 major themes or sections
-- Extract key messages, data points, quotes
-- Determine narrative arc: Problem -> Analysis -> Solution -> Action
-- Match content volume to requested slide count
-
-#### Content Guidelines
-
-- Each slide should have ONE clear takeaway (Message Design Rule 1)
-- Before information, establish tension — why this matters (Rule 2)
-- Connect to audience's reality, not abstract tech (Rule 4)
-- Balance content types: don't use 5 bullet slides in a row
-- Total text per slide: aim for 50-100 words
-
-Show outline to user for approval before proceeding to Phase 3.
-
----
-
-## Phase 3: HTML 생성 + 프리뷰/수정
-
-1. **HTML 슬라이드 생성**
-   - 선택된 모드에 따라 `references/html-generation.md` + 해당 프롬프트 규칙 적용
-   - **양쪽 프롬프트 모두 Message Design 레이어 포함** (4규칙 + 5안티패턴)
-   - 저장 위치: `slides/generated/`
-   - Mode A: 전체 한 번에 생성
-   - Mode B: 아웃라인 승인 후 생성
-   - Mode C: 한 장씩 생성 + 피드백
-
-2. **slides-grab 에디터 실행**
+1. **slides-grab 에디터 실행**
    ```bash
    npm run editor -- --slides-dir slides/generated --port 3456
    ```
@@ -218,7 +248,7 @@ Show outline to user for approval before proceeding to Phase 3.
    수정이 끝나면 말씀해주세요."
    ```
 
-3. **수정 대기**
+2. **수정 대기**
    - 사용자가 "완료" / "내보내기" / "끝" 등 입력 시 Phase 4로
 
 ---
@@ -320,17 +350,23 @@ User: /presentation "AI 트렌드 2026" 8장
 [Phase 1] 소스 분석 + 디자인 모드
   "디자인 모드: A) 자유 모드 (기본)  B) 프리셋 모드"
   → A 선택 (기본)
+  "어떤 분위기를 원하세요?" → "어둡고 임팩트있게" → dark-tech
 
-[Phase 2] "생성 방식을 선택해주세요: A/B/C" -> B 선택
-  아웃라인 제시 -> 승인
+[Phase 2] "생성 방식을 선택해주세요: A/B/C" → B 선택
+  📊 소스 분석 중...        → research.json
+  🔍 리서치 검증 중...      → pass
+  ✍️ 메시지 설계 중...      → outline.md
+  🔍 메시지 검증 중...      → pass
+  아웃라인 제시 → 승인
+  🎨 슬라이드 디자인 중...  → HTML files
 
-[Phase 3] HTML 생성 -> 에디터 실행
+[Phase 3] 에디터 실행
   "에디터를 열었습니다: http://localhost:3456"
   사용자 수정 후 "내보내기"
 
-[Phase 4] PPTX 생성 -> 파일 전달
+[Phase 4] PPTX 생성 → 파일 전달
 
 User: 좀 더 우아한 느낌으로 바꿔줘
 
-[Style change] CSS 변수 교체 -> 에디터 확인 -> 재내보내기
+[Style change] CSS 변수 교체 → 에디터 확인 → 재내보내기
 ```
