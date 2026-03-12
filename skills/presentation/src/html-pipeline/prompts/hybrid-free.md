@@ -1,3 +1,7 @@
+> ⚠️ **DEPRECATED** — 이 파일은 Agent Pipeline 도입으로 더 이상 직접 사용되지 않습니다.
+> 각 섹션은 research.md, message-architect.md, html-designer.md로 분리되었습니다.
+> 멀티 에이전트 파이프라인 안정화 후 제거 예정. 폴백용으로 유지합니다.
+
 # Free Mode: Source → HTML Slides
 
 Generate presentation slides as standalone HTML files.
