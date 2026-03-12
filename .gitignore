@@ -53,3 +53,6 @@ dist/
 
 # Personal profile (presentation plugin)
 skills/presentation/skills/presentation/references/my-*.md
+
+# E2E test results (local only)
+skills/presentation/e2e-results/

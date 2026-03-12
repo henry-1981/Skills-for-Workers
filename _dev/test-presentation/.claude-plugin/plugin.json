@@ -1,0 +1,5 @@
+{
+  "name": "test-presentation",
+  "description": "Presentation 스킬 e2e 테스트 자동화 (개발 전용, marketplace 비배포)",
+  "version": "0.1.0"
+}
