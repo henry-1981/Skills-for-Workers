@@ -94,7 +94,7 @@ SKILL.md는 반드시 `skills/` 서브디렉토리 안에 위치해야 한다 (p
 | `k-sunshine` | k-sunshine | Pure markdown + binary `.skill` archive | None |
 | `skill-tools` | skill-lint, skill-submit, skill-package | Pure markdown | None |
 | `tool-setup` | tool-setup | Pure markdown guide + references | None |
-| `presentation` | presentation | TypeScript pipeline + HTML dual-mode (hybrid/dom) + slides-grab editor | `pptxgenjs`, `playwright`, `sharp`, Node.js runtime |
+| `presentation` | presentation | TypeScript pipeline + 4-Agent Pipeline (자유 모드) + hybrid-renderer + slides-grab editor | `pptxgenjs`, `playwright`, `sharp`, Node.js runtime |
 
 ### agent-council Specifics
 
@@ -125,11 +125,24 @@ HTML 생성 + hybrid-renderer PPTX 배포 파이프라인:
 - **HTML 파이프라인**: HTML slides → orchestrator → hybrid-renderer → PPTX
   - hybrid 모드: 스크린샷 배경 + 편집 가능 텍스트 오버레이
   - 자유모드 기본 (1920×1080, LLM 자유 디자인) + 프리셋 opt-in 가드레일
-- **프롬프트 구조**: Message Design 레이어 (4규칙 + 5안티패턴) → CSS Design Philosophy 순서
-  - hybrid.md (프리셋 모드), hybrid-free.md (자유 모드)
+- **4-Agent Pipeline (자유 모드)**: Research → Verify → Message Architect → Verify → Design
+  - 프롬프트 파일: `src/html-pipeline/prompts/{research,verify,message-architect,html-designer}.md`
+  - 임시 데이터: `/tmp/presentation-pipeline/` (pipeline 완료 후 자동 삭제)
+  - `hybrid-free.md` deprecated (폴백용으로만 유지)
+- **프리셋 모드**: `prompts/hybrid.md` 단일 프롬프트 (Message Design + 프리셋 CSS 변수)
 - **slides-grab 에디터**: 브라우저 기반 시각 편집기 (`npm run editor`)
 - **themes/presets.ts**: kr-* 9개 프리셋만 유지
 - **Playwright MCP**: `.mcp.json`으로 브라우저 자동화 MCP 서버 설정
+
+### E2E Test Infrastructure
+
+`_dev/test-presentation/` — 배포 비포함 개발 전용 Plugin (`_` 접두사 = marketplace 제외):
+- **SKILL.md**: Claude Code 내 e2e 테스트 오케스트레이터 (시나리오→실행→구조채점→품질채점→리포트)
+- **scripts/structural-scorer.ts**: PPTX jszip 파싱 → 구조 점수 (0-100)
+- **scripts/result-store.ts**: 테스트 결과 저장/누적/리포트
+- **references/rubric.md**: LLM 품질 채점 기준 (NotebookLM 수준 기준선)
+- **references/scenario-pool.md**: 4개 카테고리 × 변수 랜덤 조합
+- 결과물: `skills/presentation/e2e-results/` (gitignored)
 
 ## Commands
 
@@ -159,6 +172,11 @@ npm run html2pptx -- --slidesDir=./slides --output=output.pptx --mode=hybrid
 
 # presentation: slides-grab 에디터 (express 미설치 — 추후 추가 필요)
 cd skills/presentation && npm run editor
+
+# E2E Test (presentation, development only)
+cd _dev/test-presentation && npm test                     # Unit tests
+cd _dev/test-presentation && npm run score -- <pptx-path> # Score a PPTX
+# Full e2e: invoke /test-presentation skill in Claude Code
 ```
 
 빌드, 테스트 시스템은 없다. 대부분의 스킬은 순수 마크다운이며 별도의 빌드 과정이 필요 없다. presentation 플러그인의 HTML 파이프라인은 `tsc && node dist/`로 실행해야 한다 (tsx의 esbuild __name 래핑이 page.evaluate 브라우저 컨텍스트와 충돌).
