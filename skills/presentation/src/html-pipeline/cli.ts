@@ -1,7 +1,12 @@
 import { HtmlPipeline, type RenderMode } from './orchestrator.js';
 
 const args = process.argv.slice(2);
-const slidesDir = args.find(a => !a.startsWith('--')) ?? 'slides';
+// --slidesDir=<path> 플래그 우선, 없으면 positional argument, 없으면 기본값
+// Usage:
+//   node dist/html-pipeline/cli.js --slidesDir=<dir> --output=<path> [--mode=hybrid|screenshot] [--verbose]
+//   node dist/html-pipeline/cli.js <dir> --output=<path>  (positional, legacy)
+const slidesDirFlag = args.find(a => a.startsWith('--slidesDir='))?.split('=').slice(1).join('=');
+const slidesDir = slidesDirFlag ?? args.find(a => !a.startsWith('--')) ?? 'slides';
 const outputPath = args.find(a => a.startsWith('--output='))?.split('=')[1] ?? 'output.pptx';
 const modeArg = args.find(a => a.startsWith('--mode='))?.split('=')[1];
 const mode: RenderMode = (modeArg === 'screenshot' || modeArg === 'hybrid') ? modeArg : 'hybrid';
