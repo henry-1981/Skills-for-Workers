@@ -156,3 +156,50 @@ Phase 1-4를 N번 반복 후 전체 통계:
 ### --report 모드
 `summary.json`을 읽어 누적 통계를 위와 동일한 형식으로 출력.
 실행 없이 기존 결과만 조회.
+
+## Phase 6: 이슈 액션 (개선 루프)
+
+Phase 5 리포트 출력 후 자동으로 실행한다.
+
+### 판단 기준
+
+| 조건 | 액션 |
+|------|------|
+| 구조 점수 < 80 | 파이프라인 버그 조사 → `error.json` 확인, PPTX 변환 로그 재검토 |
+| 품질 점수 < 75 (NotebookLM 기준선) | 해당 항목별 프롬프트 개선 제안 출력 (아래 매핑 참조) |
+| CLI/도구 버그 발견 | 버그 위치 즉시 수정 + 관련 SKILL.md 문서 업데이트 |
+| 개선 완료 | 동일 `scenario.json`으로 회귀 테스트 재실행 |
+
+### 품질 항목 → 프롬프트 매핑
+
+| 낮은 항목 | 수정 대상 프롬프트 |
+|-----------|-------------------|
+| message_clarity | `src/html-pipeline/prompts/message-architect.md` (One Takeaway 규칙 강화) |
+| logical_flow | `src/html-pipeline/prompts/message-architect.md` (narrative_arc 구조 강화) |
+| visual_design | `src/html-pipeline/prompts/html-designer.md` (밀도/여백 규칙 강화) |
+| audience_fit | `src/html-pipeline/prompts/research.md` (audience_context 구체화) |
+
+### 회귀 테스트 실행
+
+이슈를 수정한 후, 동일 시나리오로 재실행하여 개선 여부를 확인한다:
+
+```bash
+# 기존 run의 scenario.json을 참조하여 동일 조건 재실행
+# Phase 1에서 scenario.json을 직접 로드하는 방식으로 진행
+```
+
+새 run 디렉토리(`YYYY-MM-DD-NNN+1`)에 저장하고 점수를 이전 run과 비교 출력:
+
+```
+회귀 비교:
+  이전 (2026-03-12-001): 구조 100 / 품질 89
+  현재 (2026-03-12-002): 구조 100 / 품질 92  ↑ +3
+```
+
+### 이슈 없을 때
+
+구조 ≥ 80, 품질 ≥ 75이고 버그 없으면:
+
+```
+✓ 이슈 없음. 개선 액션 불필요.
+```
