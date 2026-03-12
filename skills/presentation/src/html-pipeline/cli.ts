@@ -7,7 +7,7 @@ const args = process.argv.slice(2);
 //   node dist/html-pipeline/cli.js <dir> --output=<path>  (positional, legacy)
 const slidesDirFlag = args.find(a => a.startsWith('--slidesDir='))?.split('=').slice(1).join('=');
 const slidesDir = slidesDirFlag ?? args.find(a => !a.startsWith('--')) ?? 'slides';
-const outputPath = args.find(a => a.startsWith('--output='))?.split('=')[1] ?? 'output.pptx';
+const outputPath = args.find(a => a.startsWith('--output='))?.split('=').slice(1).join('=') ?? 'output.pptx';
 const modeArg = args.find(a => a.startsWith('--mode='))?.split('=')[1];
 const mode: RenderMode = (modeArg === 'screenshot' || modeArg === 'hybrid') ? modeArg : 'hybrid';
 const verbose = args.includes('--verbose');
