@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920">
+<title>Slide 05 — 론칭 타임라인 8주</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    position: relative;
+  }
+
+  /* Top section */
+  .top-section {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 340px;
+    background: #0a0a0a;
+    border-bottom: 2px solid #222;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    justify-content: space-between;
+  }
+
+  .headline-group {}
+  .top-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #FF1A1A;
+    margin-bottom: 20px;
+  }
+  .headline {
+    font-family: 'Inter', sans-serif;
+    font-size: 240px;
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: #f0f0f0;
+  }
+  .headline-sub {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #FF1A1A;
+    margin-left: 8px;
+  }
+
+  .right-statement {
+    width: 560px;
+    text-align: right;
+  }
+  .statement-text {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #888;
+    letter-spacing: -0.01em;
+  }
+  .statement-highlight {
+    font-weight: 900;
+    color: #FF1A1A;
+  }
+
+  /* Timeline rail */
+  .timeline-section {
+    position: absolute;
+    top: 360px;
+    left: 80px;
+    right: 80px;
+    height: 360px;
+  }
+
+  .rail {
+    position: absolute;
+    top: 80px;
+    left: 0; right: 0;
+    height: 3px;
+    background: #222;
+  }
+  .rail-progress {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #FF1A1A, #ff6b6b);
+  }
+
+  .week-marks {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .week-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .week-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 16px;
+  }
+  .week-label.active { color: #FF1A1A; }
+
+  .week-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    background: #0a0a0a;
+    margin-top: 66px;
+  }
+  .week-dot.active {
+    border-color: #FF1A1A;
+    background: #FF1A1A;
+    box-shadow: 0 0 16px rgba(255,26,26,0.6);
+  }
+
+  .week-event {
+    margin-top: 24px;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #555;
+    text-align: center;
+    max-width: 140px;
+    line-height: 1.4;
+  }
+  .week-event.active { color: #d0d0d0; }
+
+  /* Phase labels */
+  .phase-bar {
+    position: absolute;
+    top: 280px;
+    left: 0; right: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .phase {
+    flex: 1;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .phase-1 { background: #1a0a0a; color: #FF1A1A; border: 1px solid #FF1A1A; }
+  .phase-2 { background: #111; color: #666; border: 1px solid #222; }
+  .phase-3 { background: #111; color: #666; border: 1px solid #222; }
+
+  /* Takeaway */
+  .takeaway-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    border-top: 4px solid #FF1A1A;
+    background: #111;
+    padding: 28px 80px;
+  }
+  .takeaway-text {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #d0d0d0;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+
+  .slide-num {
+    position: absolute;
+    top: 54px;
+    right: 80px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 100;
+    letter-spacing: 0.2em;
+    color: #444;
+  }
+
+  /* Left accent */
+  .accent-left {
+    position: absolute;
+    left: 0; top: 0;
+    width: 6px;
+    height: 100%;
+    background: #FF1A1A;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-left"></div>
+  <div class="slide-num">05 / 07</div>
+
+  <div class="top-section">
+    <div class="headline-group">
+      <div class="top-label">Launch Timeline</div>
+      <span class="headline">8</span><span class="headline-sub">WEEKS</span>
+    </div>
+    <div class="right-statement">
+      <div class="statement-text">
+        속도가 곧 에너지<br>
+        <span class="statement-highlight">질질 끌면<br>진정성이 식는다</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-section">
+    <div class="rail"></div>
+    <div class="rail-progress"></div>
+
+    <div class="week-marks">
+      <div class="week-mark">
+        <div class="week-label active">W1</div>
+        <div class="week-dot active"></div>
+        <div class="week-event active">인플루언서<br>온보딩</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label active">W2</div>
+        <div class="week-dot active"></div>
+        <div class="week-event active">콘텐츠<br>제작 개시</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label active">W3</div>
+        <div class="week-dot active"></div>
+        <div class="week-event active">성수<br>팝업 오픈</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label active">W4</div>
+        <div class="week-dot active"></div>
+        <div class="week-event active">홍대<br>팝업 오픈</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label">W5</div>
+        <div class="week-dot"></div>
+        <div class="week-event">강남<br>팝업 오픈</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label">W6</div>
+        <div class="week-dot"></div>
+        <div class="week-event">Shorts<br>집중 배포</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label">W7</div>
+        <div class="week-dot"></div>
+        <div class="week-event">성과<br>중간 점검</div>
+      </div>
+      <div class="week-mark">
+        <div class="week-label">W8</div>
+        <div class="week-dot"></div>
+        <div class="week-event">KPI<br>최종 평가</div>
+      </div>
+    </div>
+
+    <div class="phase-bar">
+      <div class="phase phase-1">Phase 1 — Ignition (W1–W4)</div>
+      <div class="phase phase-2">Phase 2 — Amplify (W5–W6)</div>
+      <div class="phase phase-3">Phase 3 — Measure (W7–W8)</div>
+    </div>
+  </div>
+
+  <div class="takeaway-bar">
+    <div class="takeaway-text">론칭 타임라인 8주 — 속도가 곧 에너지, 질질 끌면 진정성이 식는다</div>
+  </div>
+</body>
+</html>

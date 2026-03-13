@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    background: #111111;
+    color: #FFFFFF;
+  }
+  .red-bar {
+    position: absolute;
+    left: 0; top: 0;
+    width: 8px; height: 100%;
+    background: #E8000D;
+  }
+  .container {
+    width: 100%; height: 100%;
+    padding: 120px 160px 80px 200px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto 1px 1fr auto;
+  }
+  .title-area {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    padding-bottom: 40px;
+  }
+  h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  .divider {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    background: #333333;
+    height: 1px;
+  }
+  .content-area {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    padding-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .action-card {
+    border-left: 4px solid #E8000D;
+    padding: 32px 32px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .action-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #E8000D;
+  }
+  .action-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .action-deadline {
+    font-size: 16px;
+    font-weight: 400;
+    color: #888888;
+  }
+  .footer {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    padding-top: 24px;
+    border-top: 1px solid #333333;
+  }
+  .footer span {
+    font-size: 18px;
+    color: #888888;
+  }
+  .footer strong {
+    color: #FFFFFF;
+  }
+</style>
+</head>
+<body>
+  <div class="red-bar"></div>
+  <div class="container">
+    <div class="title-area">
+      <h1>지금 결정해야 할 것</h1>
+    </div>
+    <div class="divider"></div>
+    <div class="content-area">
+      <div class="action-card">
+        <span class="action-number">Action 01</span>
+        <span class="action-title">오프라인 회복 전략 확정</span>
+        <span class="action-deadline">이번 주 내 의사결정</span>
+      </div>
+      <div class="action-card">
+        <span class="action-number">Action 02</span>
+        <span class="action-title">신제품 2차 투자 승인</span>
+        <span class="action-deadline">다음 분기 초 실행 착수</span>
+      </div>
+    </div>
+    <div class="footer">
+      <span>두 가지 의사결정이 <strong>15% 목표의 80%</strong>를 좌우한다</span>
+    </div>
+  </div>
+</body>
+</html>

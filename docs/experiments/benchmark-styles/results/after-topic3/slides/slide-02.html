@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920">
+<title>Slide 02 - Neo-Brutalism</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background-color: #F5F500;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .canvas {
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+  }
+
+  .label-top {
+    position: absolute;
+    top: 52px;
+    left: 80px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 18px;
+    color: #000000;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .slide-number {
+    position: absolute;
+    top: 48px;
+    right: 80px;
+    font-family: Arial Black, Impact, sans-serif;
+    font-size: 86px;
+    color: #000000;
+    opacity: 0.08;
+    line-height: 1;
+  }
+
+  .headline {
+    font-family: Impact, Arial Black, sans-serif;
+    font-size: 54px;
+    color: #000000;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.15;
+    max-width: 1400px;
+  }
+
+  .cards-row {
+    display: flex;
+    gap: 60px;
+    align-items: stretch;
+    width: 1500px;
+  }
+
+  .channel-card {
+    flex: 1;
+    background: #FFFFFF;
+    border: 5px solid #000000;
+    box-shadow: 8px 8px 0px #000000;
+    padding: 60px 56px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .channel-card.dark {
+    background: #000000;
+    box-shadow: 8px 8px 0px #0000FF;
+  }
+
+  .channel-icon {
+    font-family: Arial Black, sans-serif;
+    font-size: 96px;
+    line-height: 1;
+    color: #000000;
+    letter-spacing: -4px;
+  }
+
+  .channel-card.dark .channel-icon {
+    color: #FFFFFF;
+  }
+
+  .channel-name {
+    font-family: Impact, Arial Black, sans-serif;
+    font-size: 56px;
+    color: #000000;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .channel-card.dark .channel-name {
+    color: #FFFFFF;
+  }
+
+  .channel-stat {
+    font-family: Arial Black, sans-serif;
+    font-size: 28px;
+    color: #FF3B30;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .channel-card.dark .channel-stat {
+    color: #CCFF00;
+  }
+
+  .channel-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 17px;
+    color: #000000;
+    line-height: 1.7;
+    font-weight: 700;
+  }
+
+  .channel-card.dark .channel-desc {
+    color: #FFFFFF;
+  }
+
+  .card-tag {
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    background: #FF3B30;
+    border: 4px solid #000000;
+    font-family: Arial Black, sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    padding: 6px 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .channel-card.dark .card-tag {
+    background: #CCFF00;
+    color: #000000;
+  }
+
+  .takeaway-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000000;
+    border-top: 5px solid #000000;
+    padding: 20px 80px;
+  }
+
+  .takeaway-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    color: #F5F500;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="label-top">VOKE BRAND STRATEGY — TOPIC 3</div>
+  <div class="slide-number">02</div>
+
+  <p class="headline">채널 집중 전략</p>
+
+  <div class="cards-row">
+    <!-- Instagram Card -->
+    <div class="channel-card">
+      <div class="card-tag">CHANNEL 01</div>
+      <div class="channel-icon">📸</div>
+      <div class="channel-name">INSTAGRAM</div>
+      <div class="channel-stat">체류시간 #1</div>
+      <div class="channel-desc">
+        비주얼 중심 브랜드 스토리텔링.<br>
+        릴스 + 피드 + 스토리로<br>
+        브랜드 세계관 구축.
+      </div>
+    </div>
+
+    <!-- YouTube Shorts Card -->
+    <div class="channel-card dark">
+      <div class="card-tag">CHANNEL 02</div>
+      <div class="channel-icon" style="color:#CCFF00;">▶</div>
+      <div class="channel-name">YOUTUBE SHORTS</div>
+      <div class="channel-stat">체류시간 #2</div>
+      <div class="channel-desc">
+        60초 이하 임팩트 영상.<br>
+        알고리즘이 밀어주는<br>
+        신규 도달 채널.
+      </div>
+    </div>
+  </div>
+
+  <div class="takeaway-bar">
+    <span class="takeaway-text">인스타그램 + 유튜브 쇼츠 — MZ의 체류 시간이 가장 긴 두 채널에 집중한다</span>
+  </div>
+</div>
+</body>
+</html>

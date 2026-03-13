@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    background: #FFFFFF;
+    color: #111111;
+  }
+  .red-bar {
+    position: absolute;
+    left: 0; top: 0;
+    width: 8px; height: 100%;
+    background: #E8000D;
+  }
+  .container {
+    width: 100%; height: 100%;
+    padding: 120px 160px 80px 200px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto 1px 1fr;
+  }
+  .title-area {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    padding-bottom: 40px;
+  }
+  h1 {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  .divider {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    background: #DDDDDD;
+    height: 1px;
+  }
+  .content-area {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    padding-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .channel-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .channel-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #444444;
+  }
+  .channel-value {
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: -2px;
+  }
+  .channel-value.up { color: #111111; }
+  .channel-value.flat { color: #DDDDDD; }
+  .channel-desc {
+    font-size: 18px;
+    color: #444444;
+    line-height: 1.5;
+  }
+  .channel-desc strong {
+    color: #E8000D;
+    font-weight: 600;
+  }
+  .vertical-divider {
+    width: 1px;
+    height: 200px;
+    background: #DDDDDD;
+    align-self: center;
+  }
+</style>
+</head>
+<body>
+  <div class="red-bar"></div>
+  <div class="container">
+    <div class="title-area">
+      <h1>오프라인은 제자리걸음이다</h1>
+    </div>
+    <div class="divider"></div>
+    <div class="content-area">
+      <div class="channel-card">
+        <span class="channel-label">Online</span>
+        <span class="channel-value up">+35%</span>
+        <span class="channel-desc">급증 — 성장의 핵심 동력</span>
+      </div>
+      <div class="vertical-divider"></div>
+      <div class="channel-card">
+        <span class="channel-label">Offline</span>
+        <span class="channel-value flat">±0%</span>
+        <span class="channel-desc">보합 — <strong>다음 분기의 최대 리스크</strong></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

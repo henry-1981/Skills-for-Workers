@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #FAFAFA;
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .container {
+    width: 1600px;
+    height: 900px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 40px;
+  }
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+  }
+  .number {
+    font-size: 200px;
+    font-weight: 900;
+    letter-spacing: -8px;
+    line-height: 1;
+    color: #1A1A1A;
+  }
+  .number span {
+    font-size: 80px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: #999;
+    vertical-align: top;
+    margin-left: 4px;
+  }
+  .message {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #666;
+    max-width: 700px;
+  }
+  .accent {
+    color: #E53E3E;
+    font-weight: 600;
+  }
+  .footer {
+    font-size: 14px;
+    font-weight: 400;
+    color: #999;
+    border-top: 1px solid #E0E0E0;
+    padding-top: 16px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="number">12<span>%</span></div>
+      <p class="message">
+        2분기 매출 전년 대비 12% 성장<br>
+        그러나 <span class="accent">채널별 명암이 극명하다</span>
+      </p>
+    </div>
+    <div class="footer">2분기 매출 실적 보고</div>
+  </div>
+</body>
+</html>

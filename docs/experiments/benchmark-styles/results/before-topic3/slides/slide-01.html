@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920">
+<title>Slide 01 — VOKE 거침없는 진정성</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    position: relative;
+  }
+
+  /* Background texture */
+  .bg-noise {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none;
+  }
+
+  /* Hard border accent */
+  .border-left {
+    position: absolute;
+    left: 0; top: 0;
+    width: 8px;
+    height: 100%;
+    background: #FF1A1A;
+  }
+
+  /* Top label */
+  .label-top {
+    position: absolute;
+    top: 54px;
+    left: 80px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #FF1A1A;
+  }
+
+  /* Slide number */
+  .slide-num {
+    position: absolute;
+    top: 54px;
+    right: 80px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 100;
+    letter-spacing: 0.2em;
+    color: #444;
+  }
+
+  /* MAIN headline — brutalist giant */
+  .headline-wrap {
+    position: absolute;
+    left: 80px;
+    top: 160px;
+    max-width: 1200px;
+  }
+
+  .headline-en {
+    font-family: 'Inter', sans-serif;
+    font-size: 220px;
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: #f0f0f0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .headline-ko {
+    display: block;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: #FF1A1A;
+    margin-top: 12px;
+  }
+
+  /* Right side — takeaway */
+  .takeaway-block {
+    position: absolute;
+    right: 80px;
+    bottom: 120px;
+    width: 640px;
+    border-top: 1px solid #333;
+    padding-top: 28px;
+  }
+
+  .takeaway-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 18px;
+  }
+
+  .takeaway-text {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #d0d0d0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Bottom left caption */
+  .caption-bl {
+    position: absolute;
+    left: 80px;
+    bottom: 54px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  /* Diagonal slash accent */
+  .slash {
+    position: absolute;
+    right: 760px;
+    top: 320px;
+    font-family: 'Inter', sans-serif;
+    font-size: 400px;
+    font-weight: 100;
+    color: rgba(255,26,26,0.06);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-12deg);
+  }
+</style>
+</head>
+<body>
+  <div class="bg-noise"></div>
+  <div class="border-left"></div>
+  <div class="slash">/</div>
+
+  <div class="label-top">VOKE Brand Strategy 2026</div>
+  <div class="slide-num">01 / 07</div>
+
+  <div class="headline-wrap">
+    <span class="headline-en">RAW</span>
+    <span class="headline-ko">거침없는<br>진정성</span>
+  </div>
+
+  <div class="takeaway-block">
+    <div class="takeaway-label">Takeaway</div>
+    <div class="takeaway-text">VOKE의 핵심 가치 '거침없는 진정성'은 MZ세대(25-35)가 브랜드에 요구하는 유일한 자격증이다</div>
+  </div>
+
+  <div class="caption-bl">VOKE · MZ Strategy · 2026</div>
+</body>
+</html>

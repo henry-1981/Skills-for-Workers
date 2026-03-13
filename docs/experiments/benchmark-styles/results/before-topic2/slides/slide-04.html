@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: 'Pretendard', 'Inter', sans-serif;
+    background: #FAFAFA;
+    color: #1A1A1A;
+  }
+  .container {
+    width: 100%; height: 100%;
+    padding: 120px 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 48px;
+  }
+  h1 {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -1px;
+  }
+  .ratio-bar {
+    display: flex;
+    height: 80px;
+    width: 100%;
+  }
+  .ratio-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ratio-segment.new {
+    background: #1A1A1A;
+    color: #fff;
+    width: 18%;
+  }
+  .ratio-segment.existing {
+    background: #E8E8E8;
+    color: #999;
+    width: 82%;
+  }
+  .ratio-value {
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .ratio-label {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .insight {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #666;
+    max-width: 800px;
+  }
+  .accent { color: #E53E3E; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>신제품이 예상 밖 기여를 했다</h1>
+    <div class="ratio-bar">
+      <div class="ratio-segment new">
+        <span class="ratio-value">18%</span>
+        <span class="ratio-label">신제품</span>
+      </div>
+      <div class="ratio-segment existing">
+        <span class="ratio-value">82%</span>
+        <span class="ratio-label">기존 제품군</span>
+      </div>
+    </div>
+    <p class="insight">
+      신제품 라인이 전체 매출의 18%를 기여<br>
+      <span class="accent">성장 포트폴리오의 핵심 축 확보</span> — 기존 제품군만으로는 12% 성장이 불가능했다
+    </p>
+  </div>
+</body>
+</html>
