@@ -223,7 +223,9 @@ C) 슬라이드별 — 한 장씩 만들면서 피드백을 받습니다
 
 `src/html-pipeline/prompts/html-designer.md`를 읽고 서브에이전트에게 전달한다.
 
-- **입력**: verified outline.md + archetype 정의 (`references/visual-archetypes.md`) + profile overrides (my-visual.md, my-structure.md)
+**Design Spec 로드**: `references/design-specs.md`에서 선택된 아키타입 이름(`## [archetype-name]`)에 해당하는 섹션을 추출한다.
+
+- **입력**: verified outline.md + archetype 방향 (`references/visual-archetypes.md`) + design specs (해당 아키타입 섹션) + profile overrides (my-visual.md, my-structure.md)
 - **출력**: HTML files → `slides/generated/` 디렉토리
 - **Mode C**: 한 장씩 생성하고 피드백 반영
 - **상태 표시**: "🎨 슬라이드 디자인 중..."

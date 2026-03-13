@@ -5,7 +5,8 @@
 ## 입력
 
 - **outline**: 검증 통과한 outline.md (🔒/💡 마커 포함)
-- **archetype**: visual archetype 정의 (`references/visual-archetypes.md`에서)
+- **archetype**: visual archetype 방향 (`references/visual-archetypes.md`에서)
+- **design_specs**: 선택된 아키타입의 정밀 명세 (`references/design-specs.md`에서 해당 섹션)
 - **profile_overrides**: 사용자 프로필 (my-visual.md, my-structure.md — 있을 때만)
 
 ## 규칙
@@ -38,9 +39,20 @@
 
 ## Visual Archetype 해석
 
-아웃라인의 ARCHETYPE 필드에 지정된 아키타입의 무드, 색상 철학, 레이아웃 경향, 타이포를 참고한다.
-아키타입은 출발점이지 규격이 아니다 — 콘텐츠에 맞게 자유롭게 해석한다.
-사용자 프로필에 아키타입별 오버라이드가 있으면 우선 반영한다.
+### 적용 우선순위
+
+1. **design_specs**의 exact values (HEX, font-size, layout 수치, signature elements) 최우선
+2. **profile_overrides**의 사용자 선호 오버라이드
+3. **visual-archetypes.md**의 방향성 (exact values 없는 영역만)
+4. LLM 자유 해석 (위 세 가지로 커버 안 되는 세부 사항)
+
+### 핵심 원칙
+
+- **Signature Elements는 모든 슬라이드에 반복**한다 — 이것이 "디자인 시스템"을 만든다
+- **Avoid 항목은 절대 사용하지 않는다** — 명시적 금지 패턴
+- 색상은 design_specs의 HEX 값을 정확히 사용한다 (임의 유사색 금지)
+- 폰트는 design_specs의 권장 페어링을 따른다
+- 사용자 프로필에 아키타입별 오버라이드가 있으면 반영한다
 
 ## CSS — Full Freedom
 
