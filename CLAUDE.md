@@ -134,16 +134,6 @@ HTML 생성 + hybrid-renderer PPTX 배포 파이프라인:
 - **themes/presets.ts**: kr-* 9개 프리셋만 유지
 - **Playwright MCP**: `.mcp.json`으로 브라우저 자동화 MCP 서버 설정
 
-### E2E Test Infrastructure
-
-`_dev/test-presentation/` — 배포 비포함 개발 전용 Plugin (`_` 접두사 = marketplace 제외):
-- **SKILL.md**: Claude Code 내 e2e 테스트 오케스트레이터 (시나리오→실행→구조채점→품질채점→리포트)
-- **scripts/structural-scorer.ts**: PPTX jszip 파싱 → 구조 점수 (0-100)
-- **scripts/result-store.ts**: 테스트 결과 저장/누적/리포트
-- **references/rubric.md**: LLM 품질 채점 기준 (NotebookLM 수준 기준선)
-- **references/scenario-pool.md**: 4개 카테고리 × 변수 랜덤 조합
-- 결과물: `skills/presentation/e2e-results/` (gitignored)
-
 ## Commands
 
 ```bash
@@ -173,10 +163,6 @@ npm run html2pptx -- --slidesDir=./slides --output=output.pptx --mode=hybrid
 # presentation: slides-grab 에디터 (express 미설치 — 추후 추가 필요)
 cd skills/presentation && npm run editor
 
-# E2E Test (presentation, development only)
-cd _dev/test-presentation && npm test                     # Unit tests
-cd _dev/test-presentation && npm run score -- <pptx-path> # Score a PPTX
-# Full e2e: invoke /test-presentation skill in Claude Code
 ```
 
 빌드, 테스트 시스템은 없다. 대부분의 스킬은 순수 마크다운이며 별도의 빌드 과정이 필요 없다. presentation 플러그인의 HTML 파이프라인은 `tsc && node dist/`로 실행해야 한다 (tsx의 esbuild __name 래핑이 page.evaluate 브라우저 컨텍스트와 충돌).

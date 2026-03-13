@@ -34,6 +34,7 @@ CLAUDE.md
 .moai/
 
 # Development-only (not for distribution)
+_dev/
 docs/
 tasks/
 
@@ -54,8 +55,6 @@ dist/
 # Personal profile (presentation plugin)
 skills/presentation/skills/presentation/references/my-*.md
 
-# E2E test results (local only)
-skills/presentation/e2e-results/
-
-# Generated slides (local only)
+# Generated slides & local artifacts (presentation plugin)
 skills/presentation/slides/
+skills/presentation/e2e-results/
